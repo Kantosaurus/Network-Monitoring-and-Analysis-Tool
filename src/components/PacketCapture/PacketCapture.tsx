@@ -1,8 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { IconNetwork, IconPlayerPlay, IconPlayerStop, IconTrash, IconFileExport, IconChartBar, IconAlertTriangle } from '@tabler/icons-react';
+import React, { useState, useEffect } from 'react';
+import { IconNetwork, IconPlayerPlay, IconPlayerStop, IconTrash, IconFileExport, IconChartBar, IconAlertTriangle, IconSettings, IconScript, IconFileImport, IconTerminal, IconShieldLock } from '@tabler/icons-react';
 import { Packet, NetworkInterface, SecurityAlert, ExpertAlert } from '@/types';
 import { cn } from '@/lib/utils';
 import StatisticsPanel from './StatisticsPanel';
+import ConfigurationPanel from './ConfigurationPanel';
+import LuaScriptEditor from './LuaScriptEditor';
+import SecurityAnalysisPanel from './SecurityAnalysisPanel';
+import ImportExportPanel from './ImportExportPanel';
+import UtilitiesPanel from './UtilitiesPanel';
+import PentestingPanel from './PentestingPanel';
 
 export const PacketCapture: React.FC = () => {
   const [interfaces, setInterfaces] = useState<NetworkInterface[]>([]);
@@ -14,6 +20,12 @@ export const PacketCapture: React.FC = () => {
   const [securityAlerts, setSecurityAlerts] = useState<SecurityAlert[]>([]);
   const [expertAlerts, setExpertAlerts] = useState<ExpertAlert[]>([]);
   const [showStatistics, setShowStatistics] = useState(false);
+  const [showConfiguration, setShowConfiguration] = useState(false);
+  const [showLuaEditor, setShowLuaEditor] = useState(false);
+  const [showSecurityAnalysis, setShowSecurityAnalysis] = useState(false);
+  const [showImportExport, setShowImportExport] = useState(false);
+  const [showUtilities, setShowUtilities] = useState(false);
+  const [showPentesting, setShowPentesting] = useState(false);
 
   // Advanced capture options
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -144,7 +156,7 @@ export const PacketCapture: React.FC = () => {
     setSecurityAlerts([]);
   };
 
-  const handleExport = async (format: 'json' | 'csv') => {
+  const handleExport = async (format: 'json' | 'csv' | 'xml' | 'psml' | 'txt' | 'pdml' | 'ps') => {
     if (!window.api || packets.length === 0) return;
     await window.api.exportPackets(packets, format);
   };
@@ -227,6 +239,54 @@ export const PacketCapture: React.FC = () => {
           Statistics
         </button>
 
+        <button
+          onClick={() => setShowConfiguration(true)}
+          className="flex items-center gap-2 rounded-lg border border-purple-600 text-purple-600 px-4 py-2 text-sm font-medium hover:bg-purple-50 dark:hover:bg-purple-900/20"
+        >
+          <IconSettings size={16} />
+          Configuration
+        </button>
+
+        <button
+          onClick={() => setShowLuaEditor(true)}
+          className="flex items-center gap-2 rounded-lg border border-green-600 text-green-600 px-4 py-2 text-sm font-medium hover:bg-green-50 dark:hover:bg-green-900/20"
+        >
+          <IconScript size={16} />
+          Lua Scripts
+        </button>
+
+        <button
+          onClick={() => setShowSecurityAnalysis(true)}
+          className="flex items-center gap-2 rounded-lg border border-red-600 text-red-600 px-4 py-2 text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20"
+        >
+          <IconAlertTriangle size={16} />
+          Security
+        </button>
+
+        <button
+          onClick={() => setShowPentesting(true)}
+          className="flex items-center gap-2 rounded-lg border-2 border-red-700 bg-red-700 text-white px-4 py-2 text-sm font-medium hover:bg-red-800 hover:border-red-800"
+        >
+          <IconShieldLock size={16} />
+          Pentesting
+        </button>
+
+        <button
+          onClick={() => setShowImportExport(true)}
+          className="flex items-center gap-2 rounded-lg border border-orange-600 text-orange-600 px-4 py-2 text-sm font-medium hover:bg-orange-50 dark:hover:bg-orange-900/20"
+        >
+          <IconFileImport size={16} />
+          Import/Export
+        </button>
+
+        <button
+          onClick={() => setShowUtilities(true)}
+          className="flex items-center gap-2 rounded-lg border border-teal-600 text-teal-600 px-4 py-2 text-sm font-medium hover:bg-teal-50 dark:hover:bg-teal-900/20"
+        >
+          <IconTerminal size={16} />
+          Utilities
+        </button>
+
         <input
           type="text"
           value={filter}
@@ -235,22 +295,62 @@ export const PacketCapture: React.FC = () => {
           className="rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200"
         />
 
-        <div className="ml-auto flex gap-2">
+        <div className="ml-auto flex gap-1">
           <button
             onClick={() => handleExport('json')}
             disabled={packets.length === 0}
-            className="flex items-center gap-2 rounded-lg border border-neutral-300 px-4 py-2 text-sm font-medium dark:border-neutral-700 disabled:opacity-50"
+            className="flex items-center gap-2 rounded-lg border border-neutral-300 px-3 py-2 text-sm font-medium dark:border-neutral-700 disabled:opacity-50 hover:bg-neutral-100 dark:hover:bg-neutral-800"
           >
-            <IconFileExport size={16} />
+            <IconFileExport size={14} />
             JSON
           </button>
           <button
             onClick={() => handleExport('csv')}
             disabled={packets.length === 0}
-            className="flex items-center gap-2 rounded-lg border border-neutral-300 px-4 py-2 text-sm font-medium dark:border-neutral-700 disabled:opacity-50"
+            className="flex items-center gap-2 rounded-lg border border-neutral-300 px-3 py-2 text-sm font-medium dark:border-neutral-700 disabled:opacity-50 hover:bg-neutral-100 dark:hover:bg-neutral-800"
           >
-            <IconFileExport size={16} />
+            <IconFileExport size={14} />
             CSV
+          </button>
+          <button
+            onClick={() => handleExport('xml')}
+            disabled={packets.length === 0}
+            className="flex items-center gap-2 rounded-lg border border-neutral-300 px-3 py-2 text-sm font-medium dark:border-neutral-700 disabled:opacity-50 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+          >
+            <IconFileExport size={14} />
+            XML
+          </button>
+          <button
+            onClick={() => handleExport('psml')}
+            disabled={packets.length === 0}
+            className="flex items-center gap-2 rounded-lg border border-neutral-300 px-3 py-2 text-sm font-medium dark:border-neutral-700 disabled:opacity-50 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+          >
+            <IconFileExport size={14} />
+            PSML
+          </button>
+          <button
+            onClick={() => handleExport('txt')}
+            disabled={packets.length === 0}
+            className="flex items-center gap-2 rounded-lg border border-neutral-300 px-3 py-2 text-sm font-medium dark:border-neutral-700 disabled:opacity-50 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+          >
+            <IconFileExport size={14} />
+            TXT
+          </button>
+          <button
+            onClick={() => handleExport('pdml')}
+            disabled={packets.length === 0}
+            className="flex items-center gap-2 rounded-lg border border-neutral-300 px-3 py-2 text-sm font-medium dark:border-neutral-700 disabled:opacity-50 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+          >
+            <IconFileExport size={14} />
+            PDML
+          </button>
+          <button
+            onClick={() => handleExport('ps')}
+            disabled={packets.length === 0}
+            className="flex items-center gap-2 rounded-lg border border-neutral-300 px-3 py-2 text-sm font-medium dark:border-neutral-700 disabled:opacity-50 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+          >
+            <IconFileExport size={14} />
+            PS
           </button>
         </div>
       </div>
@@ -400,147 +500,117 @@ export const PacketCapture: React.FC = () => {
       </div>
 
       <div className="flex flex-1 gap-4 min-h-0">
-        {/* Packet List */}
-        <div className="flex-1 flex flex-col rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 overflow-hidden">
-          <div className="border-b border-neutral-200 px-4 py-2 dark:border-neutral-700">
-            <h3 className="text-sm font-semibold">Packets</h3>
-          </div>
-          <div className="flex-1 overflow-auto">
-            <table className="w-full text-xs">
-              <thead className="sticky top-0 bg-neutral-100 dark:bg-neutral-800">
-                <tr>
-                  <th className="p-2 text-left">No.</th>
-                  <th className="p-2 text-left">Time</th>
-                  <th className="p-2 text-left">Source</th>
-                  <th className="p-2 text-left">Destination</th>
-                  <th className="p-2 text-left">Protocol</th>
-                  <th className="p-2 text-left">Length</th>
-                  <th className="p-2 text-left">Info</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredPackets.length === 0 ? (
+        {/* Left Side: Packets and Packet Details */}
+        <div className="flex-1 flex flex-col gap-4 min-h-0">
+          {/* Packet List */}
+          <div className={cn("flex flex-col rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 overflow-hidden", selectedPacket ? "flex-[0.6]" : "flex-1")}>
+            <div className="border-b border-neutral-200 px-4 py-2 dark:border-neutral-700">
+              <h3 className="text-sm font-semibold">Packets</h3>
+            </div>
+            <div className="flex-1 overflow-auto">
+              <table className="w-full text-xs">
+                <thead className="sticky top-0 bg-neutral-100 dark:bg-neutral-800">
                   <tr>
-                    <td colSpan={7} className="p-8 text-center text-neutral-500">
-                      <IconNetwork className="mx-auto mb-2 opacity-30" size={48} />
-                      <p>No packets captured yet</p>
-                    </td>
+                    <th className="p-2 text-left">No.</th>
+                    <th className="p-2 text-left">Time</th>
+                    <th className="p-2 text-left">Source</th>
+                    <th className="p-2 text-left">Destination</th>
+                    <th className="p-2 text-left">Protocol</th>
+                    <th className="p-2 text-left">Length</th>
+                    <th className="p-2 text-left">Info</th>
                   </tr>
-                ) : (
-                  filteredPackets.map((packet) => (
-                    <tr
-                      key={packet.no}
-                      onClick={() => setSelectedPacket(packet)}
-                      className={cn(
-                        "cursor-pointer border-b border-neutral-100 hover:bg-neutral-50 dark:border-neutral-800 dark:hover:bg-neutral-800",
-                        selectedPacket?.no === packet.no && "bg-purple-50 dark:bg-purple-900/20"
-                      )}
-                    >
-                      <td className="p-2">{packet.no}</td>
-                      <td className="p-2">{packet.relativeTime}</td>
-                      <td className="p-2 font-mono">{packet.source}</td>
-                      <td className="p-2 font-mono">{packet.destination}</td>
-                      <td className="p-2">
-                        <span className={cn(
-                          "rounded px-2 py-0.5 text-xs font-semibold",
-                          packet.protocol === 'TCP' && "bg-blue-100 text-blue-700",
-                          packet.protocol === 'UDP' && "bg-yellow-100 text-yellow-700",
-                          packet.protocol === 'ICMP' && "bg-orange-100 text-orange-700",
-                          packet.protocol === 'ARP' && "bg-purple-100 text-purple-700"
-                        )}>
-                          {packet.protocol}
-                        </span>
+                </thead>
+                <tbody>
+                  {filteredPackets.length === 0 ? (
+                    <tr>
+                      <td colSpan={7} className="p-8 text-center text-neutral-500">
+                        <IconNetwork className="mx-auto mb-2 opacity-30" size={48} />
+                        <p>No packets captured yet</p>
                       </td>
-                      <td className="p-2">{packet.length}</td>
-                      <td className="p-2 truncate max-w-xs">{packet.info}</td>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Security Alerts */}
-        {securityAlerts.length > 0 && (
-          <div className="w-80 flex flex-col rounded-lg border border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-950/20 overflow-hidden">
-            <div className="border-b border-red-200 px-4 py-2 dark:border-red-900 flex items-center justify-between">
-              <h3 className="text-sm font-semibold flex items-center gap-2 text-red-700 dark:text-red-400">
-                <IconAlertTriangle size={16} />
-                Security Alerts ({securityAlerts.length})
-              </h3>
-              <button
-                onClick={() => setSecurityAlerts([])}
-                className="text-xs text-red-600 hover:text-red-800"
-              >
-                Clear
-              </button>
+                  ) : (
+                    filteredPackets.map((packet) => (
+                      <tr
+                        key={packet.no}
+                        onClick={() => setSelectedPacket(packet)}
+                        className={cn(
+                          "cursor-pointer border-b border-neutral-100 hover:bg-neutral-50 dark:border-neutral-800 dark:hover:bg-neutral-800",
+                          selectedPacket?.no === packet.no && "bg-purple-50 dark:bg-purple-900/20"
+                        )}
+                      >
+                        <td className="p-2">{packet.no}</td>
+                        <td className="p-2">{packet.relativeTime}</td>
+                        <td className="p-2 font-mono">{packet.source}</td>
+                        <td className="p-2 font-mono">{packet.destination}</td>
+                        <td className="p-2">
+                          <span className={cn(
+                            "rounded px-2 py-0.5 text-xs font-semibold",
+                            packet.protocol === 'TCP' && "bg-blue-100 text-blue-700",
+                            packet.protocol === 'UDP' && "bg-yellow-100 text-yellow-700",
+                            packet.protocol === 'ICMP' && "bg-orange-100 text-orange-700",
+                            packet.protocol === 'ARP' && "bg-purple-100 text-purple-700"
+                          )}>
+                            {packet.protocol}
+                          </span>
+                        </td>
+                        <td className="p-2">{packet.length}</td>
+                        <td className="p-2 truncate max-w-xs">{packet.info}</td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
             </div>
-            <div className="flex-1 overflow-auto p-2 space-y-2">
-              {securityAlerts.map((alert, idx) => (
-                <div
-                  key={idx}
-                  className="rounded border border-red-200 bg-white p-2 text-xs dark:border-red-900 dark:bg-neutral-900"
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className={cn(
-                      "rounded px-1.5 py-0.5 text-xs font-bold uppercase",
-                      alert.severity === 'critical' && "bg-red-600 text-white",
-                      alert.severity === 'high' && "bg-orange-600 text-white",
-                      alert.severity === 'medium' && "bg-yellow-600 text-white",
-                      alert.severity === 'low' && "bg-blue-600 text-white"
-                    )}>
-                      {alert.severity}
-                    </span>
-                    <span className="text-neutral-500">#{alert.packet}</span>
-                  </div>
-                  <div className="font-semibold mb-1">{alert.message}</div>
-                  <div className="text-neutral-600 dark:text-neutral-400">{alert.details}</div>
+          </div>
+
+          {/* Packet Details & Hex View */}
+          {selectedPacket && (
+            <div className="grid grid-cols-2 gap-4 flex-[0.4] min-h-0">
+              <div className="rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 overflow-hidden flex flex-col">
+                <div className="border-b border-neutral-200 px-4 py-2 dark:border-neutral-700 flex items-center justify-between">
+                  <h3 className="text-sm font-semibold">Packet Details</h3>
+                  <button
+                    onClick={() => setSelectedPacket(null)}
+                    className="text-xs text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"
+                  >
+                    Close
+                  </button>
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
+                <div className="flex-1 overflow-auto p-4 text-xs space-y-2 font-mono">
+                  <div><span className="text-neutral-500">Packet #:</span> {selectedPacket.no}</div>
+                  <div><span className="text-neutral-500">Timestamp:</span> {selectedPacket.timestamp}</div>
+                  <div><span className="text-neutral-500">Source:</span> {selectedPacket.source}</div>
+                  <div><span className="text-neutral-500">Destination:</span> {selectedPacket.destination}</div>
+                  <div><span className="text-neutral-500">Protocol:</span> {selectedPacket.protocol}</div>
+                  <div><span className="text-neutral-500">Length:</span> {selectedPacket.length} bytes</div>
+                  {selectedPacket.srcPort && <div><span className="text-neutral-500">Source Port:</span> {selectedPacket.srcPort}</div>}
+                  {selectedPacket.dstPort && <div><span className="text-neutral-500">Dest Port:</span> {selectedPacket.dstPort}</div>}
+                  <div><span className="text-neutral-500">Info:</span> {selectedPacket.info}</div>
+                </div>
+              </div>
 
-      {/* Packet Details & Hex View */}
-      {selectedPacket && (
-        <div className="grid grid-cols-2 gap-4 h-64">
-          <div className="rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 overflow-hidden flex flex-col">
-            <div className="border-b border-neutral-200 px-4 py-2 dark:border-neutral-700">
-              <h3 className="text-sm font-semibold">Packet Details</h3>
+              <div className="rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 overflow-hidden flex flex-col">
+                <div className="border-b border-neutral-200 px-4 py-2 dark:border-neutral-700">
+                  <h3 className="text-sm font-semibold">Hex View</h3>
+                </div>
+                <div className="flex-1 overflow-auto p-4 bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 font-mono text-xs whitespace-pre">
+                  {selectedPacket.rawBuffer ? (
+                    formatHexView(selectedPacket.rawBuffer)
+                  ) : (
+                    <div className="text-neutral-500">No raw data available</div>
+                  )}
+                </div>
+              </div>
             </div>
-            <div className="flex-1 overflow-auto p-4 text-xs space-y-2 font-mono">
-              <div><span className="text-neutral-500">Packet #:</span> {selectedPacket.no}</div>
-              <div><span className="text-neutral-500">Timestamp:</span> {selectedPacket.timestamp}</div>
-              <div><span className="text-neutral-500">Source:</span> {selectedPacket.source}</div>
-              <div><span className="text-neutral-500">Destination:</span> {selectedPacket.destination}</div>
-              <div><span className="text-neutral-500">Protocol:</span> {selectedPacket.protocol}</div>
-              <div><span className="text-neutral-500">Length:</span> {selectedPacket.length} bytes</div>
-              {selectedPacket.srcPort && <div><span className="text-neutral-500">Source Port:</span> {selectedPacket.srcPort}</div>}
-              {selectedPacket.dstPort && <div><span className="text-neutral-500">Dest Port:</span> {selectedPacket.dstPort}</div>}
-              <div><span className="text-neutral-500">Info:</span> {selectedPacket.info}</div>
-            </div>
-          </div>
-
-          <div className="rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 overflow-hidden flex flex-col">
-            <div className="border-b border-neutral-200 px-4 py-2 dark:border-neutral-700">
-              <h3 className="text-sm font-semibold">Hex View</h3>
-            </div>
-            <div className="flex-1 overflow-auto p-4 bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 font-mono text-xs whitespace-pre">
-              {selectedPacket.rawBuffer ? (
-                formatHexView(selectedPacket.rawBuffer)
-              ) : (
-                <div className="text-neutral-500">No raw data available</div>
-              )}
-            </div>
-          </div>
+          )}
         </div>
-      )}
 
-      {/* Expert Alerts Panel */}
-      {expertAlerts.length > 0 && (
-        <div className="mt-4 rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 overflow-hidden">
+        {/* Right Side: Expert Alerts (spanning full height) */}
+        {(expertAlerts.length > 0 || securityAlerts.length > 0) && (
+          <div className="w-96 flex flex-col gap-4 min-h-0">
+            {/* Expert Alerts */}
+            {expertAlerts.length > 0 && (
+              <div className="flex-1 rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 overflow-hidden flex flex-col">
           <div className="border-b border-neutral-200 px-4 py-3 dark:border-neutral-700 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <IconAlertTriangle size={18} className="text-orange-600" />
@@ -601,6 +671,24 @@ export const PacketCapture: React.FC = () => {
 
       {/* Statistics Panel Modal */}
       {showStatistics && <StatisticsPanel onClose={() => setShowStatistics(false)} />}
+
+      {/* Configuration Panel Modal */}
+      {showConfiguration && <ConfigurationPanel onClose={() => setShowConfiguration(false)} />}
+
+      {/* Lua Script Editor Modal */}
+      {showLuaEditor && <LuaScriptEditor onClose={() => setShowLuaEditor(false)} />}
+
+      {/* Security Analysis Panel Modal */}
+      {showSecurityAnalysis && <SecurityAnalysisPanel onClose={() => setShowSecurityAnalysis(false)} />}
+
+      {/* Import/Export Panel Modal */}
+      {showImportExport && <ImportExportPanel onClose={() => setShowImportExport(false)} />}
+
+      {/* Utilities Panel Modal */}
+      {showUtilities && <UtilitiesPanel onClose={() => setShowUtilities(false)} />}
+
+      {/* Pentesting Panel Modal */}
+      {showPentesting && <PentestingPanel onClose={() => setShowPentesting(false)} />}
     </div>
   );
 };

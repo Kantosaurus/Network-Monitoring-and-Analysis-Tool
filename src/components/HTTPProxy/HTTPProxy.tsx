@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { IconPlayerPlay, IconPlayerStop, IconGlobe, IconArrowLeft, IconArrowRight, IconRefresh, IconHome, IconPlus, IconX, IconAlertCircle, IconFolderOpen } from '@tabler/icons-react';
+import { IconPlayerPlay, IconPlayerStop, IconGlobe, IconArrowLeft, IconArrowRight, IconRefresh, IconHome, IconPlus, IconX, IconAlertCircle } from '@tabler/icons-react';
 import { ProxyHistoryItem, InterceptItem } from '@/types';
 import { cn } from '@/lib/utils';
 
@@ -716,7 +716,7 @@ const BrowserTab: React.FC<{ isRunning: boolean; proxyPort: number }> = ({ isRun
               }
             }}
             src={tab.currentUrl}
-            disablewebsecurity="true"
+            disablewebsecurity={true}
             className={cn(
               "absolute inset-0 w-full h-full",
               index === activeTabIndex ? "block" : "hidden"

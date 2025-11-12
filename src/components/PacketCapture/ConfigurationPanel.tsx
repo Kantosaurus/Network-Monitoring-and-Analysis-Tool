@@ -3,7 +3,6 @@ import {
   IconSettings,
   IconPlus,
   IconTrash,
-  IconCopy,
   IconDeviceFloppy,
   IconArrowUp,
   IconArrowDown,
@@ -11,7 +10,7 @@ import {
   IconEyeOff,
   IconColumns
 } from '@tabler/icons-react';
-import { CustomColumn, AvailableField, ColorRule, ProfileConfig } from '../../types';
+import { CustomColumn, AvailableField, ColorRule } from '../../types';
 
 interface ConfigurationPanelProps {
   onClose: () => void;

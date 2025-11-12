@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { IconMinus, IconMaximize, IconX } from '@tabler/icons-react';
-import { cn } from '@/lib/utils';
 
 export const TitleBar: React.FC = () => {
   const [isMaximized, setIsMaximized] = useState(false);

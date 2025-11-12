@@ -107,6 +107,220 @@ export interface FlowGraphItem {
   length: number;
 }
 
+export interface PacketLengthStats {
+  minLength: number;
+  maxLength: number;
+  avgLength: number;
+  distribution: { range: string; count: number; percentage: string }[];
+}
+
+export interface TimingStats {
+  avgDelay: string;
+  minDelay: string;
+  maxDelay: string;
+  jitter: string;
+  packetRate: number;
+}
+
+export interface DNSQueryResponse {
+  timestamp: string;
+  query: string;
+  queryType: string;
+  responseTime: string;
+  responseCode: string;
+  answers: string[];
+  packet: number;
+}
+
+export interface VoIPCall {
+  callId: string;
+  from: string;
+  to: string;
+  codec: string;
+  duration: string;
+  packets: number;
+  jitter: string;
+  packetLoss: string;
+  avgMOS: string;
+}
+
+export interface BandwidthTalker {
+  address: string;
+  hostname?: string;
+  txBytes: number;
+  rxBytes: number;
+  totalBytes: number;
+  packets: number;
+  percentage: string;
+}
+
+export interface LatencyMeasurement {
+  stream: string;
+  handshakeTime: string;
+  avgRTT: string;
+  minRTT: string;
+  maxRTT: string;
+  packets: number;
+}
+
+export interface IntrusionAlert {
+  id: string;
+  timestamp: string;
+  severity: 'critical' | 'high' | 'medium' | 'low';
+  type: string;
+  source: string;
+  destination: string;
+  description: string;
+  indicators: string[];
+  packet: number;
+  confidence: number;
+}
+
+export interface MalwareIndicator {
+  id: string;
+  timestamp: string;
+  type: 'c2-beacon' | 'data-exfiltration' | 'suspicious-domain' | 'malicious-payload';
+  source: string;
+  destination: string;
+  domain?: string;
+  confidence: number;
+  ioc: string[];
+  description: string;
+  packets: number[];
+}
+
+export interface NetworkScan {
+  scanner: string;
+  scanType: 'port-scan' | 'network-sweep' | 'vulnerability-scan' | 'reconnaissance';
+  targetsScanned: number;
+  portsScanned: number;
+  startTime: string;
+  duration: string;
+  packetsInvolved: number;
+  suspiciousLevel: 'low' | 'medium' | 'high';
+}
+
+export interface CredentialLeak {
+  timestamp: string;
+  protocol: string;
+  source: string;
+  destination: string;
+  username: string;
+  password: string;
+  service: string;
+  packet: number;
+}
+
+export interface DecryptionSession {
+  id: string;
+  protocol: string;
+  source: string;
+  destination: string;
+  cipherSuite?: string;
+  keyLoaded: boolean;
+  packetsDecrypted: number;
+}
+
+// Utility Tools Types
+export interface CaptureFileInfo {
+  filename: string;
+  fileType: string;
+  fileSize: string;
+  dataSize: string;
+  captureStart: string;
+  captureEnd: string;
+  captureDuration: string;
+  packetCount: number;
+  averagePacketSize: string;
+  averagePacketRate: string;
+  averageBitRate: string;
+  encapsulation: string;
+  interfaces: string[];
+}
+
+// Pentesting Types
+export interface PortScanResult {
+  host: string;
+  port: number;
+  state: 'open' | 'closed' | 'filtered';
+  service?: string;
+  version?: string;
+  banner?: string;
+}
+
+export interface HostDiscoveryResult {
+  ip: string;
+  hostname?: string;
+  mac?: string;
+  vendor?: string;
+  os?: string;
+  status: 'up' | 'down';
+  latency?: string;
+  openPorts?: number[];
+}
+
+export interface PacketCraftTemplate {
+  id: string;
+  name: string;
+  description: string;
+  protocol: 'TCP' | 'UDP' | 'ICMP' | 'ARP' | 'DNS' | 'HTTP';
+  fields: Record<string, any>;
+}
+
+export interface MITMSession {
+  id: string;
+  type: 'arp-spoof' | 'dns-spoof' | 'ssl-strip';
+  target: string;
+  gateway: string;
+  status: 'active' | 'stopped';
+  packetsIntercepted: number;
+  startTime: string;
+}
+
+export interface VulnerabilityScanResult {
+  id: string;
+  host: string;
+  port?: number;
+  severity: 'critical' | 'high' | 'medium' | 'low' | 'info';
+  vulnerability: string;
+  cve?: string;
+  description: string;
+  remediation: string;
+  confidence: number;
+}
+
+export interface ExploitPayload {
+  id: string;
+  name: string;
+  category: 'shellcode' | 'reverse-shell' | 'bind-shell' | 'web-shell' | 'injection';
+  platform: string;
+  description: string;
+  payload: string;
+}
+
+export interface SessionToken {
+  type: 'cookie' | 'jwt' | 'bearer' | 'session-id';
+  name: string;
+  value: string;
+  domain?: string;
+  path?: string;
+  expires?: string;
+  httpOnly?: boolean;
+  secure?: boolean;
+  packet: number;
+}
+
+export interface AttackReport {
+  id: string;
+  timestamp: string;
+  attackType: string;
+  target: string;
+  status: 'success' | 'failed' | 'in-progress';
+  findings: string[];
+  vulnerabilities: VulnerabilityScanResult[];
+  evidence: string[];
+}
+
 // Configuration Management Types
 export interface CustomColumn {
   id: string;
@@ -231,7 +445,8 @@ export interface ElectronAPI {
   startCapture: (deviceName: string, options?: CaptureOptions) => Promise<{ success: boolean; error?: string }>;
   stopCapture: () => Promise<{ success: boolean; error?: string }>;
   loadPcapFile: () => Promise<{ success: boolean; filepath?: string; packetCount?: number; error?: string }>;
-  exportPackets: (packets: Packet[], format: 'json' | 'csv') => Promise<{ success: boolean; error?: string }>;
+  exportPackets: (packets: Packet[], format: 'json' | 'csv' | 'xml' | 'psml' | 'txt' | 'pdml' | 'ps') => Promise<{ success: boolean; error?: string }>;
+  convertPcapFormat: (inputPath: string, outputPath: string, outputFormat: 'pcap' | 'pcapng' | 'erf') => Promise<{ success: boolean; error?: string }>;
   onPacketCaptured: (callback: (packet: Packet) => void) => void;
   onCaptureError: (callback: (error: string) => void) => void;
   onCaptureStopped: (callback: (stats: CaptureStats) => void) => void;
@@ -251,7 +466,51 @@ export interface ElectronAPI {
   resolveHostname: (ip: string) => Promise<{ success: boolean; hostname?: string; error?: string }>;
   resolveMacVendor: (mac: string) => Promise<{ success: boolean; vendor?: string; error?: string }>;
   resolveService: (port: number) => Promise<{ success: boolean; service?: string; error?: string }>;
-  exportStatistics: (type: string, format: 'json' | 'csv' | 'xml') => Promise<{ success: boolean; error?: string }>;
+  exportStatistics: (type: string, format: 'json' | 'csv' | 'xml' | 'psml') => Promise<{ success: boolean; error?: string }>;
+  getPacketLengthStats: () => Promise<{ success: boolean; data?: PacketLengthStats; error?: string }>;
+  getTimingStats: () => Promise<{ success: boolean; data?: TimingStats; error?: string }>;
+  getDNSAnalysis: () => Promise<{ success: boolean; data?: DNSQueryResponse[]; error?: string }>;
+  getVoIPAnalysis: () => Promise<{ success: boolean; data?: VoIPCall[]; error?: string }>;
+  getBandwidthTalkers: () => Promise<{ success: boolean; data?: BandwidthTalker[]; error?: string }>;
+  getLatencyMeasurements: () => Promise<{ success: boolean; data?: LatencyMeasurement[]; error?: string }>;
+  getIntrusionAlerts: () => Promise<{ success: boolean; data?: IntrusionAlert[]; error?: string }>;
+  getMalwareIndicators: () => Promise<{ success: boolean; data?: MalwareIndicator[]; error?: string }>;
+  getNetworkScans: () => Promise<{ success: boolean; data?: NetworkScan[]; error?: string }>;
+  getCredentialLeaks: () => Promise<{ success: boolean; data?: CredentialLeak[]; error?: string }>;
+  getDecryptionSessions: () => Promise<{ success: boolean; data?: DecryptionSession[]; error?: string }>;
+  loadDecryptionKey: (keyData: string, format: 'pem' | 'der' | 'pkcs12') => Promise<{ success: boolean; error?: string }>;
+  replayPCAP: (filepath: string, speed: number) => Promise<{ success: boolean; error?: string }>;
+  exportToTool: (tool: 'tshark' | 'zeek' | 'suricata' | 'snort' | 'networkminer' | 'splunk', filepath: string, options?: any) => Promise<{ success: boolean; output?: string; error?: string }>;
+  runTsharkCommand: (command: string) => Promise<{ success: boolean; output?: string; error?: string }>;
+  batchProcessCaptures: (files: string[], operations: string[]) => Promise<{ success: boolean; results?: any[]; error?: string }>;
+
+  // Utility Tools
+  tsharkAnalyze: (filepath: string, displayFilter?: string, fields?: string[]) => Promise<{ success: boolean; output?: string; packets?: any[]; error?: string }>;
+  editcapTrim: (inputPath: string, outputPath: string, startPacket: number, endPacket: number) => Promise<{ success: boolean; error?: string }>;
+  editcapSplit: (inputPath: string, outputDir: string, splitType: 'count' | 'duration' | 'size', value: number) => Promise<{ success: boolean; files?: string[]; error?: string }>;
+  mergecap: (inputPaths: string[], outputPath: string) => Promise<{ success: boolean; error?: string }>;
+  capinfos: (filepath: string) => Promise<{ success: boolean; info?: CaptureFileInfo; error?: string }>;
+  text2pcap: (hexInput: string, outputPath: string) => Promise<{ success: boolean; error?: string }>;
+  rawshark: (filepath: string, fields: string[]) => Promise<{ success: boolean; data?: any[]; error?: string }>;
+  reordercap: (inputPath: string, outputPath: string) => Promise<{ success: boolean; error?: string }>;
+
+  // Pentesting Tools
+  portScan: (target: string, ports: string, scanType: 'syn' | 'connect' | 'udp' | 'stealth') => Promise<{ success: boolean; results?: PortScanResult[]; error?: string }>;
+  hostDiscovery: (subnet: string, method: 'ping' | 'arp' | 'tcp' | 'full') => Promise<{ success: boolean; hosts?: HostDiscoveryResult[]; error?: string }>;
+  craftPacket: (template: PacketCraftTemplate) => Promise<{ success: boolean; packetData?: string; error?: string }>;
+  sendCraftedPacket: (packetData: string, count: number, delay: number) => Promise<{ success: boolean; sent?: number; error?: string }>;
+  startMITM: (type: 'arp-spoof' | 'dns-spoof' | 'ssl-strip', target: string, gateway: string, options?: any) => Promise<{ success: boolean; sessionId?: string; error?: string }>;
+  stopMITM: (sessionId: string) => Promise<{ success: boolean; error?: string }>;
+  getMITMSessions: () => Promise<{ success: boolean; sessions?: MITMSession[]; error?: string }>;
+  vulnerabilityScan: (target: string, scanType: 'quick' | 'full' | 'web' | 'ssl') => Promise<{ success: boolean; vulnerabilities?: VulnerabilityScanResult[]; error?: string }>;
+  dosAttack: (target: string, port: number, type: 'syn' | 'udp' | 'icmp' | 'slowloris', duration: number) => Promise<{ success: boolean; error?: string }>;
+  extractSessionTokens: () => Promise<{ success: boolean; tokens?: SessionToken[]; error?: string }>;
+  hijackSession: (token: SessionToken, newValue: string) => Promise<{ success: boolean; error?: string }>;
+  getExploitPayloads: (category?: string) => Promise<{ success: boolean; payloads?: ExploitPayload[]; error?: string }>;
+  deliverPayload: (target: string, port: number, payload: string, method: 'tcp' | 'udp' | 'http') => Promise<{ success: boolean; error?: string }>;
+  generateReport: (attackType: string, target: string) => Promise<{ success: boolean; report?: AttackReport; error?: string }>;
+  onMITMPacket: (callback: (packet: Packet) => void) => void;
+  onVulnerabilityFound: (callback: (vuln: VulnerabilityScanResult) => void) => void;
 
   // HTTP Proxy
   startProxy: (port: number) => Promise<{ success: boolean; port?: number; error?: string }>;

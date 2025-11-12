@@ -81,6 +81,7 @@ Wireshark is an open-source, industry-standard **network protocol analyzer** use
 - **Conversation Maps**: Visual summaries of network flows.
 - **Export to CSV, JSON, XML, and PSML** for reporting and further analysis in external tools.
 
+
 ---
 
 ## 🧱 6. Network Troubleshooting Use Cases
@@ -140,10 +141,3 @@ Wireshark is an open-source, industry-standard **network protocol analyzer** use
 - macOS
 - Linux (Ubuntu, Fedora, Arch, etc.)
 - BSD, Solaris, and other UNIX-like systems
-
----
-
-## 🧭 Summary
-
-Wireshark is not just a packet sniffer — it’s a **comprehensive suite** for network analysis, troubleshooting, protocol development, and cybersecurity forensics. Its deep inspection capabilities, extensive protocol support, visualization tools, and scripting flexibility make it indispensable for both academic research and professional operations.
-"""
