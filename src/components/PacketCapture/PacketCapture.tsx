@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { IconNetwork, IconPlayerPlay, IconPlayerStop, IconTrash, IconFileExport, IconChartBar, IconAlertTriangle, IconSettings, IconScript, IconFileImport, IconTerminal, IconShieldLock } from '@tabler/icons-react';
+import { IconNetwork, IconPlayerPlay, IconPlayerStop, IconTrash, IconFileExport, IconChartBar, IconAlertTriangle, IconSettings, IconScript, IconFileImport, IconTerminal, IconShieldLock, IconCircleDot } from '@tabler/icons-react';
 import { Packet, NetworkInterface, SecurityAlert, ExpertAlert } from '@/types';
 import { cn } from '@/lib/utils';
 import StatisticsPanel from './StatisticsPanel';
@@ -9,6 +9,7 @@ import SecurityAnalysisPanel from './SecurityAnalysisPanel';
 import ImportExportPanel from './ImportExportPanel';
 import UtilitiesPanel from './UtilitiesPanel';
 import PentestingPanel from './PentestingPanel';
+import ProxyPanel from './ProxyPanel';
 
 export const PacketCapture: React.FC = () => {
   const [interfaces, setInterfaces] = useState<NetworkInterface[]>([]);
@@ -26,6 +27,7 @@ export const PacketCapture: React.FC = () => {
   const [showImportExport, setShowImportExport] = useState(false);
   const [showUtilities, setShowUtilities] = useState(false);
   const [showPentesting, setShowPentesting] = useState(false);
+  const [showProxy, setShowProxy] = useState(false);
   const [currentView, setCurrentView] = useState<0 | 1>(0); // 0 = packets, 1 = alerts
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -287,6 +289,14 @@ export const PacketCapture: React.FC = () => {
         >
           <IconShieldLock size={16} />
           Pentesting
+        </button>
+
+        <button
+          onClick={() => setShowProxy(true)}
+          className="flex items-center gap-2 rounded-lg border-2 border-purple-600 text-purple-600 px-4 py-2 text-sm font-medium hover:bg-purple-50 dark:hover:bg-purple-900/20"
+        >
+          <IconCircleDot size={16} />
+          HTTP Proxy
         </button>
 
         <button
@@ -789,6 +799,9 @@ export const PacketCapture: React.FC = () => {
 
       {/* Pentesting Panel Modal */}
       {showPentesting && <PentestingPanel onClose={() => setShowPentesting(false)} />}
+
+      {/* HTTP Proxy Panel Modal */}
+      {showProxy && <ProxyPanel onClose={() => setShowProxy(false)} />}
     </div>
   );
 };
