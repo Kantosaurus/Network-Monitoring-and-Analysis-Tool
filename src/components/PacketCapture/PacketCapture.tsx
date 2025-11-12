@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { IconNetwork, IconPlayerPlay, IconPlayerStop, IconTrash, IconFileExport, IconChartBar, IconAlertTriangle, IconSettings, IconScript, IconFileImport, IconTerminal, IconShieldLock } from '@tabler/icons-react';
 import { Packet, NetworkInterface, SecurityAlert, ExpertAlert } from '@/types';
 import { cn } from '@/lib/utils';
@@ -26,6 +26,8 @@ export const PacketCapture: React.FC = () => {
   const [showImportExport, setShowImportExport] = useState(false);
   const [showUtilities, setShowUtilities] = useState(false);
   const [showPentesting, setShowPentesting] = useState(false);
+  const [currentView, setCurrentView] = useState<0 | 1>(0); // 0 = packets, 1 = alerts
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Advanced capture options
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -37,6 +39,22 @@ export const PacketCapture: React.FC = () => {
   const [ringBuffer, setRingBuffer] = useState(false);
   const [maxFileSize, setMaxFileSize] = useState(100);
   const [maxFiles, setMaxFiles] = useState(5);
+
+  // Navigation functions for horizontal scroll
+  const scrollToView = (viewIndex: 0 | 1) => {
+    if (scrollContainerRef.current) {
+      const container = scrollContainerRef.current;
+      const targetScroll = viewIndex * container.clientWidth;
+      container.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
+      setCurrentView(viewIndex);
+    }
+  };
+
+  const scrollLeft = () => scrollToView(0);
+  const scrollRight = () => scrollToView(1);
 
   // Format hex view from raw buffer
   const formatHexView = (buffer: Uint8Array): string => {
@@ -495,179 +513,261 @@ export const PacketCapture: React.FC = () => {
         </div>
         <div className="rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2 dark:border-neutral-700 dark:bg-neutral-800">
           <div className="text-xs text-neutral-500 dark:text-neutral-400">Alerts</div>
-          <div className="text-sm font-semibold text-red-600">{securityAlerts.length}</div>
+          <div className="text-sm font-semibold text-red-600">{securityAlerts.length + expertAlerts.length}</div>
         </div>
       </div>
 
-      <div className="flex flex-1 gap-4 min-h-0">
-        {/* Left Side: Packets and Packet Details */}
-        <div className="flex-1 flex flex-col gap-4 min-h-0">
-          {/* Packet List */}
-          <div className={cn("flex flex-col rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 overflow-hidden", selectedPacket ? "flex-[0.6]" : "flex-1")}>
-            <div className="border-b border-neutral-200 px-4 py-2 dark:border-neutral-700">
-              <h3 className="text-sm font-semibold">Packets</h3>
-            </div>
-            <div className="flex-1 overflow-auto">
-              <table className="w-full text-xs">
-                <thead className="sticky top-0 bg-neutral-100 dark:bg-neutral-800">
-                  <tr>
-                    <th className="p-2 text-left">No.</th>
-                    <th className="p-2 text-left">Time</th>
-                    <th className="p-2 text-left">Source</th>
-                    <th className="p-2 text-left">Destination</th>
-                    <th className="p-2 text-left">Protocol</th>
-                    <th className="p-2 text-left">Length</th>
-                    <th className="p-2 text-left">Info</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredPackets.length === 0 ? (
+      {/* Horizontal Scrolling Container with Snap */}
+      <div className="relative flex-1 overflow-hidden">
+        {/* View Indicator - Clickable */}
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+          <button
+            onClick={scrollLeft}
+            className={cn(
+              "h-2 rounded-full transition-all cursor-pointer hover:opacity-80",
+              currentView === 0 ? "bg-purple-600 w-8" : "bg-neutral-400 w-2 hover:bg-neutral-500"
+            )}
+            aria-label="View Packets"
+          />
+          <button
+            onClick={scrollRight}
+            className={cn(
+              "h-2 rounded-full transition-all cursor-pointer hover:opacity-80",
+              currentView === 1 ? "bg-purple-600 w-8" : "bg-neutral-400 w-2 hover:bg-neutral-500"
+            )}
+            aria-label="View Alerts"
+          />
+        </div>
+
+        {/* Scroll Container */}
+        <div
+          ref={scrollContainerRef}
+          className="flex h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory [&::-webkit-scrollbar]:hidden"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {/* View 1: Packets and Packet Details */}
+          <div className="min-w-full h-full snap-start flex flex-col gap-4 px-4">
+            {/* Packet List */}
+            <div className={cn("flex flex-col rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 overflow-hidden", selectedPacket ? "flex-[0.6]" : "flex-1")}>
+              <div className="border-b border-neutral-200 px-4 py-2 dark:border-neutral-700">
+                <h3 className="text-sm font-semibold">Packets</h3>
+              </div>
+              <div className="flex-1 overflow-auto">
+                <table className="w-full text-xs">
+                  <thead className="sticky top-0 bg-neutral-100 dark:bg-neutral-800">
                     <tr>
-                      <td colSpan={7} className="p-8 text-center text-neutral-500">
-                        <IconNetwork className="mx-auto mb-2 opacity-30" size={48} />
-                        <p>No packets captured yet</p>
-                      </td>
+                      <th className="p-2 text-left">No.</th>
+                      <th className="p-2 text-left">Time</th>
+                      <th className="p-2 text-left">Source</th>
+                      <th className="p-2 text-left">Destination</th>
+                      <th className="p-2 text-left">Protocol</th>
+                      <th className="p-2 text-left">Length</th>
+                      <th className="p-2 text-left">Info</th>
                     </tr>
-                  ) : (
-                    filteredPackets.map((packet) => (
-                      <tr
-                        key={packet.no}
-                        onClick={() => setSelectedPacket(packet)}
-                        className={cn(
-                          "cursor-pointer border-b border-neutral-100 hover:bg-neutral-50 dark:border-neutral-800 dark:hover:bg-neutral-800",
-                          selectedPacket?.no === packet.no && "bg-purple-50 dark:bg-purple-900/20"
-                        )}
-                      >
-                        <td className="p-2">{packet.no}</td>
-                        <td className="p-2">{packet.relativeTime}</td>
-                        <td className="p-2 font-mono">{packet.source}</td>
-                        <td className="p-2 font-mono">{packet.destination}</td>
-                        <td className="p-2">
-                          <span className={cn(
-                            "rounded px-2 py-0.5 text-xs font-semibold",
-                            packet.protocol === 'TCP' && "bg-blue-100 text-blue-700",
-                            packet.protocol === 'UDP' && "bg-yellow-100 text-yellow-700",
-                            packet.protocol === 'ICMP' && "bg-orange-100 text-orange-700",
-                            packet.protocol === 'ARP' && "bg-purple-100 text-purple-700"
-                          )}>
-                            {packet.protocol}
-                          </span>
+                  </thead>
+                  <tbody>
+                    {filteredPackets.length === 0 ? (
+                      <tr>
+                        <td colSpan={7} className="p-8 text-center text-neutral-500">
+                          <IconNetwork className="mx-auto mb-2 opacity-30" size={48} />
+                          <p>No packets captured yet</p>
                         </td>
-                        <td className="p-2">{packet.length}</td>
-                        <td className="p-2 truncate max-w-xs">{packet.info}</td>
                       </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* Packet Details & Hex View */}
-          {selectedPacket && (
-            <div className="grid grid-cols-2 gap-4 flex-[0.4] min-h-0">
-              <div className="rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 overflow-hidden flex flex-col">
-                <div className="border-b border-neutral-200 px-4 py-2 dark:border-neutral-700 flex items-center justify-between">
-                  <h3 className="text-sm font-semibold">Packet Details</h3>
-                  <button
-                    onClick={() => setSelectedPacket(null)}
-                    className="text-xs text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"
-                  >
-                    Close
-                  </button>
-                </div>
-                <div className="flex-1 overflow-auto p-4 text-xs space-y-2 font-mono">
-                  <div><span className="text-neutral-500">Packet #:</span> {selectedPacket.no}</div>
-                  <div><span className="text-neutral-500">Timestamp:</span> {selectedPacket.timestamp}</div>
-                  <div><span className="text-neutral-500">Source:</span> {selectedPacket.source}</div>
-                  <div><span className="text-neutral-500">Destination:</span> {selectedPacket.destination}</div>
-                  <div><span className="text-neutral-500">Protocol:</span> {selectedPacket.protocol}</div>
-                  <div><span className="text-neutral-500">Length:</span> {selectedPacket.length} bytes</div>
-                  {selectedPacket.srcPort && <div><span className="text-neutral-500">Source Port:</span> {selectedPacket.srcPort}</div>}
-                  {selectedPacket.dstPort && <div><span className="text-neutral-500">Dest Port:</span> {selectedPacket.dstPort}</div>}
-                  <div><span className="text-neutral-500">Info:</span> {selectedPacket.info}</div>
-                </div>
-              </div>
-
-              <div className="rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 overflow-hidden flex flex-col">
-                <div className="border-b border-neutral-200 px-4 py-2 dark:border-neutral-700">
-                  <h3 className="text-sm font-semibold">Hex View</h3>
-                </div>
-                <div className="flex-1 overflow-auto p-4 bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 font-mono text-xs whitespace-pre">
-                  {selectedPacket.rawBuffer ? (
-                    formatHexView(selectedPacket.rawBuffer)
-                  ) : (
-                    <div className="text-neutral-500">No raw data available</div>
-                  )}
-                </div>
+                    ) : (
+                      filteredPackets.map((packet) => (
+                        <tr
+                          key={packet.no}
+                          onClick={() => setSelectedPacket(packet)}
+                          className={cn(
+                            "cursor-pointer border-b border-neutral-100 hover:bg-neutral-50 dark:border-neutral-800 dark:hover:bg-neutral-800",
+                            selectedPacket?.no === packet.no && "bg-purple-50 dark:bg-purple-900/20"
+                          )}
+                        >
+                          <td className="p-2">{packet.no}</td>
+                          <td className="p-2">{packet.relativeTime}</td>
+                          <td className="p-2 font-mono">{packet.source}</td>
+                          <td className="p-2 font-mono">{packet.destination}</td>
+                          <td className="p-2">
+                            <span className={cn(
+                              "rounded px-2 py-0.5 text-xs font-semibold",
+                              packet.protocol === 'TCP' && "bg-blue-100 text-blue-700",
+                              packet.protocol === 'UDP' && "bg-yellow-100 text-yellow-700",
+                              packet.protocol === 'ICMP' && "bg-orange-100 text-orange-700",
+                              packet.protocol === 'ARP' && "bg-purple-100 text-purple-700"
+                            )}>
+                              {packet.protocol}
+                            </span>
+                          </td>
+                          <td className="p-2">{packet.length}</td>
+                          <td className="p-2 truncate max-w-xs">{packet.info}</td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
               </div>
             </div>
-          )}
-        </div>
 
-        {/* Right Side: Expert Alerts (spanning full height) */}
-        {(expertAlerts.length > 0 || securityAlerts.length > 0) && (
-          <div className="w-96 flex flex-col gap-4 min-h-0">
-            {/* Expert Alerts */}
-            {expertAlerts.length > 0 && (
-              <div className="flex-1 rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 overflow-hidden flex flex-col">
-          <div className="border-b border-neutral-200 px-4 py-3 dark:border-neutral-700 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <IconAlertTriangle size={18} className="text-orange-600" />
-              <h3 className="text-sm font-semibold">Expert Alerts</h3>
-              <span className="text-xs text-neutral-500">({expertAlerts.length})</span>
-            </div>
-            <button
-              onClick={() => setExpertAlerts([])}
-              className="text-xs text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"
-            >
-              Clear
-            </button>
-          </div>
-          <div className="max-h-48 overflow-auto p-4 space-y-2">
-            {expertAlerts.map((alert, idx) => (
-              <div
-                key={idx}
-                className="flex items-start gap-3 rounded-lg border border-neutral-200 dark:border-neutral-700 p-3 text-xs hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
-              >
-                <IconAlertTriangle
-                  size={16}
-                  className={cn(
-                    'mt-0.5 flex-shrink-0',
-                    alert.severity === 'critical' && 'text-red-600',
-                    alert.severity === 'high' && 'text-orange-600',
-                    alert.severity === 'medium' && 'text-yellow-600',
-                    alert.severity === 'low' && 'text-blue-600'
-                  )}
-                />
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span
-                      className={cn(
-                        'text-xs font-semibold uppercase',
-                        alert.severity === 'critical' && 'text-red-600',
-                        alert.severity === 'high' && 'text-orange-600',
-                        alert.severity === 'medium' && 'text-yellow-600',
-                        alert.severity === 'low' && 'text-blue-600'
-                      )}
+            {/* Packet Details & Hex View */}
+            {selectedPacket && (
+              <div className="grid grid-cols-2 gap-4 flex-[0.4] min-h-0">
+                <div className="rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 overflow-hidden flex flex-col">
+                  <div className="border-b border-neutral-200 px-4 py-2 dark:border-neutral-700 flex items-center justify-between">
+                    <h3 className="text-sm font-semibold">Packet Details</h3>
+                    <button
+                      onClick={() => setSelectedPacket(null)}
+                      className="text-xs text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"
                     >
-                      {alert.severity}
-                    </span>
-                    <span className="text-neutral-400">•</span>
-                    <span className="text-neutral-600 dark:text-neutral-400">{alert.category}</span>
-                    <span className="text-neutral-400">•</span>
-                    <span className="font-medium">{alert.protocol}</span>
-                    <span className="text-neutral-400">•</span>
-                    <span className="text-neutral-500">Packet #{alert.packet}</span>
+                      Close
+                    </button>
                   </div>
-                  <div className="font-medium mb-1">{alert.message}</div>
-                  <div className="text-neutral-600 dark:text-neutral-400">{alert.details}</div>
+                  <div className="flex-1 overflow-auto p-4 text-xs space-y-2 font-mono">
+                    <div><span className="text-neutral-500">Packet #:</span> {selectedPacket.no}</div>
+                    <div><span className="text-neutral-500">Timestamp:</span> {selectedPacket.timestamp}</div>
+                    <div><span className="text-neutral-500">Source:</span> {selectedPacket.source}</div>
+                    <div><span className="text-neutral-500">Destination:</span> {selectedPacket.destination}</div>
+                    <div><span className="text-neutral-500">Protocol:</span> {selectedPacket.protocol}</div>
+                    <div><span className="text-neutral-500">Length:</span> {selectedPacket.length} bytes</div>
+                    {selectedPacket.srcPort && <div><span className="text-neutral-500">Source Port:</span> {selectedPacket.srcPort}</div>}
+                    {selectedPacket.dstPort && <div><span className="text-neutral-500">Dest Port:</span> {selectedPacket.dstPort}</div>}
+                    <div><span className="text-neutral-500">Info:</span> {selectedPacket.info}</div>
+                  </div>
+                </div>
+
+                <div className="rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 overflow-hidden flex flex-col">
+                  <div className="border-b border-neutral-200 px-4 py-2 dark:border-neutral-700">
+                    <h3 className="text-sm font-semibold">Hex View</h3>
+                  </div>
+                  <div className="flex-1 overflow-auto p-4 bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 font-mono text-xs whitespace-pre">
+                    {selectedPacket.rawBuffer ? (
+                      formatHexView(selectedPacket.rawBuffer)
+                    ) : (
+                      <div className="text-neutral-500">No raw data available</div>
+                    )}
+                  </div>
                 </div>
               </div>
-            ))}
+            )}
+          </div>
+
+          {/* View 2: Expert Alerts and Security Alerts */}
+          <div className="min-w-full h-full snap-start flex flex-col gap-4 px-4">
+            {(expertAlerts.length > 0 || securityAlerts.length > 0) ? (
+              <>
+                {/* Expert Alerts */}
+                {expertAlerts.length > 0 && (
+                  <div className="flex-1 rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900 overflow-hidden flex flex-col min-h-0">
+                    <div className="border-b border-neutral-200 px-4 py-3 dark:border-neutral-700 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <IconAlertTriangle size={18} className="text-orange-600" />
+                        <h3 className="text-sm font-semibold">Expert Alerts</h3>
+                        <span className="text-xs text-neutral-500">({expertAlerts.length})</span>
+                      </div>
+                      <button
+                        onClick={() => setExpertAlerts([])}
+                        className="text-xs text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"
+                      >
+                        Clear
+                      </button>
+                    </div>
+                    <div className="flex-1 overflow-auto p-4 space-y-2">
+                      {expertAlerts.map((alert, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-start gap-3 rounded-lg border border-neutral-200 dark:border-neutral-700 p-3 text-xs hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
+                        >
+                          <IconAlertTriangle
+                            size={16}
+                            className={cn(
+                              'mt-0.5 flex-shrink-0',
+                              alert.severity === 'critical' && 'text-red-600',
+                              alert.severity === 'high' && 'text-orange-600',
+                              alert.severity === 'medium' && 'text-yellow-600',
+                              alert.severity === 'low' && 'text-blue-600'
+                            )}
+                          />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1 flex-wrap">
+                              <span
+                                className={cn(
+                                  'text-xs font-semibold uppercase',
+                                  alert.severity === 'critical' && 'text-red-600',
+                                  alert.severity === 'high' && 'text-orange-600',
+                                  alert.severity === 'medium' && 'text-yellow-600',
+                                  alert.severity === 'low' && 'text-blue-600'
+                                )}
+                              >
+                                {alert.severity}
+                              </span>
+                              <span className="text-neutral-400">•</span>
+                              <span className="text-neutral-600 dark:text-neutral-400">{alert.category}</span>
+                              <span className="text-neutral-400">•</span>
+                              <span className="font-medium">{alert.protocol}</span>
+                              <span className="text-neutral-400">•</span>
+                              <span className="text-neutral-500">Packet #{alert.packet}</span>
+                            </div>
+                            <div className="font-medium mb-1">{alert.message}</div>
+                            <div className="text-neutral-600 dark:text-neutral-400">{alert.details}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Security Alerts */}
+                {securityAlerts.length > 0 && (
+                  <div className="flex-1 rounded-lg border border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-950/20 overflow-hidden flex flex-col min-h-0">
+                    <div className="border-b border-red-200 px-4 py-2 dark:border-red-900 flex items-center justify-between">
+                      <h3 className="text-sm font-semibold flex items-center gap-2 text-red-700 dark:text-red-400">
+                        <IconAlertTriangle size={16} />
+                        Security Alerts ({securityAlerts.length})
+                      </h3>
+                      <button
+                        onClick={() => setSecurityAlerts([])}
+                        className="text-xs text-red-600 hover:text-red-800"
+                      >
+                        Clear
+                      </button>
+                    </div>
+                    <div className="flex-1 overflow-auto p-2 space-y-2">
+                      {securityAlerts.map((alert, idx) => (
+                        <div
+                          key={idx}
+                          className="rounded border border-red-200 bg-white p-2 text-xs dark:border-red-900 dark:bg-neutral-900"
+                        >
+                          <div className="flex items-center justify-between mb-1">
+                            <span className={cn(
+                              "rounded px-1.5 py-0.5 text-xs font-bold uppercase",
+                              alert.severity === 'critical' && "bg-red-600 text-white",
+                              alert.severity === 'high' && "bg-orange-600 text-white",
+                              alert.severity === 'medium' && "bg-yellow-600 text-white",
+                              alert.severity === 'low' && "bg-blue-600 text-white"
+                            )}>
+                              {alert.severity}
+                            </span>
+                            <span className="text-neutral-500">#{alert.packet}</span>
+                          </div>
+                          <div className="font-semibold mb-1">{alert.message}</div>
+                          <div className="text-neutral-600 dark:text-neutral-400">{alert.details}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="flex-1 flex items-center justify-center rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900">
+                <div className="text-center text-neutral-500">
+                  <IconAlertTriangle className="mx-auto mb-2 opacity-30" size={48} />
+                  <p>No alerts to display</p>
+                  <p className="text-xs mt-1">Alerts will appear here as they are detected</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      )}
+      </div>
 
       {/* Statistics Panel Modal */}
       {showStatistics && <StatisticsPanel onClose={() => setShowStatistics(false)} />}
