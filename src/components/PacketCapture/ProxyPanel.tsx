@@ -5,7 +5,6 @@ import {
   IconPlayerStop,
   IconArrowForward,
   IconTrash,
-  IconCopy,
   IconEdit,
   IconFilter,
   IconSettings,
@@ -20,10 +19,7 @@ import {
   IconSitemap,
   IconTag,
   IconFolder,
-  IconChevronRight,
-  IconChevronDown,
   IconNotes,
-  IconSearch,
   IconRadar,
   IconFingerprint,
   IconCode,
@@ -410,7 +406,6 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
   const [filter, setFilter] = useState('');
 
   // Repeater state
-  const [repeaterRequest, setRepeaterRequest] = useState<any>(null);
   const [repeaterResponse, setRepeaterResponse] = useState<any>(null);
   const [repeaterUrl, setRepeaterUrl] = useState('');
   const [repeaterMethod, setRepeaterMethod] = useState('GET');
@@ -482,12 +477,12 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
   });
   const [formConfigs, setFormConfigs] = useState<FormConfig[]>([]);
   const [crawlingRules, setCrawlingRules] = useState<CrawlingRule[]>([]);
-  const [crawlQueue, setCrawlQueue] = useState<CrawlQueueItem[]>([]);
-  const [discoveredEndpoints, setDiscoveredEndpoints] = useState<string[]>([]);
+  const [crawlQueue] = useState<CrawlQueueItem[]>([]);
+  const [discoveredEndpoints] = useState<string[]>([]);
   const [spiderRunning, setSpiderRunning] = useState(false);
 
   // Scanner state
-  const [vulnerabilityIssues, setVulnerabilityIssues] = useState<VulnerabilityIssue[]>([]);
+  const [vulnerabilityIssues] = useState<VulnerabilityIssue[]>([]);
   const [selectedIssue, setSelectedIssue] = useState<VulnerabilityIssue | null>(null);
   const [scanPolicies, setScanPolicies] = useState<ScanPolicy[]>([
     {
@@ -536,11 +531,7 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
   });
   const [scanTasks, setScanTasks] = useState<ScanTask[]>([]);
   const [activeScanTask, setActiveScanTask] = useState<ScanTask | null>(null);
-  const [issueFilter, setIssueFilter] = useState({
-    severity: [] as string[],
-    type: [] as string[],
-    scanType: [] as string[],
-  });
+  
 
   // Intruder state
   const [intruderAttack, setIntruderAttack] = useState<IntruderAttack>({
@@ -4102,7 +4093,7 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
                                           : result.match(/.{1,2}/g)?.map(byte => String.fromCharCode(parseInt(byte, 16))).join('') || result;
                                       }
                                     } catch (e) {
-                                      result = `Error: ${e.message}`;
+                                      result = `Error: ${(e as any)?.message || String(e)}`;
                                     }
                                   });
 

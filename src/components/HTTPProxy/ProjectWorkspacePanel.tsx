@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { IconFolder, IconFolderPlus, IconDeviceFloppy, IconTrash, IconDownload, IconSettings, IconCopy, IconTag } from '@tabler/icons-react';
-import { Project, Workspace, ProjectConfiguration, SavedItem, WorkspaceSettings } from '@/types';
+import { IconFolder, IconFolderPlus, IconDeviceFloppy, IconTrash, IconDownload, IconSettings, IconTag, IconPlus } from '@tabler/icons-react';
+import { Project, Workspace, ProjectConfiguration } from '@/types';
 import { cn } from '@/lib/utils';
 
 type PWTab = 'projects' | 'workspaces' | 'saved-items' | 'configuration';

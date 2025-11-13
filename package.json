@@ -44,6 +44,8 @@
   },
   "dependencies": {
     "@tabler/icons-react": "^3.35.0",
+    "@types/animejs": "^3.1.13",
+    "animejs": "^3.2.2",
     "axios": "^1.6.2",
     "better-sqlite3": "^12.4.1",
     "body-parser": "^2.2.0",

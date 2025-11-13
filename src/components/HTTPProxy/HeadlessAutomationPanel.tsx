@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { IconServer, IconBrandDocker, IconRobot, IconPlayerPlay, IconPlayerPause, IconTrash, IconPlus, IconRefresh, IconClock, IconCheck } from '@tabler/icons-react';
-import { HeadlessAgent, HeadlessJob, DockerConfig, AutomationPipeline, PipelineStage } from '@/types';
+import { HeadlessAgent, HeadlessJob, DockerConfig, AutomationPipeline } from '@/types';
 import { cn } from '@/lib/utils';
 
 type HATab = 'agents' | 'jobs' | 'docker' | 'pipelines';
@@ -11,7 +11,7 @@ export const HeadlessAutomationPanel: React.FC = () => {
   const [jobs, setJobs] = useState<HeadlessJob[]>([]);
   const [dockerConfig, setDockerConfig] = useState<DockerConfig | null>(null);
   const [pipelines, setPipelines] = useState<AutomationPipeline[]>([]);
-  const [selectedAgent, setSelectedAgent] = useState<HeadlessAgent | null>(null);
+  
   const [showAgentForm, setShowAgentForm] = useState(false);
   const [showPipelineForm, setShowPipelineForm] = useState(false);
 

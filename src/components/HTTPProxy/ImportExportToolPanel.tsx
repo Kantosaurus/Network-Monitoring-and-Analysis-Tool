@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IconFileImport, IconFileExport, IconBrandGithub, IconTerminal, IconCloud, IconRefresh, IconPlus, IconTrash, IconCheck, IconX } from '@tabler/icons-react';
+import { IconFileImport, IconFileExport, IconTerminal, IconCloud, IconRefresh, IconPlus, IconTrash, IconCheck, IconX, IconDeviceFloppy } from '@tabler/icons-react';
 import { ImportConfig, ImportResult, ExportResult, ToolIntegration, CICDConfig } from '@/types';
 import { cn } from '@/lib/utils';
 
@@ -12,7 +12,7 @@ export const ImportExportToolPanel: React.FC = () => {
   const [importResults, setImportResults] = useState<ImportResult[]>([]);
   const [exportResults, setExportResults] = useState<ExportResult[]>([]);
   const [importing, setImporting] = useState(false);
-  const [exporting, setExporting] = useState(false);
+  const [, setExporting] = useState(false);
 
   // Import configuration
   const [importConfig, setImportConfig] = useState<Partial<ImportConfig>>({
@@ -102,20 +102,6 @@ export const ImportExportToolPanel: React.FC = () => {
     if (result.success && result.result) {
       alert(`Imported successfully: ${result.result.itemsImported} items`);
       setImportConfig({ ...importConfig, filePath: '' });
-    } else {
-      alert(`Import failed: ${result.error}`);
-    }
-  };
-
-  const handleImportPCAP = async (filePath: string) => {
-    if (!window.api) return;
-
-    setImporting(true);
-    const result = await window.api.importPCAP(filePath);
-    setImporting(false);
-
-    if (result.success && result.result) {
-      alert(`Imported ${result.result.requestsImported} requests from PCAP`);
     } else {
       alert(`Import failed: ${result.error}`);
     }

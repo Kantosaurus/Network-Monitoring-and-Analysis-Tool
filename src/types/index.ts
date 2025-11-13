@@ -1194,7 +1194,7 @@ export interface ElectronAPI {
   getDecryptionSessions: () => Promise<{ success: boolean; data?: DecryptionSession[]; error?: string }>;
   loadDecryptionKey: (keyData: string, format: 'pem' | 'der' | 'pkcs12') => Promise<{ success: boolean; error?: string }>;
   replayPCAP: (filepath: string, speed: number) => Promise<{ success: boolean; error?: string }>;
-  exportToTool: (tool: 'tshark' | 'zeek' | 'suricata' | 'snort' | 'networkminer' | 'splunk', filepath: string, options?: any) => Promise<{ success: boolean; output?: string; error?: string }>;
+  // unified exportToTool signature is declared later; remove this specific overload to avoid duplicate identifier errors
   runTsharkCommand: (command: string) => Promise<{ success: boolean; output?: string; error?: string }>;
   batchProcessCaptures: (files: string[], operations: string[]) => Promise<{ success: boolean; results?: any[]; error?: string }>;
 

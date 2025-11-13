@@ -112,7 +112,7 @@ export const APISDKPanel: React.FC = () => {
       setApiCalls((prev) => [call, ...prev]);
     });
 
-    window.api.onExtensionBuildComplete((projectId, success, output) => {
+    window.api.onExtensionBuildComplete((_projectId, success, output) => {
       setBuildOutput(output);
       if (success) {
         loadProjects();

@@ -282,17 +282,17 @@ export const BAppStorePanel: React.FC = () => {
     checkForUpdates();
 
     // Listen for extension events
-    window.api.onExtensionInstalled((installed) => {
+    window.api.onExtensionInstalled((_installed) => {
       loadInstalledExtensions();
       loadExtensions();
     });
 
-    window.api.onExtensionUninstalled((extensionId) => {
+    window.api.onExtensionUninstalled((_extensionId) => {
       loadInstalledExtensions();
       loadExtensions();
     });
 
-    window.api.onExtensionUpdated((updated) => {
+    window.api.onExtensionUpdated((_updated) => {
       loadInstalledExtensions();
       checkForUpdates();
     });

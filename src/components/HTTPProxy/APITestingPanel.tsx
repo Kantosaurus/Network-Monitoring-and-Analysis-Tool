@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { IconApi, IconDeviceMobile, IconCode, IconPlayerPlay, IconTrash, IconDownload, IconSearch, IconBrandGraphql, IconCheck, IconX } from '@tabler/icons-react';
-import { APIEndpoint, GraphQLSchema, MobileAppSession, APIParameter, VulnerabilityScanResult } from '@/types';
+import { IconApi, IconDeviceMobile, IconCode, IconPlayerPlay, IconTrash, IconDownload, IconSearch, IconBrandGraphql, IconX, IconPlus } from '@tabler/icons-react';
+import { APIEndpoint, GraphQLSchema, MobileAppSession, APIParameter } from '@/types';
 import { cn } from '@/lib/utils';
 
 type APITab = 'rest' | 'graphql' | 'mobile' | 'endpoints';
@@ -732,7 +732,7 @@ export const APITestingPanel: React.FC = () => {
                           {endpoint.response.statusCode}
                         </span>
                         <span>{endpoint.response.time}ms</span>
-                        <span>{endpoint.response.length} bytes</span>
+                        <span>{(endpoint.response.body?.length ?? 0)} bytes</span>
                       </div>
                     )}
                     {endpoint.vulnerabilities && endpoint.vulnerabilities.length > 0 && (
@@ -825,7 +825,7 @@ export const APITestingPanel: React.FC = () => {
                     <div className="mb-2 flex gap-4 text-sm">
                       <span>Status: <span className="font-semibold">{selectedEndpoint.response.statusCode}</span></span>
                       <span>Time: <span className="font-semibold">{selectedEndpoint.response.time}ms</span></span>
-                      <span>Size: <span className="font-semibold">{selectedEndpoint.response.length} bytes</span></span>
+                      <span>Size: <span className="font-semibold">{(selectedEndpoint.response.body?.length ?? 0)} bytes</span></span>
                     </div>
                     <div className="mb-2">
                       <h5 className="mb-1 text-sm font-medium">Headers</h5>

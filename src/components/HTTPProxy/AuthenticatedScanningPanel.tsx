@@ -11,7 +11,6 @@ export const AuthenticatedScanningPanel: React.FC = () => {
   const [macros, setMacros] = useState<AuthMacro[]>([]);
   const [sessionRules, setSessionRules] = useState<SessionRule[]>([]);
   const [scanResults, setScanResults] = useState<AuthenticatedScanResult[]>([]);
-  const [selectedCredential, setSelectedCredential] = useState<Credential | null>(null);
   const [showCredentialForm, setShowCredentialForm] = useState(false);
   const [showMacroForm, setShowMacroForm] = useState(false);
   const [showSessionRuleForm, setShowSessionRuleForm] = useState(false);

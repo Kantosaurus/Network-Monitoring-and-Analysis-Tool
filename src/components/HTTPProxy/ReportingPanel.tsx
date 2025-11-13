@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { IconFileText, IconFileTypePdf, IconFileDownload, IconTrash, IconPlus, IconCheck, IconSettings, IconBrandGithub } from '@tabler/icons-react';
-import { Report, ReportTemplate, ReportFinding, ReportMetadata, ExportConfig, ExportResult } from '@/types';
+import { Report, ReportTemplate, ReportFinding, ReportMetadata, ExportConfig } from '@/types';
 import { cn } from '@/lib/utils';
 
 type ReportTab = 'reports' | 'templates' | 'export' | 'findings';
@@ -9,7 +9,7 @@ export const ReportingPanel: React.FC = () => {
   const [activeTab, setActiveTab] = useState<ReportTab>('reports');
   const [reports, setReports] = useState<Report[]>([]);
   const [templates, setTemplates] = useState<ReportTemplate[]>([]);
-  const [selectedReport, setSelectedReport] = useState<Report | null>(null);
+  const [, setSelectedReport] = useState<Report | null>(null);
   const [showTemplateEditor, setShowTemplateEditor] = useState(false);
   const [generating, setGenerating] = useState(false);
 
@@ -39,7 +39,7 @@ export const ReportingPanel: React.FC = () => {
   });
 
   // Findings to include in report
-  const [findings, setFindings] = useState<ReportFinding[]>([]);
+  const [findings] = useState<ReportFinding[]>([]);
 
   useEffect(() => {
     loadReports();

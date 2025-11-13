@@ -158,7 +158,7 @@ export const SidebarLink = ({
   link,
   className,
   ...props
-}: {
+}: React.ComponentPropsWithoutRef<'a'> & {
   link: Links;
   className?: string;
 }) => {

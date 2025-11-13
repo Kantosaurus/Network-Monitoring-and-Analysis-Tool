@@ -65,7 +65,7 @@ app.commandLine.appendSwitch('ignore-certificate-errors');
 app.commandLine.appendSwitch('allow-insecure-localhost');
 app.commandLine.appendSwitch('disable-features', 'OutOfBlinkCors');
 
-function createWindow() {
+async function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1400,
     height: 900,
@@ -84,7 +84,26 @@ function createWindow() {
 
   // Load from Vite dev server in development, or from built files in production
   if (isDev) {
-    mainWindow.loadURL('http://localhost:3000');
+    // Try multiple ports since Vite may fallback if 3000 is in use
+    const tryPorts = [3000, 3001, 3002, 3003];
+    let loaded = false;
+
+    for (const port of tryPorts) {
+      try {
+        await mainWindow.loadURL(`http://localhost:${port}`);
+        console.log(`Successfully loaded from port ${port}`);
+        loaded = true;
+        break;
+      } catch (err) {
+        console.log(`Port ${port} not available, trying next...`);
+      }
+    }
+
+    if (!loaded) {
+      console.error('Could not load from any port');
+      mainWindow.loadURL('http://localhost:3000'); // Fallback to default
+    }
+
     mainWindow.webContents.openDevTools();
   } else {
     mainWindow.loadFile(path.join(__dirname, 'dist', 'index.html'));
@@ -696,53 +715,6 @@ ipcMain.handle('drop-intercept', async (event, id) => {
     if (httpProxy) {
       httpProxy.dropIntercept(id);
       return { success: true };
-    }
-    return { success: false, error: 'Proxy not running' };
-  } catch (error) {
-    return { success: false, error: error.message };
-  }
-});
-
-ipcMain.handle('get-proxy-history', async () => {
-  try {
-    if (httpProxy) {
-      return { success: true, history: httpProxy.getHistory() };
-    }
-    return { success: false, error: 'Proxy not running' };
-  } catch (error) {
-    return { success: false, error: error.message };
-  }
-});
-
-ipcMain.handle('clear-proxy-history', async () => {
-  try {
-    if (httpProxy) {
-      httpProxy.clearHistory();
-      return { success: true };
-    }
-    return { success: false, error: 'Proxy not running' };
-  } catch (error) {
-    return { success: false, error: error.message };
-  }
-});
-
-ipcMain.handle('repeat-request', async (event, requestData) => {
-  try {
-    if (httpProxy) {
-      const result = await httpProxy.repeatRequest(requestData);
-      return { success: true, result };
-    }
-    return { success: false, error: 'Proxy not running' };
-  } catch (error) {
-    return { success: false, error: error.message };
-  }
-});
-
-ipcMain.handle('run-intruder', async (event, requestData, positions, payloads, attackType) => {
-  try {
-    if (httpProxy) {
-      const results = await httpProxy.intruderAttack(requestData, positions, payloads, attackType);
-      return { success: true, results };
     }
     return { success: false, error: 'Proxy not running' };
   } catch (error) {

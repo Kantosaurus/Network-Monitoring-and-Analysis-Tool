@@ -1,117 +1,186 @@
-import { useState } from "react";
-import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
+import { useState, useEffect, useRef } from "react";
 import {
-  IconGlobe,
   IconNetwork,
+  IconGlobe,
+  IconX,
+  IconMenu2,
 } from "@tabler/icons-react";
-import { motion } from "motion/react";
+import anime from 'animejs';
 import { cn } from "@/lib/utils";
 import { PacketCapture } from "@/components/PacketCapture/PacketCapture";
 import { HTTPProxy } from "@/components/HTTPProxy/HTTPProxy";
 import { TitleBar } from "@/components/TitleBar/TitleBar";
+import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 
 export default function App() {
+  console.log("App component rendering...");
+
+  const [activeView, setActiveView] = useState<"capture" | "proxy">("capture");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const contentRef = useRef<HTMLDivElement>(null);
+
   const links = [
     {
       label: "Packet Capture",
-      href: "#capture",
-      icon: (
-        <IconNetwork className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
-      ),
+      value: "capture" as const,
+      icon: <IconNetwork size={20} className="transition-transform group-hover:scale-110" />,
+      description: "Monitor and analyze network packets",
     },
     {
       label: "HTTP Proxy",
-      href: "#proxy",
-      icon: (
-        <IconGlobe className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
-      ),
+      value: "proxy" as const,
+      icon: <IconGlobe size={20} className="transition-transform group-hover:scale-110" />,
+      description: "Intercept and modify HTTP traffic",
     },
   ];
-  const [open, setOpen] = useState(false);
-  const [activeView, setActiveView] = useState<"capture" | "proxy">("capture");
+
+  // Sidebar mount animation: handled by Sidebar motion component
+
+  // Animate content on view change
+  useEffect(() => {
+    if (contentRef.current) {
+        anime({
+        targets: contentRef.current,
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 600,
+        easing: "easeOutQuad",
+      });
+    }
+  }, [activeView]);
+
+  const toggleSidebar = () => {
+    // Sidebar motion handles width animation; just toggle the state
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  const handleNavClick = (value: "capture" | "proxy") => {
+    // Animate button press
+    const button = document.querySelector(`[data-nav="${value}"]`);
+    if (button) {
+        anime({
+        targets: button,
+        scale: [1, 0.95, 1],
+        duration: 300,
+        easing: "easeInOutQuad",
+      });
+    }
+    setActiveView(value);
+  };
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-white dark:bg-neutral-900">
+    <div className="flex flex-col h-screen overflow-hidden" style={{ background: 'transparent' }}>
       <TitleBar />
-      <div
-        className={cn(
-          "mx-auto flex w-full flex-1 flex-row overflow-hidden bg-white dark:bg-neutral-900"
-        )}
-      >
-        <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10">
-          <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
-            {open ? <Logo /> : <LogoIcon />}
-            <div className="mt-8 flex flex-col gap-2">
-              {links.map((link, idx) => (
-                <div
-                  key={idx}
-                  onClick={() => {
-                    const view = link.href.replace("#", "") as "capture" | "proxy";
-                    setActiveView(view);
-                  }}
+      <div className="flex flex-1 overflow-hidden p-4 gap-4" style={{ background: 'transparent' }}>
+        {/* Sidebar */}
+        <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} animate>
+          <SidebarBody
+            className={cn(
+              "glass-card dark:glass-card-dark rounded-2xl shadow-glass-lg overflow-hidden transition-all duration-400",
+              sidebarOpen ? "" : ""
+            )}
+          >
+            <div className="flex flex-col h-full p-4">
+              {/* Header */}
+              <div className="flex items-center justify-between mb-8">
+                {sidebarOpen ? (
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
+                      <IconNetwork className="text-white" size={24} />
+                    </div>
+                    <div>
+                      <h1 className="text-lg font-semibold text-gray-900 dark:text-white">
+                        NMAT
+                      </h1>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        Network Monitor
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center mx-auto">
+                    <IconNetwork className="text-white" size={24} />
+                  </div>
+                )}
+                {sidebarOpen && (
+                  <button
+                    onClick={toggleSidebar}
+                    className="glass-button dark:glass-button-dark rounded-lg p-2 text-gray-700 dark:text-gray-300"
+                  >
+                    <IconX size={18} />
+                  </button>
+                )}
+              </div>
+
+              {/* Toggle button when closed */}
+              {!sidebarOpen && (
+                <button
+                  onClick={toggleSidebar}
+                  className="glass-button dark:glass-button-dark rounded-lg p-2 text-gray-700 dark:text-gray-300 mb-8 mx-auto"
                 >
-                  <SidebarLink link={link} />
+                  <IconMenu2 size={20} />
+                </button>
+              )}
+
+              {/* Navigation */}
+              <div className="flex-1 space-y-2">
+                {links.map((link) => {
+                  const isActive = activeView === link.value;
+                  return (
+                    <SidebarLink
+                      key={link.value}
+                      link={{ label: link.label, href: '#', icon: link.icon }}
+                      onClick={() => handleNavClick(link.value)}
+                      data-nav={link.value}
+                      className={cn(
+                        "w-full rounded-xl transition-all duration-300 group relative overflow-hidden",
+                        sidebarOpen ? "p-4" : "p-3",
+                        isActive
+                          ? "bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg"
+                          : "glass-button dark:glass-button-dark text-gray-700 dark:text-gray-300"
+                      )}
+                    />
+                  );
+                })}
+              </div>
+
+              {/* Footer */}
+              {sidebarOpen && (
+                <div className="mt-auto pt-4 border-t border-white/20 dark:border-gray-700/50">
+                  <div className="text-xs text-gray-600 dark:text-gray-400 text-center">
+                    v1.0.0
+                  </div>
                 </div>
-              ))}
+              )}
+            </div>
+          </SidebarBody>
+        </Sidebar>
+
+        {/* Main Content */}
+        <div
+          ref={contentRef}
+          className="flex-1 glass-card dark:glass-card-dark rounded-2xl shadow-glass-lg overflow-hidden"
+        >
+          <div className="h-full flex flex-col p-6">
+            {/* Header */}
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                {activeView === "capture" ? "Packet Capture" : "HTTP Proxy"}
+              </h2>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                {activeView === "capture"
+                  ? "Monitor and analyze network packets in real-time"
+                  : "Intercept and modify HTTP/HTTPS traffic"}
+              </p>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 min-h-0">
+              {activeView === "capture" ? <PacketCapture /> : <HTTPProxy />}
             </div>
           </div>
-        </SidebarBody>
-        </Sidebar>
-        <Dashboard activeView={activeView} />
+        </div>
       </div>
     </div>
   );
 }
-
-export const Logo = () => {
-  return (
-    <a
-      href="#"
-      className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-black"
-    >
-      <div className="h-5 w-6 shrink-0 rounded-tl-lg rounded-tr-sm rounded-br-lg rounded-bl-sm bg-purple-600 dark:bg-purple-500" />
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="font-medium whitespace-pre text-black dark:text-white"
-      >
-        Network Monitor
-      </motion.span>
-    </a>
-  );
-};
-
-export const LogoIcon = () => {
-  return (
-    <a
-      href="#"
-      className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-black"
-    >
-      <div className="h-5 w-6 shrink-0 rounded-tl-lg rounded-tr-sm rounded-br-lg rounded-bl-sm bg-purple-600 dark:bg-purple-500" />
-    </a>
-  );
-};
-
-// Dashboard component with packet capture and proxy views
-const Dashboard = ({ activeView }: { activeView: "capture" | "proxy" }) => {
-  return (
-    <div className="flex flex-1 overflow-hidden">
-      <div className="flex h-full w-full flex-1 flex-col rounded-tl-2xl border border-neutral-200 bg-white p-4 md:p-6 dark:border-neutral-700 dark:bg-neutral-900 overflow-hidden">
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
-            {activeView === "capture" ? "Packet Capture" : "HTTP Proxy"}
-          </h1>
-        </div>
-
-        <div className="flex-1 min-h-0">
-          {activeView === "capture" ? (
-            <PacketCapture />
-          ) : (
-            <HTTPProxy />
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { IconPlugConnected, IconPlugConnectedX, IconSend, IconNetwork, IconPlus, IconTrash, IconPause, IconPlayerPlay, IconSettings } from '@tabler/icons-react';
-import { WebSocketConnection, WebSocketMessage, CustomProtocol, ProtocolMessage } from '@/types';
+import { IconPlugConnected, IconPlugConnectedX, IconSend, IconNetwork, IconPlus, IconTrash, IconPlayerPlay, IconSettings } from '@tabler/icons-react';
+import { WebSocketConnection, CustomProtocol, ProtocolMessage } from '@/types';
 import { cn } from '@/lib/utils';
 
 type WSTab = 'connections' | 'messages' | 'protocols' | 'history';
@@ -337,7 +337,7 @@ export const WebSocketProtocolPanel: React.FC = () => {
                         }}
                         className="rounded-lg bg-orange-500 px-3 py-1.5 text-sm text-white hover:bg-orange-600"
                       >
-                        <IconPause size={16} />
+                        <IconPlayerPlay size={16} />
                       </button>
                       <button
                         onClick={(e) => {

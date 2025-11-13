@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { IconBug, IconDatabase, IconTerminal, IconFlask, IconAlertCircle, IconPlayerPlay, IconClock, IconNetwork } from '@tabler/icons-react';
-import { InjectionTest, BlindInjectionResult, TemplateInjectionTest, DeserializationTest, CollaboratorInteraction } from '@/types';
+import { IconBug, IconDatabase, IconTerminal, IconFlask, IconPlayerPlay, IconNetwork, IconRefresh } from '@tabler/icons-react';
+import { InjectionTest, CollaboratorInteraction } from '@/types';
 import { cn } from '@/lib/utils';
 
 type InjectionTab = 'sql' | 'nosql' | 'command' | 'template' | 'xxe' | 'deserialization' | 'collaborator';
@@ -119,39 +119,6 @@ export const AdvancedInjectionPanel: React.FC = () => {
     }
   };
 
-  const handleTestLDAP = async () => {
-    if (!window.api || !testConfig.target || !testConfig.parameter) {
-      alert('Please provide target URL and parameter name');
-      return;
-    }
-
-    setTesting(true);
-    const result = await window.api.injectionTestLDAP(testConfig.target, testConfig.parameter);
-    setTesting(false);
-
-    if (result.success && result.result) {
-      setInjectionTests((prev) => [...prev, result.result!]);
-    } else {
-      alert(`Test failed: ${result.error}`);
-    }
-  };
-
-  const handleTestXPath = async () => {
-    if (!window.api || !testConfig.target || !testConfig.parameter) {
-      alert('Please provide target URL and parameter name');
-      return;
-    }
-
-    setTesting(true);
-    const result = await window.api.injectionTestXPath(testConfig.target, testConfig.parameter);
-    setTesting(false);
-
-    if (result.success && result.result) {
-      setInjectionTests((prev) => [...prev, result.result!]);
-    } else {
-      alert(`Test failed: ${result.error}`);
-    }
-  };
 
   const handleTestTemplate = async () => {
     if (!window.api || !testConfig.target || !testConfig.parameter) {
@@ -211,17 +178,7 @@ export const AdvancedInjectionPanel: React.FC = () => {
     }
   };
 
-  const getInjectionIcon = (type: string) => {
-    switch (type) {
-      case 'sql':
-      case 'nosql':
-        return <IconDatabase size={18} />;
-      case 'command':
-        return <IconTerminal size={18} />;
-      default:
-        return <IconBug size={18} />;
-    }
-  };
+  // helper icons/functionality removed because not referenced by the UI at present
 
   return (
     <div className="flex h-full flex-col gap-4">

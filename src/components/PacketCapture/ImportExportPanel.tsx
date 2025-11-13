@@ -76,7 +76,8 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({ onClose }) => {
 
     const result = await window.api.exportToTool(selectedTool, toolFilePath, options);
     if (result.success) {
-      setToolOutput(result.output || 'Export successful!');
+      // result.result may contain ExportResult with filePath/format
+      setToolOutput(result.result?.filePath || 'Export successful!');
     } else {
       setToolOutput(`Error: ${result.error}`);
     }

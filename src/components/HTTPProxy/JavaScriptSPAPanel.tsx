@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { IconBrandJavascript, IconEye, IconSearch, IconAlertTriangle, IconKey, IconPlayerPlay, IconCode, IconRefresh } from '@tabler/icons-react';
-import { JavaScriptFile, JSVulnerability, JSSecret, SPAEndpoint, DOMXSSVector } from '@/types';
+import { IconBrandJavascript, IconEye, IconSearch, IconAlertTriangle, IconKey, IconPlayerPlay, IconCode, IconRefresh, IconX } from '@tabler/icons-react';
+import { JavaScriptFile, JSSecret, SPAEndpoint, DOMXSSVector } from '@/types';
 import { cn } from '@/lib/utils';
 
 type JSTab = 'files' | 'secrets' | 'dom-xss' | 'endpoints' | 'deobfuscate';
