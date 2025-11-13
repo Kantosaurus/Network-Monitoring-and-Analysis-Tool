@@ -1,3 +1,43 @@
+// Ensure Web File/Blob constructors exist in the Node/Electron main process
+// Some libraries (undici, fetch implementations) expect global "File" and/or "Blob".
+// Provide a defensive polyfill before any modules that may import undici are loaded.
+(function ensureFileBlobPolyfill() {
+  try {
+    if (typeof global.File !== 'function') {
+      // Prefer the standalone fetch-blob package when available
+      try {
+        const fetchBlob = require('fetch-blob');
+        if (fetchBlob.Blob && typeof global.Blob === 'undefined') global.Blob = fetchBlob.Blob;
+        if (fetchBlob.File) global.File = fetchBlob.File;
+      } catch (e) {
+        // Some packages expose the File class as fetch-blob/file.js
+        try {
+          const FileCtor = require('fetch-blob/file.js');
+          if (FileCtor) global.File = FileCtor;
+        } catch (e2) {
+          // If Blob is available natively, derive a minimal File implementation from it
+          if (typeof global.Blob === 'function' && typeof global.File !== 'function') {
+            global.File = class File extends global.Blob {
+              constructor(parts, name, options) {
+                super(parts, options);
+                this.name = name || '';
+                this.lastModified = (options && options.lastModified) || Date.now();
+              }
+            };
+          } else if (typeof global.File !== 'function') {
+            // Final fallback: define a minimal stub to avoid ReferenceError. This won't be a full File implementation,
+            // but it prevents modules that merely check for the existence of File from throwing during require().
+            global.File = class File {};
+          }
+        }
+      }
+    }
+  } catch (err) {
+    // Swallow any unexpected error during polyfill setup; don't block app startup with polyfill failures.
+    try { global.File = global.File || class File {}; } catch (e) {}
+  }
+})();
+
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const PacketCapture = require('./packetCapture');

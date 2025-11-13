@@ -45,7 +45,7 @@
   "dependencies": {
     "@tabler/icons-react": "^3.35.0",
     "axios": "^1.6.2",
-    "better-sqlite3": "^9.2.2",
+    "better-sqlite3": "^12.4.1",
     "body-parser": "^2.2.0",
     "cap": "^0.2.1",
     "cheerio": "^1.0.0-rc.12",
