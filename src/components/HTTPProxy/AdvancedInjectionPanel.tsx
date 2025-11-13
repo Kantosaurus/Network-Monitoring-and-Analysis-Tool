@@ -1,0 +1,815 @@
+import React, { useState, useEffect } from 'react';
+import { IconBug, IconDatabase, IconTerminal, IconFlask, IconAlertCircle, IconPlayerPlay, IconClock, IconNetwork } from '@tabler/icons-react';
+import { InjectionTest, BlindInjectionResult, TemplateInjectionTest, DeserializationTest, CollaboratorInteraction } from '@/types';
+import { cn } from '@/lib/utils';
+
+type InjectionTab = 'sql' | 'nosql' | 'command' | 'template' | 'xxe' | 'deserialization' | 'collaborator';
+
+export const AdvancedInjectionPanel: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<InjectionTab>('sql');
+  const [injectionTests, setInjectionTests] = useState<InjectionTest[]>([]);
+  const [collaboratorInteractions, setCollaboratorInteractions] = useState<CollaboratorInteraction[]>([]);
+  const [collaboratorUrl, setCollaboratorUrl] = useState<string>('');
+  const [testing, setTesting] = useState(false);
+
+  // Test configuration
+  const [testConfig, setTestConfig] = useState({
+    target: '',
+    parameter: '',
+    method: 'in-band' as 'in-band' | 'blind' | 'time-based' | 'out-of-band',
+    language: 'java' as 'java' | 'php' | 'python' | 'ruby' | 'dotnet',
+  });
+
+  useEffect(() => {
+    if (window.api) {
+      window.api.onInjectionFound((test) => {
+        setInjectionTests((prev) => [...prev, test]);
+      });
+
+      window.api.onCollaboratorInteraction((interaction) => {
+        setCollaboratorInteractions((prev) => [...prev, interaction]);
+      });
+    }
+  }, []);
+
+  const handleStartCollaborator = async () => {
+    if (!window.api) return;
+
+    const result = await window.api.injectionStartCollaborator();
+    if (result.success && result.url) {
+      setCollaboratorUrl(result.url);
+      alert(`Collaborator started at: ${result.url}`);
+    } else {
+      alert(`Failed to start collaborator: ${result.error}`);
+    }
+  };
+
+  const loadCollaboratorInteractions = async () => {
+    if (!window.api) return;
+
+    const result = await window.api.injectionGetCollaboratorInteractions();
+    if (result.success && result.interactions) {
+      setCollaboratorInteractions(result.interactions);
+    }
+  };
+
+  const handleTestSQL = async () => {
+    if (!window.api || !testConfig.target || !testConfig.parameter) {
+      alert('Please provide target URL and parameter name');
+      return;
+    }
+
+    setTesting(true);
+    const result = await window.api.injectionTestSQL(
+      testConfig.target,
+      testConfig.parameter,
+      testConfig.method
+    );
+    setTesting(false);
+
+    if (result.success && result.result) {
+      setInjectionTests((prev) => [...prev, result.result!]);
+      if (result.result.result === 'vulnerable') {
+        alert(`SQL Injection found! Confidence: ${result.result.confidence * 100}%`);
+      } else {
+        alert('No SQL injection vulnerability detected');
+      }
+    } else {
+      alert(`Test failed: ${result.error}`);
+    }
+  };
+
+  const handleTestNoSQL = async () => {
+    if (!window.api || !testConfig.target || !testConfig.parameter) {
+      alert('Please provide target URL and parameter name');
+      return;
+    }
+
+    setTesting(true);
+    const result = await window.api.injectionTestNoSQL(testConfig.target, testConfig.parameter);
+    setTesting(false);
+
+    if (result.success && result.result) {
+      setInjectionTests((prev) => [...prev, result.result!]);
+      if (result.result.result === 'vulnerable') {
+        alert(`NoSQL Injection found! Confidence: ${result.result.confidence * 100}%`);
+      }
+    } else {
+      alert(`Test failed: ${result.error}`);
+    }
+  };
+
+  const handleTestCommand = async () => {
+    if (!window.api || !testConfig.target || !testConfig.parameter) {
+      alert('Please provide target URL and parameter name');
+      return;
+    }
+
+    setTesting(true);
+    const result = await window.api.injectionTestCommand(testConfig.target, testConfig.parameter);
+    setTesting(false);
+
+    if (result.success && result.result) {
+      setInjectionTests((prev) => [...prev, result.result!]);
+      if (result.result.result === 'vulnerable') {
+        alert(`Command Injection found! Confidence: ${result.result.confidence * 100}%`);
+      }
+    } else {
+      alert(`Test failed: ${result.error}`);
+    }
+  };
+
+  const handleTestLDAP = async () => {
+    if (!window.api || !testConfig.target || !testConfig.parameter) {
+      alert('Please provide target URL and parameter name');
+      return;
+    }
+
+    setTesting(true);
+    const result = await window.api.injectionTestLDAP(testConfig.target, testConfig.parameter);
+    setTesting(false);
+
+    if (result.success && result.result) {
+      setInjectionTests((prev) => [...prev, result.result!]);
+    } else {
+      alert(`Test failed: ${result.error}`);
+    }
+  };
+
+  const handleTestXPath = async () => {
+    if (!window.api || !testConfig.target || !testConfig.parameter) {
+      alert('Please provide target URL and parameter name');
+      return;
+    }
+
+    setTesting(true);
+    const result = await window.api.injectionTestXPath(testConfig.target, testConfig.parameter);
+    setTesting(false);
+
+    if (result.success && result.result) {
+      setInjectionTests((prev) => [...prev, result.result!]);
+    } else {
+      alert(`Test failed: ${result.error}`);
+    }
+  };
+
+  const handleTestTemplate = async () => {
+    if (!window.api || !testConfig.target || !testConfig.parameter) {
+      alert('Please provide target URL and parameter name');
+      return;
+    }
+
+    setTesting(true);
+    const result = await window.api.injectionTestTemplate(testConfig.target, testConfig.parameter);
+    setTesting(false);
+
+    if (result.success && result.result) {
+      if (result.result.vulnerable) {
+        alert(`Template Injection found! RCE: ${result.result.rce ? 'Yes' : 'No'}`);
+      }
+    } else {
+      alert(`Test failed: ${result.error}`);
+    }
+  };
+
+  const handleTestXXE = async () => {
+    if (!window.api || !testConfig.target) {
+      alert('Please provide target URL');
+      return;
+    }
+
+    setTesting(true);
+    const result = await window.api.injectionTestXXE(testConfig.target);
+    setTesting(false);
+
+    if (result.success && result.result) {
+      setInjectionTests((prev) => [...prev, result.result!]);
+      if (result.result.result === 'vulnerable') {
+        alert(`XXE vulnerability found! Confidence: ${result.result.confidence * 100}%`);
+      }
+    } else {
+      alert(`Test failed: ${result.error}`);
+    }
+  };
+
+  const handleTestDeserialization = async () => {
+    if (!window.api || !testConfig.target) {
+      alert('Please provide target URL');
+      return;
+    }
+
+    setTesting(true);
+    const result = await window.api.injectionTestDeserialization(testConfig.target, testConfig.language);
+    setTesting(false);
+
+    if (result.success && result.result) {
+      if (result.result.vulnerable) {
+        alert(`Deserialization vulnerability found! RCE: ${result.result.rce ? 'Yes' : 'No'}`);
+      }
+    } else {
+      alert(`Test failed: ${result.error}`);
+    }
+  };
+
+  const getInjectionIcon = (type: string) => {
+    switch (type) {
+      case 'sql':
+      case 'nosql':
+        return <IconDatabase size={18} />;
+      case 'command':
+        return <IconTerminal size={18} />;
+      default:
+        return <IconBug size={18} />;
+    }
+  };
+
+  return (
+    <div className="flex h-full flex-col gap-4">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-bold">Advanced Injection & Exploitation</h2>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex gap-2 border-b border-gray-200 dark:border-gray-700">
+        <button
+          onClick={() => setActiveTab('sql')}
+          className={cn(
+            'px-4 py-2 font-medium transition-colors',
+            activeTab === 'sql'
+              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
+              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+          )}
+        >
+          <div className="flex items-center gap-2">
+            <IconDatabase size={18} />
+            SQL Injection
+          </div>
+        </button>
+        <button
+          onClick={() => setActiveTab('nosql')}
+          className={cn(
+            'px-4 py-2 font-medium transition-colors',
+            activeTab === 'nosql'
+              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
+              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+          )}
+        >
+          <div className="flex items-center gap-2">
+            <IconDatabase size={18} />
+            NoSQL Injection
+          </div>
+        </button>
+        <button
+          onClick={() => setActiveTab('command')}
+          className={cn(
+            'px-4 py-2 font-medium transition-colors',
+            activeTab === 'command'
+              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
+              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+          )}
+        >
+          <div className="flex items-center gap-2">
+            <IconTerminal size={18} />
+            Command Injection
+          </div>
+        </button>
+        <button
+          onClick={() => setActiveTab('template')}
+          className={cn(
+            'px-4 py-2 font-medium transition-colors',
+            activeTab === 'template'
+              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
+              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+          )}
+        >
+          <div className="flex items-center gap-2">
+            <IconFlask size={18} />
+            Template Injection
+          </div>
+        </button>
+        <button
+          onClick={() => setActiveTab('xxe')}
+          className={cn(
+            'px-4 py-2 font-medium transition-colors',
+            activeTab === 'xxe'
+              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
+              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+          )}
+        >
+          <div className="flex items-center gap-2">
+            <IconBug size={18} />
+            XXE
+          </div>
+        </button>
+        <button
+          onClick={() => setActiveTab('deserialization')}
+          className={cn(
+            'px-4 py-2 font-medium transition-colors',
+            activeTab === 'deserialization'
+              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
+              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+          )}
+        >
+          <div className="flex items-center gap-2">
+            <IconBug size={18} />
+            Deserialization
+          </div>
+        </button>
+        <button
+          onClick={() => setActiveTab('collaborator')}
+          className={cn(
+            'px-4 py-2 font-medium transition-colors',
+            activeTab === 'collaborator'
+              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
+              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+          )}
+        >
+          <div className="flex items-center gap-2">
+            <IconNetwork size={18} />
+            Collaborator ({collaboratorInteractions.length})
+          </div>
+        </button>
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 overflow-auto">
+        {/* SQL Injection Tab */}
+        {activeTab === 'sql' && (
+          <div className="space-y-4">
+            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
+              <h3 className="mb-3 font-semibold">SQL Injection Testing</h3>
+              <div className="space-y-3">
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Target URL</label>
+                  <input
+                    type="url"
+                    value={testConfig.target}
+                    onChange={(e) => setTestConfig({ ...testConfig, target: e.target.value })}
+                    placeholder="https://example.com/api/users"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Parameter Name</label>
+                  <input
+                    type="text"
+                    value={testConfig.parameter}
+                    onChange={(e) => setTestConfig({ ...testConfig, parameter: e.target.value })}
+                    placeholder="id"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Detection Method</label>
+                  <select
+                    value={testConfig.method}
+                    onChange={(e) => setTestConfig({ ...testConfig, method: e.target.value as any })}
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  >
+                    <option value="in-band">In-Band (Error-based)</option>
+                    <option value="blind">Blind (Boolean-based)</option>
+                    <option value="time-based">Time-Based</option>
+                    <option value="out-of-band">Out-of-Band (Collaborator)</option>
+                  </select>
+                </div>
+                <button
+                  onClick={handleTestSQL}
+                  disabled={testing}
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                >
+                  <IconPlayerPlay size={18} />
+                  {testing ? 'Testing...' : 'Test SQL Injection'}
+                </button>
+              </div>
+            </div>
+
+            {/* Results */}
+            <div className="space-y-2">
+              {injectionTests
+                .filter((test) => test.type === 'sql')
+                .map((test, index) => (
+                  <div
+                    key={index}
+                    className={cn(
+                      'rounded-lg border p-4',
+                      test.result === 'vulnerable'
+                        ? 'border-red-300 bg-red-50 dark:border-red-700 dark:bg-red-900/20'
+                        : 'border-green-300 bg-green-50 dark:border-green-700 dark:bg-green-900/20'
+                    )}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <IconDatabase size={18} />
+                          <span
+                            className={cn(
+                              'rounded px-2 py-0.5 text-xs font-bold uppercase',
+                              test.result === 'vulnerable'
+                                ? 'bg-red-200 text-red-900 dark:bg-red-800 dark:text-red-100'
+                                : 'bg-green-200 text-green-900 dark:bg-green-800 dark:text-green-100'
+                            )}
+                          >
+                            {test.result}
+                          </span>
+                          <span className="rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                            {test.method}
+                          </span>
+                        </div>
+                        <div className="mt-2 space-y-1 text-sm">
+                          <p>
+                            <strong>Target:</strong> {test.target}
+                          </p>
+                          <p>
+                            <strong>Parameter:</strong> {test.parameter}
+                          </p>
+                          <p>
+                            <strong>Payload:</strong> <code className="font-mono text-xs">{test.payload}</code>
+                          </p>
+                          {test.evidence && (
+                            <p>
+                              <strong>Evidence:</strong> <code className="font-mono text-xs">{test.evidence}</code>
+                            </p>
+                          )}
+                          <p>
+                            <strong>Confidence:</strong> {(test.confidence * 100).toFixed(0)}%
+                          </p>
+                          <p className="text-xs text-gray-500">{new Date(test.timestamp).toLocaleString()}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+
+        {/* NoSQL Injection Tab */}
+        {activeTab === 'nosql' && (
+          <div className="space-y-4">
+            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
+              <h3 className="mb-3 font-semibold">NoSQL Injection Testing</h3>
+              <div className="space-y-3">
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Target URL</label>
+                  <input
+                    type="url"
+                    value={testConfig.target}
+                    onChange={(e) => setTestConfig({ ...testConfig, target: e.target.value })}
+                    placeholder="https://example.com/api/users"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Parameter Name</label>
+                  <input
+                    type="text"
+                    value={testConfig.parameter}
+                    onChange={(e) => setTestConfig({ ...testConfig, parameter: e.target.value })}
+                    placeholder="id"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  />
+                </div>
+                <button
+                  onClick={handleTestNoSQL}
+                  disabled={testing}
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                >
+                  <IconPlayerPlay size={18} />
+                  {testing ? 'Testing...' : 'Test NoSQL Injection'}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              {injectionTests
+                .filter((test) => test.type === 'nosql')
+                .map((test, index) => (
+                  <div
+                    key={index}
+                    className={cn(
+                      'rounded-lg border p-4',
+                      test.result === 'vulnerable'
+                        ? 'border-red-300 bg-red-50 dark:border-red-700 dark:bg-red-900/20'
+                        : 'border-green-300 bg-green-50 dark:border-green-700 dark:bg-green-900/20'
+                    )}
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <IconDatabase size={18} />
+                      <span className={cn(
+                        'rounded px-2 py-0.5 text-xs font-bold uppercase',
+                        test.result === 'vulnerable'
+                          ? 'bg-red-200 text-red-900 dark:bg-red-800 dark:text-red-100'
+                          : 'bg-green-200 text-green-900 dark:bg-green-800 dark:text-green-100'
+                      )}>
+                        {test.result}
+                      </span>
+                    </div>
+                    <div className="space-y-1 text-sm">
+                      <p><strong>Target:</strong> {test.target}</p>
+                      <p><strong>Parameter:</strong> {test.parameter}</p>
+                      <p><strong>Payload:</strong> <code className="font-mono text-xs">{test.payload}</code></p>
+                      {test.evidence && <p><strong>Evidence:</strong> <code className="font-mono text-xs">{test.evidence}</code></p>}
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+
+        {/* Command Injection Tab */}
+        {activeTab === 'command' && (
+          <div className="space-y-4">
+            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
+              <h3 className="mb-3 font-semibold">Command Injection Testing</h3>
+              <div className="space-y-3">
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Target URL</label>
+                  <input
+                    type="url"
+                    value={testConfig.target}
+                    onChange={(e) => setTestConfig({ ...testConfig, target: e.target.value })}
+                    placeholder="https://example.com/api/ping"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Parameter Name</label>
+                  <input
+                    type="text"
+                    value={testConfig.parameter}
+                    onChange={(e) => setTestConfig({ ...testConfig, parameter: e.target.value })}
+                    placeholder="host"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  />
+                </div>
+                <button
+                  onClick={handleTestCommand}
+                  disabled={testing}
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                >
+                  <IconPlayerPlay size={18} />
+                  {testing ? 'Testing...' : 'Test Command Injection'}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              {injectionTests
+                .filter((test) => test.type === 'command')
+                .map((test, index) => (
+                  <div
+                    key={index}
+                    className={cn(
+                      'rounded-lg border p-4',
+                      test.result === 'vulnerable'
+                        ? 'border-red-300 bg-red-50 dark:border-red-700 dark:bg-red-900/20'
+                        : 'border-green-300 bg-green-50 dark:border-green-700 dark:bg-green-900/20'
+                    )}
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <IconTerminal size={18} />
+                      <span className={cn(
+                        'rounded px-2 py-0.5 text-xs font-bold uppercase',
+                        test.result === 'vulnerable'
+                          ? 'bg-red-200 text-red-900 dark:bg-red-800 dark:text-red-100'
+                          : 'bg-green-200 text-green-900 dark:bg-green-800 dark:text-green-100'
+                      )}>
+                        {test.result}
+                      </span>
+                    </div>
+                    <div className="space-y-1 text-sm">
+                      <p><strong>Target:</strong> {test.target}</p>
+                      <p><strong>Parameter:</strong> {test.parameter}</p>
+                      <p><strong>Payload:</strong> <code className="font-mono text-xs">{test.payload}</code></p>
+                      {test.evidence && <p><strong>Evidence:</strong> <code className="font-mono text-xs">{test.evidence}</code></p>}
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+
+        {/* Template Injection Tab */}
+        {activeTab === 'template' && (
+          <div className="space-y-4">
+            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
+              <h3 className="mb-3 font-semibold">Server-Side Template Injection (SSTI)</h3>
+              <div className="space-y-3">
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Target URL</label>
+                  <input
+                    type="url"
+                    value={testConfig.target}
+                    onChange={(e) => setTestConfig({ ...testConfig, target: e.target.value })}
+                    placeholder="https://example.com/template"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Parameter Name</label>
+                  <input
+                    type="text"
+                    value={testConfig.parameter}
+                    onChange={(e) => setTestConfig({ ...testConfig, parameter: e.target.value })}
+                    placeholder="template"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  />
+                </div>
+                <button
+                  onClick={handleTestTemplate}
+                  disabled={testing}
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                >
+                  <IconPlayerPlay size={18} />
+                  {testing ? 'Testing...' : 'Test Template Injection'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* XXE Tab */}
+        {activeTab === 'xxe' && (
+          <div className="space-y-4">
+            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
+              <h3 className="mb-3 font-semibold">XML External Entity (XXE) Testing</h3>
+              <div className="space-y-3">
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Target URL</label>
+                  <input
+                    type="url"
+                    value={testConfig.target}
+                    onChange={(e) => setTestConfig({ ...testConfig, target: e.target.value })}
+                    placeholder="https://example.com/api/xml"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  />
+                </div>
+                <button
+                  onClick={handleTestXXE}
+                  disabled={testing}
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                >
+                  <IconPlayerPlay size={18} />
+                  {testing ? 'Testing...' : 'Test XXE Vulnerability'}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              {injectionTests
+                .filter((test) => test.type === 'xxe')
+                .map((test, index) => (
+                  <div
+                    key={index}
+                    className={cn(
+                      'rounded-lg border p-4',
+                      test.result === 'vulnerable'
+                        ? 'border-red-300 bg-red-50 dark:border-red-700 dark:bg-red-900/20'
+                        : 'border-green-300 bg-green-50 dark:border-green-700 dark:bg-green-900/20'
+                    )}
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <IconBug size={18} />
+                      <span className={cn(
+                        'rounded px-2 py-0.5 text-xs font-bold uppercase',
+                        test.result === 'vulnerable'
+                          ? 'bg-red-200 text-red-900 dark:bg-red-800 dark:text-red-100'
+                          : 'bg-green-200 text-green-900 dark:bg-green-800 dark:text-green-100'
+                      )}>
+                        {test.result}
+                      </span>
+                    </div>
+                    <div className="space-y-1 text-sm">
+                      <p><strong>Target:</strong> {test.target}</p>
+                      <p><strong>Payload:</strong> <code className="font-mono text-xs">{test.payload}</code></p>
+                      {test.evidence && <p><strong>Evidence:</strong> <code className="font-mono text-xs">{test.evidence}</code></p>}
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+
+        {/* Deserialization Tab */}
+        {activeTab === 'deserialization' && (
+          <div className="space-y-4">
+            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
+              <h3 className="mb-3 font-semibold">Insecure Deserialization Testing</h3>
+              <div className="space-y-3">
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Target URL</label>
+                  <input
+                    type="url"
+                    value={testConfig.target}
+                    onChange={(e) => setTestConfig({ ...testConfig, target: e.target.value })}
+                    placeholder="https://example.com/api/deserialize"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium">Language/Platform</label>
+                  <select
+                    value={testConfig.language}
+                    onChange={(e) => setTestConfig({ ...testConfig, language: e.target.value as any })}
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  >
+                    <option value="java">Java</option>
+                    <option value="php">PHP</option>
+                    <option value="python">Python</option>
+                    <option value="ruby">Ruby</option>
+                    <option value="dotnet">.NET</option>
+                  </select>
+                </div>
+                <button
+                  onClick={handleTestDeserialization}
+                  disabled={testing}
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                >
+                  <IconPlayerPlay size={18} />
+                  {testing ? 'Testing...' : 'Test Deserialization'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Collaborator Tab */}
+        {activeTab === 'collaborator' && (
+          <div className="space-y-4">
+            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
+              <h3 className="mb-3 font-semibold">Out-of-Band Collaborator</h3>
+              <p className="mb-3 text-sm text-gray-600 dark:text-gray-400">
+                The collaborator allows you to detect vulnerabilities that use out-of-band techniques, such as blind SQL injection, XXE, and SSRF.
+              </p>
+              <div className="flex gap-2">
+                <button
+                  onClick={handleStartCollaborator}
+                  disabled={!!collaboratorUrl}
+                  className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                >
+                  <IconPlayerPlay size={18} />
+                  {collaboratorUrl ? 'Collaborator Running' : 'Start Collaborator'}
+                </button>
+                {collaboratorUrl && (
+                  <button
+                    onClick={loadCollaboratorInteractions}
+                    className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+                  >
+                    <IconRefresh size={18} />
+                    Refresh
+                  </button>
+                )}
+              </div>
+              {collaboratorUrl && (
+                <div className="mt-3 rounded-lg border border-blue-300 bg-blue-50 p-3 dark:border-blue-700 dark:bg-blue-900/20">
+                  <p className="text-sm font-medium">Collaborator URL:</p>
+                  <code className="mt-1 block break-all font-mono text-sm">{collaboratorUrl}</code>
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="font-semibold">Interactions</h3>
+              {collaboratorInteractions.map((interaction, index) => (
+                <div
+                  key={index}
+                  className="rounded-lg border border-green-300 bg-green-50 p-4 dark:border-green-700 dark:bg-green-900/20"
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <IconNetwork size={18} />
+                    <span className="rounded bg-green-200 px-2 py-0.5 text-xs font-bold uppercase text-green-900 dark:bg-green-800 dark:text-green-100">
+                      {interaction.protocol}
+                    </span>
+                    <span className="text-xs text-gray-600 dark:text-gray-400">
+                      {new Date(interaction.timestamp).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="space-y-1 text-sm">
+                    <p><strong>Subdomain:</strong> {interaction.subdomain}</p>
+                    <p><strong>Source IP:</strong> {interaction.sourceIp}</p>
+                    {interaction.data && (
+                      <p><strong>Data:</strong> <code className="font-mono text-xs">{interaction.data}</code></p>
+                    )}
+                    {interaction.relatedTest && (
+                      <p><strong>Related Test:</strong> {interaction.relatedTest}</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+
+              {collaboratorInteractions.length === 0 && (
+                <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+                  <IconNetwork size={48} className="mx-auto mb-3 text-gray-400" />
+                  <p className="text-gray-600 dark:text-gray-400">
+                    No interactions received yet. Use the collaborator URL in your payloads to detect out-of-band vulnerabilities.
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
