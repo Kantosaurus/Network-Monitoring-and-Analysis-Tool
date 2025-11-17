@@ -76,42 +76,42 @@ export const TitleBar: React.FC = () => {
   return (
     <div
       ref={titleBarRef}
-      className="flex items-center justify-between h-10 px-4 select-none glass dark:glass-dark"
+      className="flex items-center justify-between h-12 px-5 select-none bg-white/80 backdrop-blur-xl border-b border-gray-200"
       style={{ WebkitAppRegion: 'drag' } as React.CSSProperties}
     >
       <div className="flex items-center gap-3">
-        <div className="h-5 w-5 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
-          <div className="h-2 w-2 bg-white rounded-sm" />
+        <div className="h-6 w-6 rounded-lg bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-sm">
+          <div className="h-2.5 w-2.5 bg-white rounded-sm" />
         </div>
-        <span className="text-sm font-medium text-gray-900 dark:text-white">
-          Network Monitor
+        <span className="text-sm font-semibold text-black font-mono tracking-tight">
+          NMAT
         </span>
       </div>
 
-      <div className="flex items-center gap-1" style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}>
+      <div className="flex items-center gap-2" style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}>
         <button
           data-titlebar="minimize"
           onClick={handleMinimize}
-          className="h-7 w-10 flex items-center justify-center rounded-lg hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-200 text-gray-900 dark:text-white"
+          className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-all duration-150 text-black"
           aria-label="Minimize"
         >
-          <IconMinus size={16} />
+          <IconMinus size={14} />
         </button>
         <button
           data-titlebar="maximize"
           onClick={handleMaximize}
-          className="h-7 w-10 flex items-center justify-center rounded-lg hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-200 text-gray-900 dark:text-white"
+          className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-all duration-150 text-black"
           aria-label={isMaximized ? "Restore" : "Maximize"}
         >
-          <IconMaximize size={14} />
+          <IconMaximize size={12} />
         </button>
         <button
           data-titlebar="close"
           onClick={handleClose}
-          className="h-7 w-10 flex items-center justify-center rounded-lg hover:bg-red-500 hover:text-white transition-all duration-200 text-gray-900 dark:text-white"
+          className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-red-500 hover:text-white transition-all duration-150 text-gray-700"
           aria-label="Close"
         >
-          <IconX size={16} />
+          <IconX size={14} />
         </button>
       </div>
     </div>

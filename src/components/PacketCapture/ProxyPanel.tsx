@@ -840,33 +840,35 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="w-full max-w-7xl h-[95vh] bg-white dark:bg-neutral-900 rounded-lg shadow-xl flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/40 backdrop-blur-sm">
+      <div className="apple-card rounded-3xl shadow-2xl flex flex-col overflow-hidden w-full max-w-7xl max-h-[95vh]">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-700 px-6 py-4">
-          <div>
-            <h2 className="text-xl font-bold flex items-center gap-2">
-              <IconCircleDot className="text-purple-600" />
-              HTTP/HTTPS Intercepting Proxy
-            </h2>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">
-              Intercept, inspect, and modify HTTP/HTTPS traffic
-            </p>
+        <div className="flex items-center justify-between border-b border-gray-200 px-6 py-5">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center">
+              <IconCircleDot size={20} className="text-white" />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-black uppercase tracking-wide">HTTP/HTTPS Intercepting Proxy</h2>
+              <p className="text-xs text-black opacity-60">
+                Intercept, inspect, and modify HTTP/HTTPS traffic
+              </p>
+            </div>
           </div>
           <button
             onClick={onClose}
-            className="rounded-lg p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+            className="apple-button rounded-xl px-4 py-2.5 text-sm font-semibold text-black"
           >
-            <IconX size={20} />
+            Close
           </button>
         </div>
 
         {/* Proxy Controls */}
-        <div className="border-b border-neutral-200 dark:border-neutral-700 px-6 py-3 flex items-center gap-3">
+        <div className="border-b border-gray-200 px-6 py-3.5 flex items-center gap-3 bg-gray-50">
           {!proxyRunning ? (
             <button
               onClick={handleStartProxy}
-              className="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700"
+              className="flex items-center gap-2 rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm"
             >
               <IconPlayerPlay size={16} />
               Start Proxy (Port {settings.proxyPort})
@@ -874,7 +876,7 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
           ) : (
             <button
               onClick={handleStopProxy}
-              className="flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
+              className="flex items-center gap-2 rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 shadow-sm"
             >
               <IconPlayerStop size={16} />
               Stop Proxy
@@ -885,10 +887,10 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
             onClick={handleToggleIntercept}
             disabled={!proxyRunning}
             className={cn(
-              'flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-50',
+              'flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold disabled:opacity-50 shadow-sm',
               interceptEnabled
                 ? 'bg-orange-600 text-white hover:bg-orange-700'
-                : 'bg-neutral-200 text-neutral-700 hover:bg-neutral-300 dark:bg-neutral-700 dark:text-neutral-300'
+                : 'bg-gray-200 text-black hover:bg-gray-300'
             )}
           >
             <IconFilter size={16} />
@@ -918,17 +920,16 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-neutral-200 dark:border-neutral-700">
+        <div className="flex border-b border-gray-200 px-6 bg-gray-50 overflow-x-auto">
           <button
             onClick={() => setActiveTab('intercept')}
             className={cn(
-              'flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors',
+              'flex items-center gap-2 px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
               activeTab === 'intercept'
-                ? 'border-purple-600 text-purple-600'
-                : 'border-transparent text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+                ? 'border-purple-600 text-purple-600 bg-white'
+                : 'border-transparent text-black opacity-60 hover:opacity-100'
             )}
           >
-            <IconFilter size={18} />
             Intercept
             {interceptQueue.length > 0 && (
               <span className="rounded-full bg-orange-600 px-2 py-0.5 text-xs text-white">
@@ -939,16 +940,15 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
           <button
             onClick={() => setActiveTab('history')}
             className={cn(
-              'flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors',
+              'flex items-center gap-2 px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
               activeTab === 'history'
-                ? 'border-purple-600 text-purple-600'
-                : 'border-transparent text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+                ? 'border-purple-600 text-purple-600 bg-white'
+                : 'border-transparent text-black opacity-60 hover:opacity-100'
             )}
           >
-            <IconHistory size={18} />
             History
             {proxyHistory.length > 0 && (
-              <span className="rounded-full bg-neutral-300 dark:bg-neutral-600 px-2 py-0.5 text-xs">
+              <span className="rounded-full bg-gray-300 px-2 py-0.5 text-xs text-black">
                 {proxyHistory.length}
               </span>
             )}
@@ -956,28 +956,26 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
           <button
             onClick={() => setActiveTab('repeater')}
             className={cn(
-              'flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors',
+              'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
               activeTab === 'repeater'
-                ? 'border-purple-600 text-purple-600'
-                : 'border-transparent text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+                ? 'border-purple-600 text-purple-600 bg-white'
+                : 'border-transparent text-black opacity-60 hover:opacity-100'
             )}
           >
-            <IconRepeat size={18} />
             Repeater
           </button>
           <button
             onClick={() => setActiveTab('target')}
             className={cn(
-              'flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors',
+              'flex items-center gap-2 px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
               activeTab === 'target'
-                ? 'border-purple-600 text-purple-600'
-                : 'border-transparent text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+                ? 'border-purple-600 text-purple-600 bg-white'
+                : 'border-transparent text-black opacity-60 hover:opacity-100'
             )}
           >
-            <IconSitemap size={18} />
             Target
             {siteMap.length > 0 && (
-              <span className="rounded-full bg-neutral-300 dark:bg-neutral-600 px-2 py-0.5 text-xs">
+              <span className="rounded-full bg-gray-300 px-2 py-0.5 text-xs text-black">
                 {siteMap.length}
               </span>
             )}
@@ -985,13 +983,12 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
           <button
             onClick={() => setActiveTab('spider')}
             className={cn(
-              'flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors',
+              'flex items-center gap-2 px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
               activeTab === 'spider'
-                ? 'border-purple-600 text-purple-600'
-                : 'border-transparent text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+                ? 'border-purple-600 text-purple-600 bg-white'
+                : 'border-transparent text-black opacity-60 hover:opacity-100'
             )}
           >
-            <IconRadar size={18} />
             Spider
             {spiderRunning && (
               <span className="rounded-full bg-orange-600 px-2 py-0.5 text-xs text-white animate-pulse">
@@ -1002,20 +999,19 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
           <button
             onClick={() => setActiveTab('scanner')}
             className={cn(
-              'flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors',
+              'flex items-center gap-2 px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
               activeTab === 'scanner'
-                ? 'border-purple-600 text-purple-600'
-                : 'border-transparent text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+                ? 'border-purple-600 text-purple-600 bg-white'
+                : 'border-transparent text-black opacity-60 hover:opacity-100'
             )}
           >
-            <IconShieldCheck size={18} />
             Scanner
             {vulnerabilityIssues.length > 0 && (
               <span className={cn(
                 "rounded-full px-2 py-0.5 text-xs",
                 vulnerabilityIssues.some(i => i.severity === 'critical' || i.severity === 'high')
                   ? "bg-red-600 text-white"
-                  : "bg-neutral-300 dark:bg-neutral-600"
+                  : "bg-gray-300 text-black"
               )}>
                 {vulnerabilityIssues.length}
               </span>
@@ -1024,13 +1020,12 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
           <button
             onClick={() => setActiveTab('intruder')}
             className={cn(
-              'flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors',
+              'flex items-center gap-2 px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
               activeTab === 'intruder'
-                ? 'border-purple-600 text-purple-600'
-                : 'border-transparent text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+                ? 'border-purple-600 text-purple-600 bg-white'
+                : 'border-transparent text-black opacity-60 hover:opacity-100'
             )}
           >
-            <IconBolt size={18} />
             Intruder
             {intruderAttack.status === 'running' && (
               <span className="rounded-full bg-orange-600 px-2 py-0.5 text-xs text-white animate-pulse">
@@ -1041,16 +1036,15 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
           <button
             onClick={() => setActiveTab('sequencer')}
             className={cn(
-              'flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors',
+              'flex items-center gap-2 px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
               activeTab === 'sequencer'
-                ? 'border-purple-600 text-purple-600'
-                : 'border-transparent text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+                ? 'border-purple-600 text-purple-600 bg-white'
+                : 'border-transparent text-black opacity-60 hover:opacity-100'
             )}
           >
-            <IconFingerprint size={18} />
             Sequencer
             {sequencerTokens.length > 0 && (
-              <span className="rounded-full bg-neutral-300 dark:bg-neutral-600 px-2 py-0.5 text-xs">
+              <span className="rounded-full bg-gray-300 px-2 py-0.5 text-xs text-black">
                 {sequencerTokens.length}
               </span>
             )}
@@ -1058,28 +1052,26 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
           <button
             onClick={() => setActiveTab('decoder')}
             className={cn(
-              'flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors',
+              'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
               activeTab === 'decoder'
-                ? 'border-purple-600 text-purple-600'
-                : 'border-transparent text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+                ? 'border-purple-600 text-purple-600 bg-white'
+                : 'border-transparent text-black opacity-60 hover:opacity-100'
             )}
           >
-            <IconCode size={18} />
             Decoder
           </button>
           <button
             onClick={() => setActiveTab('comparer')}
             className={cn(
-              'flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors',
+              'flex items-center gap-2 px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
               activeTab === 'comparer'
-                ? 'border-purple-600 text-purple-600'
-                : 'border-transparent text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+                ? 'border-purple-600 text-purple-600 bg-white'
+                : 'border-transparent text-black opacity-60 hover:opacity-100'
             )}
           >
-            <IconColumns size={18} />
             Comparer
             {comparerItems.length > 0 && (
-              <span className="rounded-full bg-neutral-300 dark:bg-neutral-600 px-2 py-0.5 text-xs">
+              <span className="rounded-full bg-gray-300 px-2 py-0.5 text-xs text-black">
                 {comparerItems.length}
               </span>
             )}
@@ -1087,19 +1079,18 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
           <button
             onClick={() => setActiveTab('settings')}
             className={cn(
-              'flex items-center gap-2 px-6 py-3 text-sm font-medium border-b-2 transition-colors',
+              'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
               activeTab === 'settings'
-                ? 'border-purple-600 text-purple-600'
-                : 'border-transparent text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+                ? 'border-purple-600 text-purple-600 bg-white'
+                : 'border-transparent text-black opacity-60 hover:opacity-100'
             )}
           >
-            <IconSettings size={18} />
             Settings
           </button>
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-auto">
+        <div className="flex-1 overflow-auto bg-white">
           {/* Intercept Tab */}
           {activeTab === 'intercept' && (
             <div className="h-full flex flex-col">
@@ -1109,14 +1100,14 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
                   <div className="flex items-center gap-3">
                     <button
                       onClick={handleForwardIntercept}
-                      className="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700"
+                      className="flex items-center gap-2 rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm"
                     >
                       <IconArrowForward size={16} />
                       Forward
                     </button>
                     <button
                       onClick={handleDropIntercept}
-                      className="flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
+                      className="flex items-center gap-2 rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 shadow-sm"
                     >
                       <IconTrash size={16} />
                       Drop
@@ -1275,7 +1266,7 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
                     <div className="p-3 border-b border-neutral-200 dark:border-neutral-700 flex items-center gap-2">
                       <button
                         onClick={() => handleSendToRepeater(selectedHistoryItem)}
-                        className="flex items-center gap-2 rounded-lg bg-purple-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-purple-700"
+                        className="flex items-center gap-2 rounded-xl bg-purple-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-purple-700 shadow-sm"
                       >
                         <IconRepeat size={14} />
                         Send to Repeater
@@ -1365,7 +1356,7 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
                 <div className="flex items-center gap-3">
                   <button
                     onClick={handleRepeatRequest}
-                    className="flex items-center gap-2 rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700"
+                    className="flex items-center gap-2 rounded-xl bg-purple-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-purple-700 shadow-sm"
                   >
                     <IconBolt size={16} />
                     Send Request
@@ -2071,7 +2062,7 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
                         }
                       }}
                       className={cn(
-                        'w-full rounded-lg px-4 py-2 text-sm font-medium text-white',
+                        'w-full rounded-xl px-4 py-2.5 text-sm font-semibold text-white shadow-sm',
                         spiderRunning ? 'bg-red-600 hover:bg-red-700' : 'bg-purple-600 hover:bg-purple-700'
                       )}
                     >
@@ -2568,7 +2559,7 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
                           setScanTasks([...scanTasks, task]);
                           setActiveScanTask(task);
                         }}
-                        className="w-full rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700"
+                        className="w-full rounded-xl bg-purple-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-purple-700 shadow-sm"
                       >
                         Start Scan
                       </button>
@@ -3046,7 +3037,7 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
                     }
                   }}
                   className={cn(
-                    "flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white",
+                    "flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-white shadow-sm",
                     intruderAttack.status === 'running' ? "bg-red-600 hover:bg-red-700" : "bg-purple-600 hover:bg-purple-700"
                   )}
                 >
@@ -3645,7 +3636,7 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
                       timestamp: Date.now() + idx,
                     })));
                   }}
-                  className="flex items-center gap-2 rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700"
+                  className="flex items-center gap-2 rounded-xl bg-purple-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-purple-700 shadow-sm"
                 >
                   <IconPlus size={16} />
                   Load Tokens
@@ -3708,7 +3699,7 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
                     setTimeout(() => setIsAnalyzing(false), 500);
                   }}
                   disabled={isAnalyzing || sequencerTokens.length === 0}
-                  className="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <IconChartBar size={16} />
                   Analyze
@@ -3891,7 +3882,7 @@ const ProxyPanel: React.FC<ProxyPanelProps> = ({ onClose }) => {
                       output: '',
                     }]);
                   }}
-                  className="flex items-center gap-2 rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700"
+                  className="flex items-center gap-2 rounded-xl bg-purple-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-purple-700 shadow-sm"
                 >
                   <IconPlus size={16} />
                   New Chain

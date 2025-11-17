@@ -5,15 +5,13 @@ import './index.css'
 
 console.log("main.tsx executing...");
 
-// Apply dark mode to body
-document.body.classList.add('dark');
+// Remove dark mode - using light Apple theme
+document.body.classList.remove('dark');
 
 try {
   ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-      <div className="dark">
-        <App />
-      </div>
+      <App />
     </React.StrictMode>,
   );
   console.log("App rendered successfully");

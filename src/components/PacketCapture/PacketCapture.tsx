@@ -189,12 +189,12 @@ export const PacketCapture: React.FC = () => {
   return (
     <div className="flex h-full flex-col gap-4">
       {/* Controls */}
-      <div ref={controlsRef} className="flex flex-wrap items-center gap-2">
+      <div ref={controlsRef} className="flex flex-wrap items-center gap-3">
         <select
           value={selectedInterface}
           onChange={(e) => setSelectedInterface(e.target.value)}
           disabled={isCapturing}
-          className="glass-button dark:glass-button-dark rounded-xl px-4 py-2 text-sm font-medium text-gray-900 dark:text-white disabled:opacity-50"
+          className="apple-button rounded-xl px-4 py-2 text-sm font-medium text-black disabled:opacity-40"
         >
           <option value="">Select Interface...</option>
           {interfaces.map((iface) => (
@@ -207,7 +207,7 @@ export const PacketCapture: React.FC = () => {
         <button
           onClick={handleStartCapture}
           disabled={isCapturing || !selectedInterface}
-          className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 px-4 py-2 text-sm font-medium text-white shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
+          className="flex items-center gap-2 rounded-xl bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-sm"
         >
           <IconPlayerPlay size={16} />
           Start
@@ -216,7 +216,7 @@ export const PacketCapture: React.FC = () => {
         <button
           onClick={handleStopCapture}
           disabled={!isCapturing}
-          className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-red-500 to-pink-500 px-4 py-2 text-sm font-medium text-white shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
+          className="flex items-center gap-2 rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-sm"
         >
           <IconPlayerStop size={16} />
           Stop
@@ -224,7 +224,7 @@ export const PacketCapture: React.FC = () => {
 
         <button
           onClick={handleClear}
-          className="flex items-center gap-2 glass-button dark:glass-button-dark rounded-xl px-4 py-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="flex items-center gap-2 apple-button rounded-xl px-4 py-2 text-sm font-medium text-black"
         >
           <IconTrash size={16} />
           Clear
@@ -233,7 +233,7 @@ export const PacketCapture: React.FC = () => {
         <button
           onClick={handleLoadPcap}
           disabled={isCapturing}
-          className="flex items-center gap-2 glass-button dark:glass-button-dark rounded-xl px-4 py-2 text-sm font-medium text-purple-600 dark:text-purple-400 disabled:opacity-50"
+          className="flex items-center gap-2 apple-button rounded-xl px-4 py-2 text-sm font-medium text-purple-600 disabled:opacity-40"
         >
           <IconFileExport size={16} />
           Load PCAP
@@ -244,61 +244,66 @@ export const PacketCapture: React.FC = () => {
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           placeholder="Filter packets..."
-          className="glass-button dark:glass-button-dark rounded-xl px-4 py-2 text-sm font-medium text-gray-900 dark:text-white placeholder:text-gray-500"
+          className="apple-input rounded-xl px-4 py-2 text-sm font-medium text-black placeholder:text-black placeholder:opacity-40 flex-1 min-w-[200px]"
         />
 
         <div className="ml-auto flex gap-2">
           <button
             onClick={() => setShowStatistics(true)}
-            className="flex items-center gap-2 glass-button dark:glass-button-dark rounded-xl px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400"
+            className="flex items-center gap-2 apple-button rounded-xl px-3 py-2 text-sm font-medium text-blue-600 hover:shadow-sm"
+            title="Statistics"
           >
-            <IconChartBar size={16} />
+            <IconChartBar size={18} />
           </button>
           <button
             onClick={() => setShowConfiguration(true)}
-            className="flex items-center gap-2 glass-button dark:glass-button-dark rounded-xl px-3 py-2 text-sm font-medium text-purple-600 dark:text-purple-400"
+            className="flex items-center gap-2 apple-button rounded-xl px-3 py-2 text-sm font-medium text-purple-600 hover:shadow-sm"
+            title="Configuration"
           >
-            <IconSettings size={16} />
+            <IconSettings size={18} />
           </button>
           <button
             onClick={() => setShowLuaEditor(true)}
-            className="flex items-center gap-2 glass-button dark:glass-button-dark rounded-xl px-3 py-2 text-sm font-medium text-green-600 dark:text-green-400"
+            className="flex items-center gap-2 apple-button rounded-xl px-3 py-2 text-sm font-medium text-green-600 hover:shadow-sm"
+            title="Lua Scripts"
           >
-            <IconScript size={16} />
+            <IconScript size={18} />
           </button>
           <button
             onClick={() => setShowSecurityAnalysis(true)}
-            className="flex items-center gap-2 glass-button dark:glass-button-dark rounded-xl px-3 py-2 text-sm font-medium text-red-600 dark:text-red-400"
+            className="flex items-center gap-2 apple-button rounded-xl px-3 py-2 text-sm font-medium text-red-600 hover:shadow-sm"
+            title="Security Analysis"
           >
-            <IconAlertTriangle size={16} />
+            <IconAlertTriangle size={18} />
           </button>
           <button
             onClick={() => setShowPentesting(true)}
-            className="flex items-center gap-2 glass-button dark:glass-button-dark rounded-xl px-3 py-2 text-sm font-medium text-orange-600 dark:text-orange-400"
+            className="flex items-center gap-2 apple-button rounded-xl px-3 py-2 text-sm font-medium text-orange-600 hover:shadow-sm"
+            title="Pentesting Tools"
           >
-            <IconShieldLock size={16} />
+            <IconShieldLock size={18} />
           </button>
           <button
             onClick={() => setShowImportExport(true)}
-            className="flex items-center gap-2 glass-button dark:glass-button-dark rounded-xl px-3 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-400"
+            className="flex items-center gap-2 apple-button rounded-xl px-3 py-2 text-sm font-medium text-indigo-600 hover:shadow-sm"
+            title="Import/Export"
           >
-            <IconFileImport size={16} />
+            <IconFileImport size={18} />
           </button>
           <button
             onClick={() => setShowUtilities(true)}
-            className="flex items-center gap-2 glass-button dark:glass-button-dark rounded-xl px-3 py-2 text-sm font-medium text-teal-600 dark:text-teal-400"
+            className="flex items-center gap-2 apple-button rounded-xl px-3 py-2 text-sm font-medium text-teal-600 hover:shadow-sm"
+            title="Utilities"
           >
-            <IconTerminal size={16} />
+            <IconTerminal size={18} />
           </button>
-          {/* Proxy modal removed from Packet Capture; HTTP Proxy page contains the intercepting proxy UI */}
         </div>
       </div>
 
       {/* Features (from docs/wireshark.md) */}
-      <div className="glass-card dark:glass-card-dark rounded-xl p-4">
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Features</h3>
-        <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">Key packet capture & analysis capabilities (derived from Wireshark):</p>
-        <ul className="mt-3 text-xs list-disc list-inside space-y-1 text-gray-800 dark:text-gray-200">
+      <div className="apple-card rounded-2xl p-5">
+        <h3 className="text-sm font-bold text-black uppercase tracking-wide mb-3">Wireshark Capabilities</h3>
+        <ul className="text-xs list-disc list-inside space-y-2 text-black opacity-80 font-mono leading-relaxed">
           <li>Real-time capture from Ethernet/Wi‑Fi/USB/loopback and offline PCAP/PCAPNG analysis</li>
           <li>Promiscuous / monitor modes (where supported) and remote capture support</li>
           <li>Custom capture (BPF) filters, ring buffers and time/size-based rotation</li>
@@ -313,22 +318,22 @@ export const PacketCapture: React.FC = () => {
 
       {/* Advanced Options */}
       {showAdvanced && (
-        <div className="glass-card dark:glass-card-dark rounded-xl p-4">
-          <h3 className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">Advanced Capture Options</h3>
+        <div className="apple-card rounded-2xl p-5">
+          <h3 className="mb-4 text-sm font-bold text-black uppercase tracking-wide">Advanced Capture Options</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="col-span-full">
-              <label className="block text-xs font-medium mb-1 text-gray-700 dark:text-gray-300">BPF Filter</label>
+              <label className="block text-xs font-semibold mb-2 text-black opacity-70 uppercase tracking-wide">BPF Filter</label>
               <input
                 type="text"
                 value={bpfFilter}
                 onChange={(e) => setBpfFilter(e.target.value)}
                 placeholder="e.g., tcp port 443"
-                className="w-full glass-button dark:glass-button-dark rounded-lg px-3 py-1.5 text-sm text-gray-900 dark:text-white"
+                className="w-full apple-input rounded-xl px-4 py-2 text-sm text-black"
                 disabled={isCapturing}
               />
             </div>
             <div>
-              <label className="flex items-center gap-2">
+              <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={promiscuous}
@@ -336,11 +341,11 @@ export const PacketCapture: React.FC = () => {
                   disabled={isCapturing}
                   className="rounded"
                 />
-                <span className="text-sm font-medium text-gray-900 dark:text-white">Promiscuous Mode</span>
+                <span className="text-sm font-medium text-black">Promiscuous Mode</span>
               </label>
             </div>
             <div>
-              <label className="flex items-center gap-2">
+              <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={monitorMode}
@@ -348,11 +353,11 @@ export const PacketCapture: React.FC = () => {
                   disabled={isCapturing}
                   className="rounded"
                 />
-                <span className="text-sm font-medium text-gray-900 dark:text-white">Monitor Mode</span>
+                <span className="text-sm font-medium text-black">Monitor Mode</span>
               </label>
             </div>
             <div>
-              <label className="flex items-center gap-2">
+              <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={ringBuffer}
@@ -360,7 +365,7 @@ export const PacketCapture: React.FC = () => {
                   disabled={isCapturing}
                   className="rounded"
                 />
-                <span className="text-sm font-medium text-gray-900 dark:text-white">Ring Buffer</span>
+                <span className="text-sm font-medium text-black">Ring Buffer</span>
               </label>
             </div>
           </div>
@@ -368,24 +373,24 @@ export const PacketCapture: React.FC = () => {
       )}
 
       {/* Stats */}
-      <div className="flex gap-4">
-        <div className="glass-card dark:glass-card-dark rounded-xl px-4 py-3">
-          <div className="text-xs text-gray-600 dark:text-gray-400">Status</div>
-          <div className={cn("text-sm font-semibold", isCapturing ? "text-green-600" : "text-gray-600 dark:text-gray-400")}>
+      <div className="flex gap-3">
+        <div className="apple-card rounded-xl px-5 py-3">
+          <div className="text-xs text-black opacity-60 uppercase tracking-wide font-semibold mb-1">Status</div>
+          <div className={cn("text-sm font-bold font-mono", isCapturing ? "text-green-600" : "text-black opacity-70")}>
             {isCapturing ? 'Capturing...' : 'Ready'}
           </div>
         </div>
-        <div className="glass-card dark:glass-card-dark rounded-xl px-4 py-3">
-          <div className="text-xs text-gray-600 dark:text-gray-400">Packets</div>
-          <div className="text-sm font-semibold text-gray-900 dark:text-white">{packets.length}</div>
+        <div className="apple-card rounded-xl px-5 py-3">
+          <div className="text-xs text-black opacity-60 uppercase tracking-wide font-semibold mb-1">Packets</div>
+          <div className="text-sm font-bold font-mono text-black">{packets.length}</div>
         </div>
-        <div className="glass-card dark:glass-card-dark rounded-xl px-4 py-3">
-          <div className="text-xs text-gray-600 dark:text-gray-400">Displayed</div>
-          <div className="text-sm font-semibold text-gray-900 dark:text-white">{filteredPackets.length}</div>
+        <div className="apple-card rounded-xl px-5 py-3">
+          <div className="text-xs text-black opacity-60 uppercase tracking-wide font-semibold mb-1">Displayed</div>
+          <div className="text-sm font-bold font-mono text-black">{filteredPackets.length}</div>
         </div>
-        <div className="glass-card dark:glass-card-dark rounded-xl px-4 py-3">
-          <div className="text-xs text-gray-600 dark:text-gray-400">Alerts</div>
-          <div className="text-sm font-semibold text-red-600">{securityAlerts.length + expertAlerts.length}</div>
+        <div className="apple-card rounded-xl px-5 py-3">
+          <div className="text-xs text-black opacity-60 uppercase tracking-wide font-semibold mb-1">Alerts</div>
+          <div className="text-sm font-bold font-mono text-red-600">{securityAlerts.length + expertAlerts.length}</div>
         </div>
       </div>
 
@@ -415,29 +420,29 @@ export const PacketCapture: React.FC = () => {
         >
           {/* Packets View */}
           <div className="min-w-full h-full snap-start flex flex-col gap-4 px-4">
-            <div className={cn("glass-card dark:glass-card-dark rounded-xl overflow-hidden flex flex-col", selectedPacket ? "flex-[0.6]" : "flex-1")}>
-              <div className="border-b border-white/20 dark:border-gray-700/50 px-4 py-3">
-                <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Packets</h3>
+            <div className={cn("apple-card rounded-2xl overflow-hidden flex flex-col", selectedPacket ? "flex-[0.6]" : "flex-1")}>
+              <div className="border-b border-gray-200 px-5 py-4">
+                <h3 className="text-sm font-bold text-black uppercase tracking-wide">Packets</h3>
               </div>
               <div className="flex-1 overflow-auto">
                 <table className="w-full text-xs">
-                  <thead className="sticky top-0 glass-card dark:glass-card-dark">
+                  <thead className="sticky top-0 bg-white border-b border-gray-200">
                     <tr>
-                      <th className="p-2 text-left text-gray-900 dark:text-white font-medium">No.</th>
-                      <th className="p-2 text-left text-gray-900 dark:text-white font-medium">Time</th>
-                      <th className="p-2 text-left text-gray-900 dark:text-white font-medium">Source</th>
-                      <th className="p-2 text-left text-gray-900 dark:text-white font-medium">Destination</th>
-                      <th className="p-2 text-left text-gray-900 dark:text-white font-medium">Protocol</th>
-                      <th className="p-2 text-left text-gray-900 dark:text-white font-medium">Length</th>
-                      <th className="p-2 text-left text-gray-900 dark:text-white font-medium">Info</th>
+                      <th className="px-3 py-3 text-left text-black font-semibold">No.</th>
+                      <th className="px-3 py-3 text-left text-black font-semibold">Time</th>
+                      <th className="px-3 py-3 text-left text-black font-semibold">Source</th>
+                      <th className="px-3 py-3 text-left text-black font-semibold">Destination</th>
+                      <th className="px-3 py-3 text-left text-black font-semibold">Protocol</th>
+                      <th className="px-3 py-3 text-left text-black font-semibold">Length</th>
+                      <th className="px-3 py-3 text-left text-black font-semibold">Info</th>
                     </tr>
                   </thead>
                   <tbody>
                     {filteredPackets.length === 0 ? (
                       <tr>
-                        <td colSpan={7} className="p-8 text-center text-gray-600 dark:text-gray-400">
-                          <IconNetwork className="mx-auto mb-2 opacity-30" size={48} />
-                          <p>No packets captured yet</p>
+                        <td colSpan={7} className="p-8 text-center text-black opacity-60">
+                          <IconNetwork className="mx-auto mb-3 opacity-30" size={48} />
+                          <p className="font-mono">No packets captured yet</p>
                         </td>
                       </tr>
                     ) : (
@@ -446,27 +451,27 @@ export const PacketCapture: React.FC = () => {
                           key={packet.no}
                           onClick={() => setSelectedPacket(packet)}
                           className={cn(
-                            "cursor-pointer border-b border-white/10 dark:border-gray-800 hover:bg-white/20 dark:hover:bg-white/5 transition-colors",
-                            selectedPacket?.no === packet.no && "bg-purple-500/20"
+                            "cursor-pointer border-b border-gray-100 hover:bg-gray-50 transition-colors",
+                            selectedPacket?.no === packet.no && "bg-blue-50"
                           )}
                         >
-                          <td className="p-2 text-gray-900 dark:text-white">{packet.no}</td>
-                          <td className="p-2 text-gray-900 dark:text-white">{packet.relativeTime}</td>
-                          <td className="p-2 font-mono text-gray-900 dark:text-white">{packet.source}</td>
-                          <td className="p-2 font-mono text-gray-900 dark:text-white">{packet.destination}</td>
-                          <td className="p-2">
+                          <td className="px-3 py-2.5 text-black font-mono">{packet.no}</td>
+                          <td className="px-3 py-2.5 text-black font-mono">{packet.relativeTime}</td>
+                          <td className="px-3 py-2.5 font-mono text-black">{packet.source}</td>
+                          <td className="px-3 py-2.5 font-mono text-black">{packet.destination}</td>
+                          <td className="px-3 py-2.5">
                             <span className={cn(
-                              "rounded-full px-2 py-0.5 text-xs font-semibold",
-                              packet.protocol === 'TCP' && "bg-blue-500/20 text-blue-700 dark:text-blue-300",
-                              packet.protocol === 'UDP' && "bg-yellow-500/20 text-yellow-700 dark:text-yellow-300",
-                              packet.protocol === 'ICMP' && "bg-orange-500/20 text-orange-700 dark:text-orange-300",
-                              packet.protocol === 'ARP' && "bg-purple-500/20 text-purple-700 dark:text-purple-300"
+                              "rounded-full px-2 py-0.5 text-xs font-bold",
+                              packet.protocol === 'TCP' && "bg-blue-100 text-blue-700",
+                              packet.protocol === 'UDP' && "bg-yellow-100 text-yellow-700",
+                              packet.protocol === 'ICMP' && "bg-orange-100 text-orange-700",
+                              packet.protocol === 'ARP' && "bg-purple-100 text-purple-700"
                             )}>
                               {packet.protocol}
                             </span>
                           </td>
-                          <td className="p-2 text-gray-900 dark:text-white">{packet.length}</td>
-                          <td className="p-2 truncate max-w-xs text-gray-900 dark:text-white">{packet.info}</td>
+                          <td className="px-3 py-2.5 text-black font-mono">{packet.length}</td>
+                          <td className="px-3 py-2.5 truncate max-w-xs text-black font-mono">{packet.info}</td>
                         </tr>
                       ))
                     )}
@@ -477,38 +482,38 @@ export const PacketCapture: React.FC = () => {
 
             {selectedPacket && (
               <div className="grid grid-cols-2 gap-4 flex-[0.4] min-h-0">
-                <div className="glass-card dark:glass-card-dark rounded-xl overflow-hidden flex flex-col">
-                  <div className="border-b border-white/20 dark:border-gray-700/50 px-4 py-3 flex items-center justify-between">
-                    <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Packet Details</h3>
+                <div className="apple-card rounded-2xl overflow-hidden flex flex-col">
+                  <div className="border-b border-gray-200 px-5 py-4 flex items-center justify-between">
+                    <h3 className="text-sm font-bold text-black uppercase tracking-wide">Packet Details</h3>
                     <button
                       onClick={() => setSelectedPacket(null)}
-                      className="text-xs text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                      className="text-xs text-black opacity-60 hover:opacity-100 font-semibold"
                     >
                       Close
                     </button>
                   </div>
-                  <div className="flex-1 overflow-auto p-4 text-xs space-y-2 font-mono text-gray-900 dark:text-white">
-                    <div><span className="text-gray-600 dark:text-gray-400">Packet #:</span> {selectedPacket.no}</div>
-                    <div><span className="text-gray-600 dark:text-gray-400">Timestamp:</span> {selectedPacket.timestamp}</div>
-                    <div><span className="text-gray-600 dark:text-gray-400">Source:</span> {selectedPacket.source}</div>
-                    <div><span className="text-gray-600 dark:text-gray-400">Destination:</span> {selectedPacket.destination}</div>
-                    <div><span className="text-gray-600 dark:text-gray-400">Protocol:</span> {selectedPacket.protocol}</div>
-                    <div><span className="text-gray-600 dark:text-gray-400">Length:</span> {selectedPacket.length} bytes</div>
-                    {selectedPacket.srcPort && <div><span className="text-gray-600 dark:text-gray-400">Source Port:</span> {selectedPacket.srcPort}</div>}
-                    {selectedPacket.dstPort && <div><span className="text-gray-600 dark:text-gray-400">Dest Port:</span> {selectedPacket.dstPort}</div>}
-                    <div><span className="text-gray-600 dark:text-gray-400">Info:</span> {selectedPacket.info}</div>
+                  <div className="flex-1 overflow-auto p-5 text-xs space-y-2.5 font-mono text-black">
+                    <div><span className="opacity-60">Packet #:</span> {selectedPacket.no}</div>
+                    <div><span className="opacity-60">Timestamp:</span> {selectedPacket.timestamp}</div>
+                    <div><span className="opacity-60">Source:</span> {selectedPacket.source}</div>
+                    <div><span className="opacity-60">Destination:</span> {selectedPacket.destination}</div>
+                    <div><span className="opacity-60">Protocol:</span> {selectedPacket.protocol}</div>
+                    <div><span className="opacity-60">Length:</span> {selectedPacket.length} bytes</div>
+                    {selectedPacket.srcPort && <div><span className="opacity-60">Source Port:</span> {selectedPacket.srcPort}</div>}
+                    {selectedPacket.dstPort && <div><span className="opacity-60">Dest Port:</span> {selectedPacket.dstPort}</div>}
+                    <div><span className="opacity-60">Info:</span> {selectedPacket.info}</div>
                   </div>
                 </div>
 
-                <div className="glass-card dark:glass-card-dark rounded-xl overflow-hidden flex flex-col">
-                  <div className="border-b border-white/20 dark:border-gray-700/50 px-4 py-3">
-                    <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Hex View</h3>
+                <div className="apple-card rounded-2xl overflow-hidden flex flex-col">
+                  <div className="border-b border-gray-200 px-5 py-4">
+                    <h3 className="text-sm font-bold text-black uppercase tracking-wide">Hex View</h3>
                   </div>
-                  <div className="flex-1 overflow-auto p-4 font-mono text-xs whitespace-pre text-gray-900 dark:text-white">
+                  <div className="flex-1 overflow-auto p-5 font-mono text-xs whitespace-pre text-black">
                     {selectedPacket.rawBuffer ? (
                       formatHexView(selectedPacket.rawBuffer)
                     ) : (
-                      <div className="text-gray-600 dark:text-gray-400">No raw data available</div>
+                      <div className="text-black opacity-60">No raw data available</div>
                     )}
                   </div>
                 </div>
@@ -521,30 +526,30 @@ export const PacketCapture: React.FC = () => {
             {(expertAlerts.length > 0 || securityAlerts.length > 0) ? (
               <>
                 {expertAlerts.length > 0 && (
-                  <div className="flex-1 glass-card dark:glass-card-dark rounded-xl overflow-hidden flex flex-col min-h-0">
-                    <div className="border-b border-white/20 dark:border-gray-700/50 px-4 py-3 flex items-center justify-between">
+                  <div className="flex-1 apple-card rounded-2xl overflow-hidden flex flex-col min-h-0">
+                    <div className="border-b border-gray-200 px-5 py-4 flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <IconAlertTriangle size={18} className="text-orange-600" />
-                        <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Expert Alerts</h3>
-                        <span className="text-xs text-gray-600 dark:text-gray-400">({expertAlerts.length})</span>
+                        <h3 className="text-sm font-bold text-black uppercase tracking-wide">Expert Alerts</h3>
+                        <span className="text-xs text-black opacity-60 font-mono">({expertAlerts.length})</span>
                       </div>
                       <button
                         onClick={() => setExpertAlerts([])}
-                        className="text-xs text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                        className="text-xs text-black opacity-60 hover:opacity-100 font-semibold"
                       >
                         Clear
                       </button>
                     </div>
-                    <div className="flex-1 overflow-auto p-4 space-y-2">
+                    <div className="flex-1 overflow-auto p-5 space-y-3">
                       {expertAlerts.map((alert, idx) => (
                         <div
                           key={idx}
-                          className="glass-button dark:glass-button-dark rounded-xl p-3 text-xs"
+                          className="apple-button rounded-xl p-4 text-xs hover:shadow-sm"
                         >
-                          <div className="flex items-center gap-2 mb-1 flex-wrap">
+                          <div className="flex items-center gap-2 mb-2 flex-wrap">
                             <span
                               className={cn(
-                                'text-xs font-semibold uppercase',
+                                'text-xs font-bold uppercase',
                                 alert.severity === 'critical' && 'text-red-600',
                                 alert.severity === 'high' && 'text-orange-600',
                                 alert.severity === 'medium' && 'text-yellow-600',
@@ -553,13 +558,13 @@ export const PacketCapture: React.FC = () => {
                             >
                               {alert.severity}
                             </span>
-                            <span className="text-gray-400">•</span>
-                            <span className="text-gray-600 dark:text-gray-400">{alert.category}</span>
-                            <span className="text-gray-400">•</span>
-                            <span className="font-medium text-gray-900 dark:text-white">{alert.protocol}</span>
+                            <span className="text-black opacity-30">•</span>
+                            <span className="text-black opacity-70">{alert.category}</span>
+                            <span className="text-black opacity-30">•</span>
+                            <span className="font-semibold text-black">{alert.protocol}</span>
                           </div>
-                          <div className="font-medium mb-1 text-gray-900 dark:text-white">{alert.message}</div>
-                          <div className="text-gray-600 dark:text-gray-400">{alert.details}</div>
+                          <div className="font-semibold mb-1 text-black">{alert.message}</div>
+                          <div className="text-black opacity-70 font-mono">{alert.details}</div>
                         </div>
                       ))}
                     </div>
@@ -567,28 +572,28 @@ export const PacketCapture: React.FC = () => {
                 )}
 
                 {securityAlerts.length > 0 && (
-                  <div className="flex-1 glass-card dark:glass-card-dark rounded-xl overflow-hidden flex flex-col min-h-0">
-                    <div className="border-b border-white/20 dark:border-gray-700/50 px-4 py-3 flex items-center justify-between">
-                      <h3 className="text-sm font-semibold flex items-center gap-2 text-red-600">
-                        <IconAlertTriangle size={16} />
+                  <div className="flex-1 apple-card rounded-2xl overflow-hidden flex flex-col min-h-0">
+                    <div className="border-b border-gray-200 px-5 py-4 flex items-center justify-between">
+                      <h3 className="text-sm font-bold flex items-center gap-2 text-red-600 uppercase tracking-wide">
+                        <IconAlertTriangle size={18} />
                         Security Alerts ({securityAlerts.length})
                       </h3>
                       <button
                         onClick={() => setSecurityAlerts([])}
-                        className="text-xs text-red-600 hover:text-red-800"
+                        className="text-xs text-red-600 hover:text-red-800 font-semibold"
                       >
                         Clear
                       </button>
                     </div>
-                    <div className="flex-1 overflow-auto p-4 space-y-2">
+                    <div className="flex-1 overflow-auto p-5 space-y-3">
                       {securityAlerts.map((alert, idx) => (
                         <div
                           key={idx}
-                          className="glass-button dark:glass-button-dark rounded-xl p-3 text-xs"
+                          className="apple-button rounded-xl p-4 text-xs hover:shadow-sm"
                         >
-                          <div className="flex items-center justify-between mb-1">
+                          <div className="flex items-center justify-between mb-2">
                             <span className={cn(
-                              "rounded-full px-2 py-0.5 text-xs font-bold uppercase",
+                              "rounded-full px-2.5 py-1 text-xs font-bold uppercase",
                               alert.severity === 'critical' && "bg-red-600 text-white",
                               alert.severity === 'high' && "bg-orange-600 text-white",
                               alert.severity === 'medium' && "bg-yellow-600 text-white",
@@ -596,10 +601,10 @@ export const PacketCapture: React.FC = () => {
                             )}>
                               {alert.severity}
                             </span>
-                            <span className="text-gray-600 dark:text-gray-400">#{alert.packet}</span>
+                            <span className="text-black opacity-60 font-mono">#{alert.packet}</span>
                           </div>
-                          <div className="font-semibold mb-1 text-gray-900 dark:text-white">{alert.message}</div>
-                          <div className="text-gray-600 dark:text-gray-400">{alert.details}</div>
+                          <div className="font-semibold mb-1 text-black">{alert.message}</div>
+                          <div className="text-black opacity-70 font-mono">{alert.details}</div>
                         </div>
                       ))}
                     </div>
@@ -607,11 +612,11 @@ export const PacketCapture: React.FC = () => {
                 )}
               </>
             ) : (
-              <div className="flex-1 flex items-center justify-center glass-card dark:glass-card-dark rounded-xl">
-                <div className="text-center text-gray-600 dark:text-gray-400">
-                  <IconAlertTriangle className="mx-auto mb-2 opacity-30" size={48} />
-                  <p>No alerts to display</p>
-                  <p className="text-xs mt-1">Alerts will appear here as they are detected</p>
+              <div className="flex-1 flex items-center justify-center apple-card rounded-2xl">
+                <div className="text-center text-black opacity-60">
+                  <IconAlertTriangle className="mx-auto mb-3 opacity-30" size={48} />
+                  <p className="font-mono">No alerts to display</p>
+                  <p className="text-xs mt-2 font-mono">Alerts will appear here as they are detected</p>
                 </div>
               </div>
             )}

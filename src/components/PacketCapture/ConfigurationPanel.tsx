@@ -11,6 +11,7 @@ import {
   IconColumns
 } from '@tabler/icons-react';
 import { CustomColumn, AvailableField, ColorRule } from '../../types';
+import { ModalWrapper } from './ModalWrapper';
 
 interface ConfigurationPanelProps {
   onClose: () => void;
@@ -209,25 +210,27 @@ const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="w-[90%] h-[90%] bg-white dark:bg-neutral-900 rounded-lg shadow-2xl flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/40 backdrop-blur-sm">
+      <div className="apple-card rounded-3xl shadow-2xl flex flex-col overflow-hidden w-full max-w-5xl max-h-[90vh]">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 px-6 py-4">
+        <div className="flex items-center justify-between border-b border-gray-200 px-6 py-5">
           <div className="flex items-center gap-3">
-            <IconSettings size={24} className="text-purple-600" />
-            <h2 className="text-xl font-semibold">Configuration</h2>
+            <div className="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center">
+              <IconSettings size={20} className="text-white" />
+            </div>
+            <h2 className="text-lg font-bold text-black uppercase tracking-wide">Configuration</h2>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <button
               onClick={handleSaveProfile}
-              className="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700"
+              className="flex items-center gap-2 rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm"
             >
               <IconDeviceFloppy size={16} />
               Save Profile
             </button>
             <button
               onClick={onClose}
-              className="rounded-lg px-4 py-2 text-sm font-medium hover:bg-neutral-100 dark:hover:bg-neutral-800"
+              className="apple-button rounded-xl px-4 py-2.5 text-sm font-semibold text-black"
             >
               Close
             </button>
@@ -235,7 +238,7 @@ const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({ onClose }) => {
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-neutral-200 dark:border-neutral-800 px-6">
+        <div className="flex border-b border-gray-200 px-6 bg-gray-50">
           {[
             { id: 'profiles', label: 'Profiles' },
             { id: 'columns', label: 'Custom Columns' },
@@ -244,10 +247,10 @@ const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({ onClose }) => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as TabType)}
-              className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+              className={`px-5 py-3.5 text-sm font-semibold border-b-2 transition-all ${
                 activeTab === tab.id
-                  ? 'border-purple-600 text-purple-600'
-                  : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                  ? 'border-purple-600 text-purple-600 bg-white'
+                  : 'border-transparent text-black opacity-60 hover:opacity-100'
               }`}
             >
               {tab.label}
@@ -256,15 +259,15 @@ const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({ onClose }) => {
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-auto p-6">
+        <div className="flex-1 overflow-auto p-6 bg-white">
           {/* Profiles Tab */}
           {activeTab === 'profiles' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">Profiles</h3>
+                <h3 className="text-sm font-bold text-black uppercase tracking-wide">Profiles</h3>
                 <button
                   onClick={() => setShowNewProfile(true)}
-                  className="flex items-center gap-2 rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700"
+                  className="flex items-center gap-2 rounded-xl bg-purple-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-purple-700 shadow-sm"
                 >
                   <IconPlus size={16} />
                   New Profile
@@ -272,18 +275,18 @@ const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({ onClose }) => {
               </div>
 
               {showNewProfile && (
-                <div className="flex items-center gap-2 p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg">
+                <div className="flex items-center gap-3 p-5 apple-card rounded-2xl">
                   <input
                     type="text"
                     value={newProfileName}
                     onChange={(e) => setNewProfileName(e.target.value)}
                     placeholder="Profile name"
-                    className="flex-1 rounded-lg border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800"
+                    className="flex-1 apple-input rounded-xl px-4 py-2.5 text-sm text-black font-mono"
                     onKeyDown={(e) => e.key === 'Enter' && handleCreateProfile()}
                   />
                   <button
                     onClick={handleCreateProfile}
-                    className="rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700"
+                    className="rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm"
                   >
                     Create
                   </button>
@@ -292,29 +295,29 @@ const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({ onClose }) => {
                       setShowNewProfile(false);
                       setNewProfileName('');
                     }}
-                    className="rounded-lg border border-neutral-300 px-4 py-2 text-sm font-medium dark:border-neutral-700"
+                    className="apple-button rounded-xl px-4 py-2.5 text-sm font-semibold text-black"
                   >
                     Cancel
                   </button>
                 </div>
               )}
 
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {profiles.map(profile => (
                   <div
                     key={profile}
-                    className={`flex items-center justify-between p-4 rounded-lg border ${
+                    className={`flex items-center justify-between p-5 rounded-2xl border-2 transition-all ${
                       profile === currentProfile
-                        ? 'border-purple-600 bg-purple-50 dark:bg-purple-900/20'
-                        : 'border-neutral-200 dark:border-neutral-700'
+                        ? 'border-purple-600 bg-purple-50'
+                        : 'apple-card'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
-                      <IconSettings size={20} className={profile === currentProfile ? 'text-purple-600' : ''} />
+                    <div className="flex items-center gap-4">
+                      <IconSettings size={22} className={profile === currentProfile ? 'text-purple-600' : 'text-black opacity-60'} />
                       <div>
-                        <div className="font-medium">{profile}</div>
+                        <div className="font-bold text-black">{profile}</div>
                         {profile === currentProfile && (
-                          <div className="text-xs text-purple-600">Active Profile</div>
+                          <div className="text-xs text-purple-600 font-semibold mt-0.5">Active Profile</div>
                         )}
                       </div>
                     </div>
@@ -322,7 +325,7 @@ const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({ onClose }) => {
                       {profile !== currentProfile && (
                         <button
                           onClick={() => handleLoadProfile(profile)}
-                          className="rounded-lg border border-purple-600 text-purple-600 px-3 py-1 text-sm font-medium hover:bg-purple-50 dark:hover:bg-purple-900/20"
+                          className="rounded-xl border-2 border-purple-600 text-purple-600 px-4 py-2 text-sm font-semibold hover:bg-purple-50"
                         >
                           Load
                         </button>
@@ -330,9 +333,9 @@ const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({ onClose }) => {
                       {profile !== 'default' && (
                         <button
                           onClick={() => handleDeleteProfile(profile)}
-                          className="rounded-lg border border-red-600 text-red-600 px-3 py-1 text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20"
+                          className="rounded-xl p-2 text-red-600 hover:bg-red-50"
                         >
-                          <IconTrash size={16} />
+                          <IconTrash size={18} />
                         </button>
                       )}
                     </div>
@@ -340,9 +343,9 @@ const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({ onClose }) => {
                 ))}
               </div>
 
-              <div className="p-4 border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                <h4 className="font-medium mb-2">Profile Information</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+              <div className="p-5 apple-card rounded-2xl bg-blue-50 border border-blue-200">
+                <h4 className="font-bold text-black mb-2 text-sm uppercase tracking-wide">Profile Information</h4>
+                <p className="text-sm text-black opacity-80 font-mono leading-relaxed">
                   Profiles save your entire configuration including custom columns, display filters,
                   BPF filters, color rules, capture options, and UI layout preferences. Create different
                   profiles for different analysis tasks.

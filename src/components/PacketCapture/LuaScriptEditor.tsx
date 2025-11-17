@@ -183,25 +183,27 @@ end
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="w-[90%] h-[90%] bg-white dark:bg-neutral-900 rounded-lg shadow-2xl flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/40 backdrop-blur-sm">
+      <div className="apple-card rounded-3xl shadow-2xl flex flex-col overflow-hidden w-full max-w-7xl max-h-[90vh]">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 px-6 py-4">
+        <div className="flex items-center justify-between border-b border-gray-200 px-6 py-5">
           <div className="flex items-center gap-3">
-            <IconScript size={24} className="text-purple-600" />
-            <h2 className="text-xl font-semibold">Lua Script Editor</h2>
+            <div className="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center">
+              <IconScript size={20} className="text-white" />
+            </div>
+            <h2 className="text-lg font-bold text-black uppercase tracking-wide">Lua Script Editor</h2>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <button
               onClick={handleNewScript}
-              className="flex items-center gap-2 rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700"
+              className="flex items-center gap-2 rounded-xl bg-purple-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-purple-700 shadow-sm"
             >
               <IconPlus size={16} />
               New Script
             </button>
             <button
               onClick={onClose}
-              className="rounded-lg px-4 py-2 text-sm font-medium hover:bg-neutral-100 dark:hover:bg-neutral-800"
+              className="apple-button rounded-xl px-4 py-2.5 text-sm font-semibold text-black"
             >
               Close
             </button>
@@ -209,7 +211,7 @@ end
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-neutral-200 dark:border-neutral-800 px-6">
+        <div className="flex border-b border-gray-200 px-6 bg-gray-50">
           {[
             { id: 'editor', label: 'Script Editor' },
             { id: 'templates', label: 'Templates' },
@@ -219,10 +221,10 @@ end
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as TabType)}
-              className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+              className={`px-5 py-3.5 text-sm font-semibold border-b-2 transition-all ${
                 activeTab === tab.id
-                  ? 'border-purple-600 text-purple-600'
-                  : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                  ? 'border-purple-600 text-purple-600 bg-white'
+                  : 'border-transparent text-black opacity-60 hover:opacity-100'
               }`}
             >
               {tab.label}
@@ -231,7 +233,7 @@ end
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-auto p-6">
+        <div className="flex-1 overflow-auto p-6 bg-white">
           {/* Script Editor Tab */}
           {activeTab === 'editor' && (
             <div className="space-y-4">
@@ -247,7 +249,7 @@ end
                 {isScriptLoaded ? (
                   <button
                     onClick={() => handleUnloadScript(scriptId)}
-                    className="flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
+                    className="flex items-center gap-2 rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 shadow-sm"
                   >
                     <IconPlayerStop size={16} />
                     Unload
@@ -255,7 +257,7 @@ end
                 ) : (
                   <button
                     onClick={handleLoadScript}
-                    className="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700"
+                    className="flex items-center gap-2 rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm"
                   >
                     <IconPlayerPlay size={16} />
                     Load & Run
@@ -273,9 +275,9 @@ end
                 />
               </div>
 
-              <div className="p-4 border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                <h4 className="font-medium mb-2">Lua Script API</h4>
-                <div className="text-sm text-gray-600 dark:text-gray-400 space-y-2">
+              <div className="apple-card rounded-2xl p-5 bg-blue-50 border border-blue-200">
+                <h4 className="text-sm font-bold text-black uppercase tracking-wide mb-3">Lua Script API</h4>
+                <div className="text-sm text-black opacity-80 space-y-2">
                   <p><strong>Callbacks:</strong></p>
                   <ul className="list-disc list-inside ml-4">
                     <li><code>on_packet(packet)</code> - Called for each captured packet</li>

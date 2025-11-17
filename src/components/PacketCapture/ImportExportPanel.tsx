@@ -115,24 +115,26 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="w-[90%] h-[90%] bg-white dark:bg-neutral-900 rounded-lg shadow-2xl flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/40 backdrop-blur-sm">
+      <div className="apple-card rounded-3xl shadow-2xl flex flex-col overflow-hidden w-full max-w-7xl max-h-[90vh]">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 px-6 py-4">
+        <div className="flex items-center justify-between border-b border-gray-200 px-6 py-5">
           <div className="flex items-center gap-3">
-            <IconFileImport size={24} className="text-blue-600" />
-            <h2 className="text-xl font-semibold">Import/Export Manager</h2>
+            <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center">
+              <IconFileImport size={20} className="text-white" />
+            </div>
+            <h2 className="text-lg font-bold text-black uppercase tracking-wide">Import/Export Manager</h2>
           </div>
           <button
             onClick={onClose}
-            className="rounded-lg px-4 py-2 text-sm font-medium hover:bg-neutral-100 dark:hover:bg-neutral-800"
+            className="apple-button rounded-xl px-4 py-2.5 text-sm font-semibold text-black"
           >
             Close
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-neutral-200 dark:border-neutral-800 px-6 overflow-x-auto">
+        <div className="flex border-b border-gray-200 px-6 bg-gray-50">
           {[
             { id: 'import', label: 'Import Files', icon: IconFileImport },
             { id: 'export', label: 'Export Formats', icon: IconFileExport },
@@ -145,13 +147,12 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({ onClose }) => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as TabType)}
-                className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
+                className={`px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap ${
                   activeTab === tab.id
-                    ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                    ? 'border-blue-600 text-blue-600 bg-white'
+                    : 'border-transparent text-black opacity-60 hover:opacity-100'
                 }`}
               >
-                <Icon size={16} />
                 {tab.label}
               </button>
             );
@@ -159,7 +160,7 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({ onClose }) => {
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-auto p-6">
+        <div className="flex-1 overflow-auto p-6 bg-white">
           {/* Import Files Tab */}
           {activeTab === 'import' && (
             <div className="space-y-6">
@@ -196,23 +197,23 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({ onClose }) => {
                 </div>
               </div>
 
-              <div className="border border-neutral-200 dark:border-neutral-800 rounded-lg p-6">
-                <h4 className="font-medium mb-4">Import Capture File</h4>
+              <div className="apple-card rounded-2xl p-5">
+                <h4 className="text-sm font-bold text-black uppercase tracking-wide mb-4">Import Capture File</h4>
                 <button
                   onClick={handleImportFile}
-                  className="flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-sm font-medium text-white hover:bg-blue-700"
+                  className="flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                 >
                   <IconFileImport size={18} />
                   Browse & Import File
                 </button>
-                <p className="mt-3 text-xs text-gray-600 dark:text-gray-400">
+                <p className="mt-3 text-xs text-black opacity-60">
                   Opens file browser to select PCAP, PCAPNG, ERF, or other supported formats
                 </p>
               </div>
 
-              <div className="p-4 border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                <h4 className="font-medium mb-2">Import Features</h4>
-                <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-400 space-y-1">
+              <div className="apple-card rounded-2xl p-5 bg-blue-50 border border-blue-200">
+                <h4 className="text-sm font-bold text-black uppercase tracking-wide mb-3">Import Features</h4>
+                <ul className="list-disc list-inside text-sm text-black opacity-80 space-y-2">
                   <li>Automatic format detection</li>
                   <li>Large file support (up to several GB)</li>
                   <li>Compressed file support (.gz, .bz2)</li>
@@ -255,9 +256,9 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({ onClose }) => {
                 ))}
               </div>
 
-              <div className="p-4 border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                <h4 className="font-medium mb-2">Export Options</h4>
-                <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-400 space-y-1">
+              <div className="apple-card rounded-2xl p-5 bg-green-50 border border-green-200">
+                <h4 className="text-sm font-bold text-black uppercase tracking-wide mb-3">Export Options</h4>
+                <ul className="list-disc list-inside text-sm text-black opacity-80 space-y-2">
                   <li><strong>Selective Export:</strong> Export filtered packets only</li>
                   <li><strong>Range Export:</strong> Export specific packet ranges</li>
                   <li><strong>Column Customization:</strong> Choose which fields to export</li>
@@ -266,9 +267,9 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({ onClose }) => {
                 </ul>
               </div>
 
-              <div className="border border-neutral-200 dark:border-neutral-800 rounded-lg p-6">
-                <h4 className="font-medium mb-4">Quick Export</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+              <div className="apple-card rounded-2xl p-5">
+                <h4 className="text-sm font-bold text-black uppercase tracking-wide mb-4">Quick Export</h4>
+                <p className="text-sm text-black opacity-80">
                   Export buttons are available in the main Packet Capture toolbar for quick access to JSON, CSV, XML, and PSML formats.
                   Additional formats (Plain Text, PDML, PostScript) can be accessed through the Statistics panel export buttons.
                 </p>
@@ -281,35 +282,35 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({ onClose }) => {
             <div className="space-y-6">
               <h3 className="text-lg font-semibold">File Format Converter</h3>
 
-              <div className="border border-neutral-200 dark:border-neutral-800 rounded-lg p-6 space-y-4">
+              <div className="apple-card rounded-2xl p-5 space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Input File Path</label>
+                  <label className="block text-sm font-semibold text-black mb-2">Input File Path</label>
                   <input
                     type="text"
                     value={convertInputPath}
                     onChange={(e) => setConvertInputPath(e.target.value)}
                     placeholder="/path/to/input.pcap"
-                    className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm font-mono dark:border-neutral-700 dark:bg-neutral-800"
+                    className="apple-input w-full rounded-xl px-4 py-2.5 text-sm font-mono text-black"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Output File Path</label>
+                  <label className="block text-sm font-semibold text-black mb-2">Output File Path</label>
                   <input
                     type="text"
                     value={convertOutputPath}
                     onChange={(e) => setConvertOutputPath(e.target.value)}
                     placeholder="/path/to/output.pcapng"
-                    className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm font-mono dark:border-neutral-700 dark:bg-neutral-800"
+                    className="apple-input w-full rounded-xl px-4 py-2.5 text-sm font-mono text-black"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Target Format</label>
+                  <label className="block text-sm font-semibold text-black mb-2">Target Format</label>
                   <select
                     value={convertFormat}
                     onChange={(e) => setConvertFormat(e.target.value as 'pcap' | 'pcapng' | 'erf')}
-                    className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800"
+                    className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                   >
                     <option value="pcap">PCAP (Standard)</option>
                     <option value="pcapng">PCAPNG (Next-Gen)</option>
@@ -319,7 +320,7 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({ onClose }) => {
 
                 <button
                   onClick={handleConvertFormat}
-                  className="flex items-center gap-2 rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700"
+                  className="flex items-center gap-2 rounded-xl bg-purple-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-purple-700 shadow-sm"
                 >
                   <IconRefresh size={16} />
                   Convert File
@@ -400,7 +401,7 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({ onClose }) => {
 
                 <button
                   onClick={handleExportToTool}
-                  className="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700"
+                  className="flex items-center gap-2 rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm"
                 >
                   <IconPlayerPlay size={16} />
                   Export & Run Tool
@@ -459,7 +460,7 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({ onClose }) => {
                 </div>
                 <button
                   onClick={handleRunTsharkCommand}
-                  className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                  className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                 >
                   <IconTerminal size={16} />
                   Execute Command
@@ -496,7 +497,7 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({ onClose }) => {
                 </div>
                 <button
                   onClick={handleBatchProcess}
-                  className="flex items-center gap-2 rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700"
+                  className="flex items-center gap-2 rounded-xl bg-purple-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-purple-700 shadow-sm"
                 >
                   <IconPlayerPlay size={16} />
                   Run Batch Process

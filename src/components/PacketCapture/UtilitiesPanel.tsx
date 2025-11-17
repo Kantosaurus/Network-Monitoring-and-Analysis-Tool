@@ -170,53 +170,57 @@ const UtilitiesPanel: React.FC<UtilitiesPanelProps> = ({ onClose }) => {
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="w-full max-w-6xl h-[90vh] bg-white dark:bg-neutral-900 rounded-lg shadow-xl flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/40 backdrop-blur-sm">
+      <div className="apple-card rounded-3xl shadow-2xl flex flex-col overflow-hidden w-full max-w-7xl max-h-[90vh]">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-700 px-6 py-4">
-          <div>
-            <h2 className="text-xl font-bold">Command-Line Utilities</h2>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">
-              Wireshark-equivalent tools for packet capture analysis
-            </p>
+        <div className="flex items-center justify-between border-b border-gray-200 px-6 py-5">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center">
+              <IconTerminal size={20} className="text-white" />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-black uppercase tracking-wide">Command-Line Utilities</h2>
+              <p className="text-xs text-black opacity-60">
+                Wireshark-equivalent tools for packet capture analysis
+              </p>
+            </div>
           </div>
           <button
             onClick={onClose}
-            className="rounded-lg p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+            className="apple-button rounded-xl px-4 py-2.5 text-sm font-semibold text-black"
           >
-            <IconX size={20} />
+            Close
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-neutral-200 dark:border-neutral-700 overflow-x-auto">
+        <div className="flex border-b border-gray-200 overflow-x-auto px-6 bg-gray-50">
           {tabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
+              className={`px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap ${
                 activeTab === tab.id
-                  ? 'border-purple-600 text-purple-600'
-                  : 'border-transparent text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+                  ? 'border-blue-600 text-blue-600 bg-white'
+                  : 'border-transparent text-black opacity-60 hover:opacity-100'
               }`}
             >
-              {tab.icon}
               {tab.label}
             </button>
           ))}
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-auto p-6">
+        <div className="flex-1 overflow-auto p-6 bg-white">
           {/* TShark Tab */}
           {activeTab === 'tshark' && (
             <div className="space-y-4">
-              <div className="rounded-lg border border-blue-200 bg-blue-50 dark:border-blue-900 dark:bg-blue-950/20 p-4">
+              <div className="apple-card rounded-2xl border border-blue-200 bg-blue-50 p-5">
                 <div className="flex items-start gap-3">
                   <IconTerminal className="text-blue-600 mt-0.5" size={20} />
                   <div>
-                    <h3 className="font-semibold text-blue-900 dark:text-blue-300">TShark - Command-Line Analyzer</h3>
-                    <p className="text-sm text-blue-800 dark:text-blue-400">
+                    <h3 className="text-sm font-bold text-blue-900 uppercase tracking-wide">TShark - Command-Line Analyzer</h3>
+                    <p className="text-sm text-blue-800 opacity-90 mt-1">
                       Analyze capture files programmatically without GUI. Perfect for headless environments and automation.
                     </p>
                   </div>
@@ -261,7 +265,7 @@ const UtilitiesPanel: React.FC<UtilitiesPanelProps> = ({ onClose }) => {
 
                 <button
                   onClick={handleTsharkAnalyze}
-                  className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                  className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                 >
                   <IconPlayerPlay size={16} />
                   Analyze

@@ -223,47 +223,49 @@ const StatisticsPanel: React.FC<StatisticsPanelProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="w-[90%] h-[90%] bg-white dark:bg-neutral-900 rounded-lg shadow-2xl flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/40 backdrop-blur-sm">
+      <div className="apple-card rounded-3xl shadow-2xl flex flex-col overflow-hidden w-full max-w-7xl max-h-[90vh]">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 px-6 py-4">
+        <div className="flex items-center justify-between border-b border-gray-200 px-6 py-5">
           <div className="flex items-center gap-3">
-            <IconChartBar size={24} className="text-purple-600" />
-            <h2 className="text-xl font-semibold">Statistics & Analysis</h2>
+            <div className="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center">
+              <IconChartBar size={20} className="text-white" />
+            </div>
+            <h2 className="text-lg font-bold text-black uppercase tracking-wide">Statistics & Analysis</h2>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <button
               onClick={loadData}
-              className="flex items-center gap-2 rounded-lg border border-neutral-300 px-3 py-2 text-sm font-medium hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+              className="flex items-center gap-2 rounded-xl border-2 border-gray-200 px-4 py-2.5 text-sm font-semibold text-black hover:bg-gray-50"
             >
               <IconRefresh size={16} />
               Refresh
             </button>
-            <div className="flex gap-1 rounded-lg border border-neutral-300 dark:border-neutral-700 p-1">
+            <div className="flex gap-1 rounded-xl border-2 border-gray-200 p-1">
               <button
                 onClick={() => handleExport('json')}
-                className="px-3 py-1 text-sm font-medium rounded hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                className="px-3 py-1.5 text-sm font-semibold rounded-lg hover:bg-gray-100"
                 title="Export as JSON"
               >
                 JSON
               </button>
               <button
                 onClick={() => handleExport('csv')}
-                className="px-3 py-1 text-sm font-medium rounded hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                className="px-3 py-1.5 text-sm font-semibold rounded-lg hover:bg-gray-100"
                 title="Export as CSV"
               >
                 CSV
               </button>
               <button
                 onClick={() => handleExport('xml')}
-                className="px-3 py-1 text-sm font-medium rounded hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                className="px-3 py-1.5 text-sm font-semibold rounded-lg hover:bg-gray-100"
                 title="Export as XML"
               >
                 XML
               </button>
               <button
                 onClick={() => handleExport('psml')}
-                className="px-3 py-1 text-sm font-medium rounded hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                className="px-3 py-1.5 text-sm font-semibold rounded-lg hover:bg-gray-100"
                 title="Export as PSML"
               >
                 PSML
@@ -271,7 +273,7 @@ const StatisticsPanel: React.FC<StatisticsPanelProps> = ({ onClose }) => {
             </div>
             <button
               onClick={onClose}
-              className="rounded-lg px-4 py-2 text-sm font-medium hover:bg-neutral-100 dark:hover:bg-neutral-800"
+              className="apple-button rounded-xl px-4 py-2.5 text-sm font-semibold text-black"
             >
               Close
             </button>
@@ -279,7 +281,7 @@ const StatisticsPanel: React.FC<StatisticsPanelProps> = ({ onClose }) => {
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-neutral-200 dark:border-neutral-800 px-6 overflow-x-auto">
+        <div className="flex border-b border-gray-200 px-6 overflow-x-auto bg-gray-50">
           {[
             { id: 'hierarchy', label: 'Protocol Hierarchy', icon: IconChartBar },
             { id: 'conversations', label: 'Conversations', icon: IconNetwork },
@@ -302,13 +304,12 @@ const StatisticsPanel: React.FC<StatisticsPanelProps> = ({ onClose }) => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as TabType)}
-                className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
+                className={`px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap ${
                   activeTab === tab.id
-                    ? 'border-purple-600 text-purple-600'
-                    : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                    ? 'border-purple-600 text-purple-600 bg-white'
+                    : 'border-transparent text-black opacity-60 hover:opacity-100'
                 }`}
               >
-                <Icon size={16} />
                 {tab.label}
               </button>
             );
@@ -316,7 +317,7 @@ const StatisticsPanel: React.FC<StatisticsPanelProps> = ({ onClose }) => {
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-auto p-6">
+        <div className="flex-1 overflow-auto p-6 bg-white">
           {loading ? (
             <div className="flex items-center justify-center h-full">
               <div className="text-gray-500">Loading...</div>
