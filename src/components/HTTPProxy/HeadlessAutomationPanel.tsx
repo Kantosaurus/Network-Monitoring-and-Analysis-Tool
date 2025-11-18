@@ -11,7 +11,7 @@ export const HeadlessAutomationPanel: React.FC = () => {
   const [jobs, setJobs] = useState<HeadlessJob[]>([]);
   const [dockerConfig, setDockerConfig] = useState<DockerConfig | null>(null);
   const [pipelines, setPipelines] = useState<AutomationPipeline[]>([]);
-  
+
   const [showAgentForm, setShowAgentForm] = useState(false);
   const [showPipelineForm, setShowPipelineForm] = useState(false);
 
@@ -262,127 +262,117 @@ export const HeadlessAutomationPanel: React.FC = () => {
   };
 
   return (
-    <div className="flex h-full flex-col gap-4">
+    <div className="flex flex-col h-full bg-white">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Headless & Automation</h2>
+      <div className="px-6 py-5 border-b border-gray-200">
+        <h2 className="text-lg font-bold text-black uppercase tracking-wide">Headless & Automation</h2>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex border-b border-gray-200 px-6 bg-gray-50">
         <button
           onClick={() => setActiveTab('agents')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'agents'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconServer size={18} />
-            Agents ({agents.length})
-          </div>
+          <IconServer size={18} />
+          Agents ({agents.length})
         </button>
         <button
           onClick={() => setActiveTab('jobs')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'jobs'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconRobot size={18} />
-            Jobs ({jobs.length})
-          </div>
+          <IconRobot size={18} />
+          Jobs ({jobs.length})
         </button>
         <button
           onClick={() => setActiveTab('docker')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'docker'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconBrandDocker size={18} />
-            Docker
-          </div>
+          <IconBrandDocker size={18} />
+          Docker
         </button>
         <button
           onClick={() => setActiveTab('pipelines')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'pipelines'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconClock size={18} />
-            Pipelines ({pipelines.length})
-          </div>
+          <IconClock size={18} />
+          Pipelines ({pipelines.length})
         </button>
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-y-auto p-4">
         {/* Agents Tab */}
         {activeTab === 'agents' && (
           <div className="space-y-4">
             <div className="flex gap-2">
               <button
                 onClick={() => setShowAgentForm(true)}
-                className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm"
               >
-                <IconPlus size={18} />
-                Register Agent
+                + Register Agent
               </button>
               <button
                 onClick={loadAgents}
-                className="flex items-center gap-2 rounded-lg bg-gray-200 px-4 py-2 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+                className="rounded-xl bg-gray-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-gray-700 shadow-sm"
               >
-                <IconRefresh size={18} />
                 Refresh
               </button>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-3">
               {agents.map((agent) => (
                 <div
                   key={agent.id}
-                  className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+                  className="apple-card rounded-2xl p-5 border border-gray-200"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <IconServer size={18} className="text-blue-500" />
-                        <span className="font-semibold">{agent.name}</span>
+                        <span className="font-semibold text-black">{agent.name}</span>
                         <span
                           className={cn(
                             'rounded px-2 py-0.5 text-xs font-medium',
-                            agent.status === 'idle' && 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
-                            agent.status === 'running' && 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
-                            agent.status === 'error' && 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
-                            agent.status === 'offline' && 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+                            agent.status === 'idle' && 'bg-green-100 text-green-800',
+                            agent.status === 'running' && 'bg-yellow-100 text-yellow-800',
+                            agent.status === 'error' && 'bg-red-100 text-red-800',
+                            agent.status === 'offline' && 'bg-gray-100 text-gray-800'
                           )}
                         >
                           {agent.status}
                         </span>
                       </div>
-                      <div className="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-400">
+                      <div className="mt-2 space-y-1 text-sm text-black opacity-80">
                         <p>Host: {agent.host}:{agent.port}</p>
                         <p>Capabilities: {agent.capabilities.join(', ')}</p>
                         {agent.currentJob && (
-                          <p className="text-blue-600 dark:text-blue-400">
+                          <p className="text-blue-600">
                             Current Job: {agent.currentJob.type} - {agent.currentJob.target}
                           </p>
                         )}
                       </div>
-                      <div className="mt-2 grid grid-cols-4 gap-2 text-xs">
+                      <div className="mt-2 grid grid-cols-4 gap-2 text-xs text-black opacity-80">
                         <div>
                           <span className="text-gray-500">CPU:</span> {agent.metrics.cpuUsage.toFixed(1)}%
                         </div>
@@ -399,7 +389,7 @@ export const HeadlessAutomationPanel: React.FC = () => {
                     </div>
                     <button
                       onClick={() => handleRemoveAgent(agent.id)}
-                      className="rounded-lg bg-red-500 px-3 py-1.5 text-sm text-white hover:bg-red-600"
+                      className="rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 shadow-sm"
                     >
                       <IconTrash size={16} />
                     </button>
@@ -408,9 +398,9 @@ export const HeadlessAutomationPanel: React.FC = () => {
               ))}
 
               {agents.length === 0 && (
-                <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+                <div className="rounded-2xl border border-gray-200 apple-card p-8 text-center">
                   <IconServer size={48} className="mx-auto mb-3 text-gray-400" />
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-black opacity-60">
                     No headless agents registered. Register an agent to start distributed scanning.
                   </p>
                 </div>
@@ -422,15 +412,15 @@ export const HeadlessAutomationPanel: React.FC = () => {
         {/* Jobs Tab */}
         {activeTab === 'jobs' && (
           <div className="space-y-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">Create Job</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="text-lg font-bold text-black uppercase tracking-wide mb-3">Create Job</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Agent</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Agent</label>
                   <select
                     value={jobForm.agentId}
                     onChange={(e) => setJobForm({ ...jobForm, agentId: e.target.value })}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   >
                     <option value="">-- Select Agent --</option>
                     {agents.filter(a => a.status === 'idle').map((agent) => (
@@ -442,11 +432,11 @@ export const HeadlessAutomationPanel: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Job Type</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Job Type</label>
                   <select
                     value={jobForm.type}
                     onChange={(e) => setJobForm({ ...jobForm, type: e.target.value as any })}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   >
                     <option value="scan">Security Scan</option>
                     <option value="crawl">Web Crawl</option>
@@ -456,19 +446,19 @@ export const HeadlessAutomationPanel: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Target URL</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Target URL</label>
                   <input
                     type="url"
                     value={jobForm.target}
                     onChange={(e) => setJobForm({ ...jobForm, target: e.target.value })}
                     placeholder="https://example.com"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
 
                 <button
                   onClick={handleCreateJob}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                  className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm w-full flex items-center justify-center gap-2"
                 >
                   <IconPlayerPlay size={18} />
                   Create & Start Job
@@ -476,38 +466,38 @@ export const HeadlessAutomationPanel: React.FC = () => {
               </div>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-3">
               {jobs.map((job) => (
                 <div
                   key={job.id}
-                  className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+                  className="apple-card rounded-2xl p-5 border border-gray-200"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <IconRobot size={18} className="text-blue-500" />
-                        <span className="font-semibold">{job.type}</span>
+                        <span className="font-semibold text-black">{job.type}</span>
                         <span
                           className={cn(
                             'rounded px-2 py-0.5 text-xs font-medium',
-                            job.status === 'queued' && 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200',
-                            job.status === 'running' && 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
-                            job.status === 'completed' && 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
-                            job.status === 'failed' && 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                            job.status === 'queued' && 'bg-gray-100 text-gray-800',
+                            job.status === 'running' && 'bg-yellow-100 text-yellow-800',
+                            job.status === 'completed' && 'bg-green-100 text-green-800',
+                            job.status === 'failed' && 'bg-red-100 text-red-800'
                           )}
                         >
                           {job.status}
                         </span>
                       </div>
-                      <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{job.target}</p>
-                      <div className="mt-2 text-xs text-gray-500">
+                      <p className="mt-2 text-sm text-black opacity-80">{job.target}</p>
+                      <div className="mt-2 text-xs text-black opacity-60">
                         <p>Started: {new Date(job.startTime).toLocaleString()}</p>
                         {job.endTime && <p>Ended: {new Date(job.endTime).toLocaleString()}</p>}
                         {job.status === 'running' && (
                           <div className="mt-2">
-                            <div className="h-2 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+                            <div className="h-2 overflow-hidden rounded-full bg-gray-200">
                               <div
-                                className="h-full bg-blue-500 transition-all"
+                                className="h-full bg-blue-600 transition-all"
                                 style={{ width: `${job.progress}%` }}
                               />
                             </div>
@@ -519,7 +509,7 @@ export const HeadlessAutomationPanel: React.FC = () => {
                     {job.status === 'running' && (
                       <button
                         onClick={() => handleCancelJob(job.id)}
-                        className="rounded-lg bg-red-500 px-3 py-1.5 text-sm text-white hover:bg-red-600"
+                        className="rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 shadow-sm"
                       >
                         <IconPlayerPause size={16} />
                       </button>
@@ -529,9 +519,9 @@ export const HeadlessAutomationPanel: React.FC = () => {
               ))}
 
               {jobs.length === 0 && (
-                <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+                <div className="apple-card rounded-2xl border border-gray-200 p-8 text-center">
                   <IconRobot size={48} className="mx-auto mb-3 text-gray-400" />
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-black opacity-60">
                     No jobs running. Create a job to start scanning with headless agents.
                   </p>
                 </div>
@@ -543,58 +533,58 @@ export const HeadlessAutomationPanel: React.FC = () => {
         {/* Docker Tab */}
         {activeTab === 'docker' && (
           <div className="space-y-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">Docker Configuration</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="text-lg font-bold text-black uppercase tracking-wide mb-3">Docker Configuration</h3>
               <div className="space-y-3">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="mb-1 block text-sm font-medium">Image</label>
+                    <label className="text-sm font-semibold text-black mb-2 block">Image</label>
                     <input
                       type="text"
                       value={dockerForm.image}
                       onChange={(e) => setDockerForm({ ...dockerForm, image: e.target.value })}
                       placeholder="nmat-scanner"
-                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                      className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-sm font-medium">Tag</label>
+                    <label className="text-sm font-semibold text-black mb-2 block">Tag</label>
                     <input
                       type="text"
                       value={dockerForm.tag}
                       onChange={(e) => setDockerForm({ ...dockerForm, tag: e.target.value })}
                       placeholder="latest"
-                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                      className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Container Name</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Container Name</label>
                   <input
                     type="text"
                     value={dockerForm.containerName}
                     onChange={(e) => setDockerForm({ ...dockerForm, containerName: e.target.value })}
                     placeholder="nmat-headless-1"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Replicas</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Replicas</label>
                   <input
                     type="number"
                     value={dockerForm.replicas}
                     onChange={(e) => setDockerForm({ ...dockerForm, replicas: parseInt(e.target.value) })}
                     min={1}
                     max={10}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
 
                 <button
                   onClick={handleSaveDockerConfig}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                  className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm w-full flex items-center justify-center gap-2"
                 >
                   <IconCheck size={18} />
                   Save Configuration
@@ -603,12 +593,12 @@ export const HeadlessAutomationPanel: React.FC = () => {
             </div>
 
             {dockerConfig && (
-              <div className="rounded-lg border border-green-300 bg-green-50 p-4 dark:border-green-700 dark:bg-green-900/20">
+              <div className="rounded-2xl border border-green-200 bg-green-50 p-5">
                 <div className="mb-3 flex items-center gap-2">
                   <IconBrandDocker size={18} className="text-green-600" />
-                  <span className="font-semibold">Docker Configured</span>
+                  <span className="font-semibold text-black">Docker Configured</span>
                 </div>
-                <div className="space-y-1 text-sm">
+                <div className="space-y-1 text-sm text-black">
                   <p>Image: {dockerConfig.image}:{dockerConfig.tag}</p>
                   <p>Container: {dockerConfig.containerName}</p>
                   <p>Replicas: {dockerConfig.replicas}</p>
@@ -616,14 +606,14 @@ export const HeadlessAutomationPanel: React.FC = () => {
                 <div className="mt-3 flex gap-2">
                   <button
                     onClick={handleStartDocker}
-                    className="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700"
+                    className="rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm flex items-center gap-2"
                   >
                     <IconPlayerPlay size={18} />
                     Start Container
                   </button>
                   <button
                     onClick={() => handleStopDocker(dockerConfig.containerName)}
-                    className="flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-white hover:bg-red-700"
+                    className="rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 shadow-sm flex items-center gap-2"
                   >
                     <IconPlayerPause size={18} />
                     Stop Container
@@ -640,43 +630,42 @@ export const HeadlessAutomationPanel: React.FC = () => {
             <div className="flex justify-end">
               <button
                 onClick={() => setShowPipelineForm(true)}
-                className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm"
               >
-                <IconPlus size={18} />
-                Create Pipeline
+                + Create Pipeline
               </button>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-3">
               {pipelines.map((pipeline) => (
                 <div
                   key={pipeline.id}
-                  className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+                  className="apple-card rounded-2xl p-5 border border-gray-200"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <IconClock size={18} className="text-blue-500" />
-                        <span className="font-semibold">{pipeline.name}</span>
+                        <span className="font-semibold text-black">{pipeline.name}</span>
                         <span
                           className={cn(
                             'rounded px-2 py-0.5 text-xs font-medium',
                             pipeline.enabled
-                              ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                              : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-gray-100 text-gray-800'
                           )}
                         >
                           {pipeline.enabled ? 'Enabled' : 'Disabled'}
                         </span>
                       </div>
-                      <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                      <p className="mt-2 text-sm text-black opacity-80">
                         {pipeline.stages.length} stages
                       </p>
                       {pipeline.schedule && (
-                        <p className="mt-1 text-xs text-gray-500">Schedule: {pipeline.schedule}</p>
+                        <p className="mt-1 text-xs text-black opacity-60">Schedule: {pipeline.schedule}</p>
                       )}
                       {pipeline.lastRun && (
-                        <p className="mt-1 text-xs text-gray-500">
+                        <p className="mt-1 text-xs text-black opacity-60">
                           Last run: {new Date(pipeline.lastRun).toLocaleString()}
                         </p>
                       )}
@@ -684,13 +673,13 @@ export const HeadlessAutomationPanel: React.FC = () => {
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleRunPipeline(pipeline.id)}
-                        className="rounded-lg bg-green-500 px-3 py-1.5 text-sm text-white hover:bg-green-600"
+                        className="rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm"
                       >
                         <IconPlayerPlay size={16} />
                       </button>
                       <button
                         onClick={() => handleDeletePipeline(pipeline.id)}
-                        className="rounded-lg bg-red-500 px-3 py-1.5 text-sm text-white hover:bg-red-600"
+                        className="rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 shadow-sm"
                       >
                         <IconTrash size={16} />
                       </button>
@@ -700,9 +689,9 @@ export const HeadlessAutomationPanel: React.FC = () => {
               ))}
 
               {pipelines.length === 0 && (
-                <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+                <div className="apple-card rounded-2xl border border-gray-200 p-8 text-center">
                   <IconClock size={48} className="mx-auto mb-3 text-gray-400" />
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-black opacity-60">
                     No automation pipelines configured. Create a pipeline to automate your security workflows.
                   </p>
                 </div>
@@ -715,34 +704,34 @@ export const HeadlessAutomationPanel: React.FC = () => {
       {/* Agent Form Modal */}
       {showAgentForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-            <h3 className="mb-4 text-xl font-bold">Register Headless Agent</h3>
+          <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-xl">
+            <h3 className="text-lg font-bold text-black uppercase tracking-wide mb-4">Register Headless Agent</h3>
             <div className="space-y-3">
               <div>
-                <label className="mb-1 block text-sm font-medium">Agent Name</label>
+                <label className="text-sm font-semibold text-black mb-2 block">Agent Name</label>
                 <input
                   type="text"
                   value={agentForm.name}
                   onChange={(e) => setAgentForm({ ...agentForm, name: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Host</label>
+                <label className="text-sm font-semibold text-black mb-2 block">Host</label>
                 <input
                   type="text"
                   value={agentForm.host}
                   onChange={(e) => setAgentForm({ ...agentForm, host: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Port</label>
+                <label className="text-sm font-semibold text-black mb-2 block">Port</label>
                 <input
                   type="number"
                   value={agentForm.port}
                   onChange={(e) => setAgentForm({ ...agentForm, port: parseInt(e.target.value) })}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                 />
               </div>
             </div>
@@ -752,13 +741,13 @@ export const HeadlessAutomationPanel: React.FC = () => {
                   setShowAgentForm(false);
                   setAgentForm({ name: '', host: 'localhost', port: 8090, capabilities: ['scan'] });
                 }}
-                className="rounded-lg bg-gray-200 px-4 py-2 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                className="rounded-xl bg-gray-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-gray-700 shadow-sm"
               >
                 Cancel
               </button>
               <button
                 onClick={handleRegisterAgent}
-                className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
               >
                 Register Agent
               </button>
@@ -770,16 +759,16 @@ export const HeadlessAutomationPanel: React.FC = () => {
       {/* Pipeline Form Modal */}
       {showPipelineForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-            <h3 className="mb-4 text-xl font-bold">Create Automation Pipeline</h3>
+          <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-xl">
+            <h3 className="text-lg font-bold text-black uppercase tracking-wide mb-4">Create Automation Pipeline</h3>
             <div className="space-y-3">
               <div>
-                <label className="mb-1 block text-sm font-medium">Pipeline Name</label>
+                <label className="text-sm font-semibold text-black mb-2 block">Pipeline Name</label>
                 <input
                   type="text"
                   value={pipelineForm.name}
                   onChange={(e) => setPipelineForm({ ...pipelineForm, name: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                 />
               </div>
               <label className="flex items-center gap-2">
@@ -789,7 +778,7 @@ export const HeadlessAutomationPanel: React.FC = () => {
                   onChange={(e) => setPipelineForm({ ...pipelineForm, enabled: e.target.checked })}
                   className="h-4 w-4"
                 />
-                <span className="text-sm">Enabled</span>
+                <span className="text-sm text-black">Enabled</span>
               </label>
             </div>
             <div className="mt-6 flex justify-end gap-2">
@@ -798,13 +787,13 @@ export const HeadlessAutomationPanel: React.FC = () => {
                   setShowPipelineForm(false);
                   setPipelineForm({ name: '', stages: [], enabled: true });
                 }}
-                className="rounded-lg bg-gray-200 px-4 py-2 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                className="rounded-xl bg-gray-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-gray-700 shadow-sm"
               >
                 Cancel
               </button>
               <button
                 onClick={handleCreatePipeline}
-                className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
               >
                 Create Pipeline
               </button>

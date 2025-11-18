@@ -235,21 +235,21 @@ export const APITestingPanel: React.FC = () => {
   };
 
   return (
-    <div className="flex h-full flex-col gap-4">
+    <div className="flex h-full flex-col bg-white">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">API & Mobile App Testing</h2>
+      <div className="flex items-center justify-between px-6 py-5 border-b border-gray-200">
+        <h2 className="text-lg font-bold text-black uppercase tracking-wide">API & Mobile App Testing</h2>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex border-b border-gray-200 px-6 bg-gray-50 overflow-x-auto">
         <button
           onClick={() => setActiveTab('rest')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
             activeTab === 'rest'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600'
+              : 'border-transparent text-gray-600 hover:text-gray-900'
           )}
         >
           <div className="flex items-center gap-2">
@@ -260,10 +260,10 @@ export const APITestingPanel: React.FC = () => {
         <button
           onClick={() => setActiveTab('graphql')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
             activeTab === 'graphql'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600'
+              : 'border-transparent text-gray-600 hover:text-gray-900'
           )}
         >
           <div className="flex items-center gap-2">
@@ -274,10 +274,10 @@ export const APITestingPanel: React.FC = () => {
         <button
           onClick={() => setActiveTab('mobile')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
             activeTab === 'mobile'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600'
+              : 'border-transparent text-gray-600 hover:text-gray-900'
           )}
         >
           <div className="flex items-center gap-2">
@@ -288,10 +288,10 @@ export const APITestingPanel: React.FC = () => {
         <button
           onClick={() => setActiveTab('endpoints')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
             activeTab === 'endpoints'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600'
+              : 'border-transparent text-gray-600 hover:text-gray-900'
           )}
         >
           <div className="flex items-center gap-2">
@@ -305,25 +305,25 @@ export const APITestingPanel: React.FC = () => {
       <div className="flex-1 overflow-auto">
         {/* REST & SOAP Tab */}
         {activeTab === 'rest' && (
-          <div className="space-y-4">
+          <div className="space-y-4 p-6">
             {/* Discovery Section */}
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">Endpoint Discovery</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="mb-3 text-sm font-semibold text-black">Endpoint Discovery</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Target URL</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Target URL</label>
                   <div className="flex gap-2">
                     <input
                       type="url"
                       value={discoveryUrl}
                       onChange={(e) => setDiscoveryUrl(e.target.value)}
                       placeholder="https://api.example.com"
-                      className="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                      className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full flex-1"
                     />
                     <button
                       onClick={handleDiscoverEndpoints}
                       disabled={discovering}
-                      className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                      className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm disabled:opacity-50"
                     >
                       <IconSearch size={18} />
                       {discovering ? 'Discovering...' : 'Discover'}
@@ -332,18 +332,18 @@ export const APITestingPanel: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium">OpenAPI / Swagger Spec URL</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">OpenAPI / Swagger Spec URL</label>
                   <div className="flex gap-2">
                     <input
                       type="url"
                       value={openAPISpecUrl}
                       onChange={(e) => setOpenAPISpecUrl(e.target.value)}
                       placeholder="https://api.example.com/swagger.json"
-                      className="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                      className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full flex-1"
                     />
                     <button
                       onClick={handleParseOpenAPI}
-                      className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+                      className="flex items-center gap-2 rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm"
                     >
                       <IconDownload size={18} />
                       Import
@@ -354,14 +354,14 @@ export const APITestingPanel: React.FC = () => {
             </div>
 
             {/* Manual Endpoint Testing */}
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">Manual Endpoint Testing</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="mb-3 text-sm font-semibold text-black">Manual Endpoint Testing</h3>
               <div className="space-y-3">
                 <div className="flex gap-2">
                   <select
                     value={endpointForm.method}
                     onChange={(e) => setEndpointForm({ ...endpointForm, method: e.target.value })}
-                    className="w-32 rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-32"
                   >
                     <option value="GET">GET</option>
                     <option value="POST">POST</option>
@@ -376,23 +376,23 @@ export const APITestingPanel: React.FC = () => {
                     value={endpointForm.baseUrl}
                     onChange={(e) => setEndpointForm({ ...endpointForm, baseUrl: e.target.value })}
                     placeholder="https://api.example.com"
-                    className="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full flex-1"
                   />
                   <input
                     type="text"
                     value={endpointForm.path}
                     onChange={(e) => setEndpointForm({ ...endpointForm, path: e.target.value })}
                     placeholder="/api/users"
-                    className="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full flex-1"
                   />
                 </div>
 
                 <div>
                   <div className="mb-2 flex items-center justify-between">
-                    <label className="text-sm font-medium">Parameters</label>
+                    <label className="text-sm font-semibold text-black">Parameters</label>
                     <button
                       onClick={addParameter}
-                      className="rounded bg-blue-500 px-2 py-1 text-xs text-white hover:bg-blue-600"
+                      className="rounded-xl bg-blue-600 px-2 py-1 text-xs font-semibold text-white hover:bg-blue-700 shadow-sm"
                     >
                       <IconPlus size={14} />
                     </button>
@@ -405,12 +405,12 @@ export const APITestingPanel: React.FC = () => {
                           placeholder="Name"
                           value={param.name}
                           onChange={(e) => updateParameter(index, { ...param, name: e.target.value })}
-                          className="flex-1 rounded border border-gray-300 bg-white px-2 py-1 text-sm dark:border-gray-600 dark:bg-gray-700"
+                          className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full flex-1"
                         />
                         <select
                           value={param.type}
                           onChange={(e) => updateParameter(index, { ...param, type: e.target.value as any })}
-                          className="w-24 rounded border border-gray-300 bg-white px-2 py-1 text-sm dark:border-gray-600 dark:bg-gray-700"
+                          className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-24"
                         >
                           <option value="query">Query</option>
                           <option value="path">Path</option>
@@ -420,7 +420,7 @@ export const APITestingPanel: React.FC = () => {
                         <select
                           value={param.dataType}
                           onChange={(e) => updateParameter(index, { ...param, dataType: e.target.value as any })}
-                          className="w-24 rounded border border-gray-300 bg-white px-2 py-1 text-sm dark:border-gray-600 dark:bg-gray-700"
+                          className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-24"
                         >
                           <option value="string">String</option>
                           <option value="number">Number</option>
@@ -433,11 +433,11 @@ export const APITestingPanel: React.FC = () => {
                           placeholder="Value"
                           value={param.value || ''}
                           onChange={(e) => updateParameter(index, { ...param, value: e.target.value })}
-                          className="flex-1 rounded border border-gray-300 bg-white px-2 py-1 text-sm dark:border-gray-600 dark:bg-gray-700"
+                          className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full flex-1"
                         />
                         <button
                           onClick={() => removeParameter(index)}
-                          className="text-red-500 hover:text-red-600"
+                          className="text-red-600 hover:text-red-700"
                         >
                           <IconTrash size={16} />
                         </button>
@@ -447,13 +447,13 @@ export const APITestingPanel: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Request Body</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Request Body</label>
                   <textarea
                     value={endpointForm.body}
                     onChange={(e) => setEndpointForm({ ...endpointForm, body: e.target.value })}
                     rows={5}
                     placeholder='{"key": "value"}'
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-sm dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full font-mono"
                   />
                 </div>
 
@@ -472,7 +472,7 @@ export const APITestingPanel: React.FC = () => {
                       };
                       handleTestEndpoint(endpoint);
                     }}
-                    className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                    className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                   >
                     <IconPlayerPlay size={18} />
                     Test Endpoint
@@ -491,7 +491,7 @@ export const APITestingPanel: React.FC = () => {
                       };
                       handleScanEndpoint(endpoint, 'full');
                     }}
-                    className="flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-white hover:bg-orange-600"
+                    className="flex items-center gap-2 rounded-xl bg-orange-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-orange-700 shadow-sm"
                   >
                     <IconSearch size={18} />
                     Scan for Vulnerabilities
@@ -504,23 +504,23 @@ export const APITestingPanel: React.FC = () => {
 
         {/* GraphQL Tab */}
         {activeTab === 'graphql' && (
-          <div className="space-y-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">GraphQL Introspection</h3>
+          <div className="space-y-4 p-6">
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="mb-3 text-sm font-semibold text-black">GraphQL Introspection</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">GraphQL Endpoint</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">GraphQL Endpoint</label>
                   <div className="flex gap-2">
                     <input
                       type="url"
                       value={graphqlEndpoint}
                       onChange={(e) => setGraphqlEndpoint(e.target.value)}
                       placeholder="https://api.example.com/graphql"
-                      className="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                      className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full flex-1"
                     />
                     <button
                       onClick={handleIntrospectGraphQL}
-                      className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                      className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                     >
                       <IconSearch size={18} />
                       Introspect
@@ -529,14 +529,14 @@ export const APITestingPanel: React.FC = () => {
                 </div>
 
                 {graphqlSchema && (
-                  <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-700 dark:bg-gray-900">
-                    <p className="text-sm font-medium">
+                  <div className="rounded-xl border border-gray-200 bg-gray-50 p-3">
+                    <p className="text-sm font-semibold text-black">
                       Schema: {graphqlSchema.queries.length} queries, {graphqlSchema.mutations.length} mutations,{' '}
                       {graphqlSchema.subscriptions.length} subscriptions
                     </p>
                     <button
                       onClick={handleScanGraphQL}
-                      className="mt-2 rounded-lg bg-orange-500 px-3 py-1.5 text-sm text-white hover:bg-orange-600"
+                      className="mt-2 rounded-xl bg-orange-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-orange-700 shadow-sm"
                     >
                       Scan for Vulnerabilities
                     </button>
@@ -545,34 +545,34 @@ export const APITestingPanel: React.FC = () => {
               </div>
             </div>
 
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">Query Testing</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="mb-3 text-sm font-semibold text-black">Query Testing</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Query</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Query</label>
                   <textarea
                     value={graphqlQuery}
                     onChange={(e) => setGraphqlQuery(e.target.value)}
                     rows={8}
                     placeholder="query { users { id name email } }"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-sm dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full font-mono"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Variables (JSON)</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Variables (JSON)</label>
                   <textarea
                     value={graphqlVariables}
                     onChange={(e) => setGraphqlVariables(e.target.value)}
                     rows={4}
                     placeholder='{"id": 1}'
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-sm dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full font-mono"
                   />
                 </div>
 
                 <button
                   onClick={handleTestGraphQL}
-                  className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                  className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                 >
                   <IconPlayerPlay size={18} />
                   Execute Query
@@ -580,8 +580,8 @@ export const APITestingPanel: React.FC = () => {
 
                 {graphqlResult && (
                   <div>
-                    <label className="mb-1 block text-sm font-medium">Result</label>
-                    <pre className="max-h-64 overflow-auto rounded-lg border border-gray-300 bg-gray-50 p-3 text-xs dark:border-gray-600 dark:bg-gray-900">
+                    <label className="text-sm font-semibold text-black mb-2 block">Result</label>
+                    <pre className="max-h-64 overflow-auto rounded-xl border border-gray-200 bg-gray-50 p-3 text-xs text-black">
                       {JSON.stringify(graphqlResult, null, 2)}
                     </pre>
                   </div>
@@ -593,18 +593,18 @@ export const APITestingPanel: React.FC = () => {
 
         {/* Mobile Apps Tab */}
         {activeTab === 'mobile' && (
-          <div className="space-y-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">Start Mobile App Session</h3>
+          <div className="space-y-4 p-6">
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="mb-3 text-sm font-semibold text-black">Start Mobile App Session</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Device Type</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Device Type</label>
                   <select
                     value={mobileSessionForm.deviceType}
                     onChange={(e) =>
                       setMobileSessionForm({ ...mobileSessionForm, deviceType: e.target.value as any })
                     }
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   >
                     <option value="android">Android</option>
                     <option value="ios">iOS</option>
@@ -612,19 +612,19 @@ export const APITestingPanel: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Device Name</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Device Name</label>
                   <input
                     type="text"
                     value={mobileSessionForm.deviceName}
                     onChange={(e) => setMobileSessionForm({ ...mobileSessionForm, deviceName: e.target.value })}
                     placeholder="My Phone"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
 
                 <button
                   onClick={handleStartMobileSession}
-                  className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+                  className="flex items-center gap-2 rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm"
                 >
                   <IconPlayerPlay size={18} />
                   Start Session
@@ -633,22 +633,22 @@ export const APITestingPanel: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <h3 className="font-semibold">Active Sessions</h3>
+              <h3 className="text-sm font-semibold text-black">Active Sessions</h3>
               {mobileSessions.map((session) => (
                 <div
                   key={session.id}
-                  className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+                  className="apple-card rounded-2xl p-5 border border-gray-200"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <IconDeviceMobile size={18} className="text-blue-500" />
-                        <h4 className="font-semibold">{session.deviceName}</h4>
-                        <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                        <IconDeviceMobile size={18} className="text-blue-600" />
+                        <h4 className="font-semibold text-black">{session.deviceName}</h4>
+                        <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800">
                           {session.deviceType}
                         </span>
                       </div>
-                      <div className="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-400">
+                      <div className="mt-2 space-y-1 text-sm text-gray-600">
                         <p>App: {session.appName} ({session.appPackage})</p>
                         <p>Requests: {session.requests}</p>
                         <p>Vulnerabilities: {session.vulnerabilities.length}</p>
@@ -665,13 +665,13 @@ export const APITestingPanel: React.FC = () => {
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleBypassSSLPinning(session.id)}
-                        className="rounded-lg bg-orange-500 px-3 py-1.5 text-sm text-white hover:bg-orange-600"
+                        className="rounded-xl bg-orange-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-orange-700 shadow-sm"
                       >
                         Bypass Pinning
                       </button>
                       <button
                         onClick={() => handleStopMobileSession(session.id)}
-                        className="rounded-lg bg-red-500 px-3 py-1.5 text-sm text-white hover:bg-red-600"
+                        className="rounded-xl bg-red-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-red-700 shadow-sm"
                       >
                         Stop
                       </button>
@@ -680,9 +680,9 @@ export const APITestingPanel: React.FC = () => {
                 </div>
               ))}
               {mobileSessions.length === 0 && (
-                <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+                <div className="apple-card rounded-2xl p-8 border border-gray-200 text-center">
                   <IconDeviceMobile size={48} className="mx-auto mb-3 text-gray-400" />
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-gray-600">
                     No active mobile app sessions. Start a session to begin testing.
                   </p>
                 </div>
@@ -693,11 +693,11 @@ export const APITestingPanel: React.FC = () => {
 
         {/* Endpoints Tab */}
         {activeTab === 'endpoints' && (
-          <div className="space-y-2">
+          <div className="space-y-2 p-6">
             {endpoints.map((endpoint) => (
               <div
                 key={endpoint.id}
-                className="cursor-pointer rounded-lg border border-gray-200 bg-white p-4 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-750"
+                className="cursor-pointer apple-card rounded-2xl p-5 border border-gray-200 hover:bg-gray-50"
                 onClick={() => setSelectedEndpoint(endpoint)}
               >
                 <div className="flex items-start justify-between">
@@ -706,22 +706,22 @@ export const APITestingPanel: React.FC = () => {
                       <span
                         className={cn(
                           'rounded px-2 py-0.5 text-xs font-mono font-bold',
-                          endpoint.method === 'GET' && 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
-                          endpoint.method === 'POST' && 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
-                          endpoint.method === 'PUT' && 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
-                          endpoint.method === 'DELETE' && 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                          endpoint.method === 'GET' && 'bg-blue-100 text-blue-800',
+                          endpoint.method === 'POST' && 'bg-green-100 text-green-800',
+                          endpoint.method === 'PUT' && 'bg-yellow-100 text-yellow-800',
+                          endpoint.method === 'DELETE' && 'bg-red-100 text-red-800'
                         )}
                       >
                         {endpoint.method}
                       </span>
-                      <span className="font-mono text-sm">{endpoint.path}</span>
-                      <span className="rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                      <span className="font-mono text-sm text-black">{endpoint.path}</span>
+                      <span className="rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800">
                         {endpoint.type}
                       </span>
                     </div>
                     <p className="mt-1 text-xs text-gray-500">{endpoint.baseUrl}</p>
                     {endpoint.response && (
-                      <div className="mt-2 flex items-center gap-3 text-xs text-gray-600 dark:text-gray-400">
+                      <div className="mt-2 flex items-center gap-3 text-xs text-gray-600">
                         <span
                           className={cn(
                             endpoint.response.statusCode >= 200 && endpoint.response.statusCode < 300
@@ -736,7 +736,7 @@ export const APITestingPanel: React.FC = () => {
                       </div>
                     )}
                     {endpoint.vulnerabilities && endpoint.vulnerabilities.length > 0 && (
-                      <p className="mt-2 text-sm text-orange-600 dark:text-orange-400">
+                      <p className="mt-2 text-sm text-orange-600">
                         {endpoint.vulnerabilities.length} vulnerabilities found
                       </p>
                     )}
@@ -747,7 +747,7 @@ export const APITestingPanel: React.FC = () => {
                         e.stopPropagation();
                         handleTestEndpoint(endpoint);
                       }}
-                      className="rounded-lg bg-blue-500 px-3 py-1.5 text-sm text-white hover:bg-blue-600"
+                      className="rounded-xl bg-blue-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                     >
                       Test
                     </button>
@@ -756,7 +756,7 @@ export const APITestingPanel: React.FC = () => {
                         e.stopPropagation();
                         handleScanEndpoint(endpoint, 'quick');
                       }}
-                      className="rounded-lg bg-orange-500 px-3 py-1.5 text-sm text-white hover:bg-orange-600"
+                      className="rounded-xl bg-orange-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-orange-700 shadow-sm"
                     >
                       Scan
                     </button>
@@ -765,9 +765,9 @@ export const APITestingPanel: React.FC = () => {
               </div>
             ))}
             {endpoints.length === 0 && (
-              <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+              <div className="apple-card rounded-2xl p-8 border border-gray-200 text-center">
                 <IconApi size={48} className="mx-auto mb-3 text-gray-400" />
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-gray-600">
                   No endpoints discovered yet. Use the REST & SOAP tab to discover or import endpoints.
                 </p>
               </div>

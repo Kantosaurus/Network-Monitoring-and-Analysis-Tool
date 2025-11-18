@@ -239,50 +239,52 @@ export const AuthenticatedScanningPanel: React.FC = () => {
   };
 
   return (
-    <div className="flex h-full flex-col gap-4">
+    <div className="flex h-full flex-col bg-white">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Authenticated Scanning</h2>
-        <div className="flex gap-2">
-          {activeTab === 'credentials' && (
-            <button
-              onClick={() => setShowCredentialForm(true)}
-              className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-            >
-              <IconPlus size={18} />
-              Add Credential
-            </button>
-          )}
-          {activeTab === 'macros' && (
-            <button
-              onClick={() => setShowMacroForm(true)}
-              className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-            >
-              <IconPlus size={18} />
-              Add Macro
-            </button>
-          )}
-          {activeTab === 'session-rules' && (
-            <button
-              onClick={() => setShowSessionRuleForm(true)}
-              className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-            >
-              <IconPlus size={18} />
-              Add Session Rule
-            </button>
-          )}
+      <div className="px-6 py-5 border-b border-gray-200">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-bold text-black uppercase tracking-wide">Authenticated Scanning</h2>
+          <div className="flex gap-2">
+            {activeTab === 'credentials' && (
+              <button
+                onClick={() => setShowCredentialForm(true)}
+                className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
+              >
+                <IconPlus size={18} />
+                Add Credential
+              </button>
+            )}
+            {activeTab === 'macros' && (
+              <button
+                onClick={() => setShowMacroForm(true)}
+                className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
+              >
+                <IconPlus size={18} />
+                Add Macro
+              </button>
+            )}
+            {activeTab === 'session-rules' && (
+              <button
+                onClick={() => setShowSessionRuleForm(true)}
+                className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
+              >
+                <IconPlus size={18} />
+                Add Session Rule
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex border-b border-gray-200 px-6 bg-gray-50 overflow-x-auto">
         <button
           onClick={() => setActiveTab('credentials')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
             activeTab === 'credentials'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600'
+              : 'border-transparent text-gray-600 hover:text-gray-900'
           )}
         >
           <div className="flex items-center gap-2">
@@ -293,10 +295,10 @@ export const AuthenticatedScanningPanel: React.FC = () => {
         <button
           onClick={() => setActiveTab('macros')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
             activeTab === 'macros'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600'
+              : 'border-transparent text-gray-600 hover:text-gray-900'
           )}
         >
           <div className="flex items-center gap-2">
@@ -307,10 +309,10 @@ export const AuthenticatedScanningPanel: React.FC = () => {
         <button
           onClick={() => setActiveTab('session-rules')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
             activeTab === 'session-rules'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600'
+              : 'border-transparent text-gray-600 hover:text-gray-900'
           )}
         >
           <div className="flex items-center gap-2">
@@ -321,10 +323,10 @@ export const AuthenticatedScanningPanel: React.FC = () => {
         <button
           onClick={() => setActiveTab('scan-results')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
             activeTab === 'scan-results'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600'
+              : 'border-transparent text-gray-600 hover:text-gray-900'
           )}
         >
           <div className="flex items-center gap-2">
@@ -335,20 +337,20 @@ export const AuthenticatedScanningPanel: React.FC = () => {
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto p-6">
         {/* Credentials Tab */}
         {activeTab === 'credentials' && (
           <div className="space-y-4">
             {/* Scan Configuration */}
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">Quick Authenticated Scan</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="text-sm font-semibold text-black mb-4">Quick Authenticated Scan</h3>
               <div className="grid gap-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Select Credential</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Select Credential</label>
                   <select
                     value={scanConfig.credentialId}
                     onChange={(e) => setScanConfig({ ...scanConfig, credentialId: e.target.value })}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   >
                     <option value="">-- Select Credential --</option>
                     {credentials.map((cred) => (
@@ -359,21 +361,21 @@ export const AuthenticatedScanningPanel: React.FC = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Target URL</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Target URL</label>
                   <input
                     type="url"
                     value={scanConfig.targetUrl}
                     onChange={(e) => setScanConfig({ ...scanConfig, targetUrl: e.target.value })}
                     placeholder="https://example.com"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Scan Type</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Scan Type</label>
                   <select
                     value={scanConfig.scanType}
                     onChange={(e) => setScanConfig({ ...scanConfig, scanType: e.target.value })}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   >
                     <option value="quick">Quick Scan</option>
                     <option value="full">Full Scan</option>
@@ -382,7 +384,7 @@ export const AuthenticatedScanningPanel: React.FC = () => {
                 </div>
                 <button
                   onClick={handleStartAuthenticatedScan}
-                  className="flex items-center justify-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+                  className="flex items-center justify-center gap-2 rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm"
                 >
                   <IconPlayerPlay size={18} />
                   Start Authenticated Scan
@@ -395,18 +397,18 @@ export const AuthenticatedScanningPanel: React.FC = () => {
               {credentials.map((credential) => (
                 <div
                   key={credential.id}
-                  className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+                  className="apple-card rounded-2xl p-5 border border-gray-200"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <IconLock size={18} className="text-blue-500" />
-                        <h4 className="font-semibold">{credential.name}</h4>
-                        <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                        <IconLock size={18} className="text-blue-600" />
+                        <h4 className="text-sm font-semibold text-black">{credential.name}</h4>
+                        <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800">
                           {credential.type}
                         </span>
                       </div>
-                      <div className="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-400">
+                      <div className="mt-2 space-y-1 text-sm text-gray-600">
                         {credential.username && <p>Username: {credential.username}</p>}
                         {credential.domain && <p>Domain: {credential.domain}</p>}
                         {credential.loginUrl && <p>Login URL: {credential.loginUrl}</p>}
@@ -418,13 +420,13 @@ export const AuthenticatedScanningPanel: React.FC = () => {
                       <button
                         onClick={() => handleTestCredential(credential.id)}
                         disabled={testingCredential === credential.id}
-                        className="rounded-lg bg-blue-500 px-3 py-1.5 text-sm text-white hover:bg-blue-600 disabled:opacity-50"
+                        className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm disabled:opacity-50"
                       >
                         {testingCredential === credential.id ? 'Testing...' : 'Test'}
                       </button>
                       <button
                         onClick={() => handleDeleteCredential(credential.id)}
-                        className="rounded-lg bg-red-500 px-3 py-1.5 text-sm text-white hover:bg-red-600"
+                        className="rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 shadow-sm"
                       >
                         <IconTrash size={16} />
                       </button>
@@ -433,9 +435,9 @@ export const AuthenticatedScanningPanel: React.FC = () => {
                 </div>
               ))}
               {credentials.length === 0 && (
-                <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+                <div className="apple-card rounded-2xl p-8 border border-gray-200 text-center">
                   <IconKey size={48} className="mx-auto mb-3 text-gray-400" />
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-gray-600">
                     No credentials configured. Click "Add Credential" to get started.
                   </p>
                 </div>
@@ -450,13 +452,13 @@ export const AuthenticatedScanningPanel: React.FC = () => {
             {macros.map((macro) => (
               <div
                 key={macro.id}
-                className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+                className="apple-card rounded-2xl p-5 border border-gray-200"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <h4 className="font-semibold">{macro.name}</h4>
+                    <h4 className="text-sm font-semibold text-black">{macro.name}</h4>
                     {macro.description && (
-                      <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{macro.description}</p>
+                      <p className="mt-1 text-sm text-gray-600">{macro.description}</p>
                     )}
                     <p className="mt-2 text-sm text-gray-500">
                       {macro.steps.length} step{macro.steps.length !== 1 ? 's' : ''}
@@ -465,13 +467,13 @@ export const AuthenticatedScanningPanel: React.FC = () => {
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleRunMacro(macro.id)}
-                      className="rounded-lg bg-green-500 px-3 py-1.5 text-sm text-white hover:bg-green-600"
+                      className="rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm"
                     >
                       <IconPlayerPlay size={16} />
                     </button>
                     <button
                       onClick={() => handleDeleteMacro(macro.id)}
-                      className="rounded-lg bg-red-500 px-3 py-1.5 text-sm text-white hover:bg-red-600"
+                      className="rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 shadow-sm"
                     >
                       <IconTrash size={16} />
                     </button>
@@ -480,9 +482,9 @@ export const AuthenticatedScanningPanel: React.FC = () => {
               </div>
             ))}
             {macros.length === 0 && (
-              <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+              <div className="apple-card rounded-2xl p-8 border border-gray-200 text-center">
                 <IconSettings size={48} className="mx-auto mb-3 text-gray-400" />
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-gray-600">
                   No macros configured. Click "Add Macro" to create multi-step authentication flows.
                 </p>
               </div>
@@ -496,12 +498,12 @@ export const AuthenticatedScanningPanel: React.FC = () => {
             {sessionRules.map((rule) => (
               <div
                 key={rule.id}
-                className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+                className="apple-card rounded-2xl p-5 border border-gray-200"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <h4 className="font-semibold">{rule.name}</h4>
-                    <div className="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-400">
+                    <h4 className="text-sm font-semibold text-black">{rule.name}</h4>
+                    <div className="mt-2 space-y-1 text-sm text-gray-600">
                       <p>Condition: {rule.condition}</p>
                       <p>Action: {rule.action}</p>
                       {rule.macroId && <p>Macro ID: {rule.macroId}</p>}
@@ -509,7 +511,7 @@ export const AuthenticatedScanningPanel: React.FC = () => {
                   </div>
                   <button
                     onClick={() => handleDeleteSessionRule(rule.id)}
-                    className="rounded-lg bg-red-500 px-3 py-1.5 text-sm text-white hover:bg-red-600"
+                    className="rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 shadow-sm"
                   >
                     <IconTrash size={16} />
                   </button>
@@ -517,9 +519,9 @@ export const AuthenticatedScanningPanel: React.FC = () => {
               </div>
             ))}
             {sessionRules.length === 0 && (
-              <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+              <div className="apple-card rounded-2xl p-8 border border-gray-200 text-center">
                 <IconShield size={48} className="mx-auto mb-3 text-gray-400" />
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-gray-600">
                   No session rules configured. Click "Add Session Rule" to handle session management.
                 </p>
               </div>
@@ -533,31 +535,31 @@ export const AuthenticatedScanningPanel: React.FC = () => {
             {scanResults.map((result, index) => (
               <div
                 key={index}
-                className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+                className="apple-card rounded-2xl p-5 border border-gray-200"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <h4 className="font-semibold">Scan #{result.scanId}</h4>
+                      <h4 className="text-sm font-semibold text-black">Scan #{result.scanId}</h4>
                       {result.authenticated ? (
-                        <span className="flex items-center gap-1 rounded bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-200">
+                        <span className="flex items-center gap-1 rounded bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">
                           <IconCheck size={14} />
                           Authenticated
                         </span>
                       ) : (
-                        <span className="flex items-center gap-1 rounded bg-red-100 px-2 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900 dark:text-red-200">
+                        <span className="flex items-center gap-1 rounded bg-red-100 px-2 py-0.5 text-xs font-medium text-red-800">
                           <IconX size={14} />
                           Failed
                         </span>
                       )}
                     </div>
-                    <div className="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-400">
+                    <div className="mt-2 space-y-1 text-sm text-gray-600">
                       <p>Credential ID: {result.credentialId}</p>
                       <p>Pages Accessed: {result.pagesAccessed}</p>
                       <p>Vulnerabilities Found: {result.vulnerabilities.length}</p>
                       <p>Timestamp: {new Date(result.timestamp).toLocaleString()}</p>
                       {result.errors.length > 0 && (
-                        <p className="text-red-600 dark:text-red-400">
+                        <p className="text-red-600">
                           Errors: {result.errors.join(', ')}
                         </p>
                       )}
@@ -567,9 +569,9 @@ export const AuthenticatedScanningPanel: React.FC = () => {
               </div>
             ))}
             {scanResults.length === 0 && (
-              <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+              <div className="apple-card rounded-2xl p-8 border border-gray-200 text-center">
                 <IconPlayerPlay size={48} className="mx-auto mb-3 text-gray-400" />
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-gray-600">
                   No scan results yet. Run an authenticated scan to see results here.
                 </p>
               </div>
@@ -581,24 +583,24 @@ export const AuthenticatedScanningPanel: React.FC = () => {
       {/* Credential Form Modal */}
       {showCredentialForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="w-full max-w-2xl rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-            <h3 className="mb-4 text-xl font-bold">Add Credential</h3>
+          <div className="w-full max-w-2xl apple-card rounded-2xl border border-gray-200 bg-white p-6">
+            <h3 className="mb-4 text-lg font-bold text-black uppercase tracking-wide">Add Credential</h3>
             <div className="space-y-3">
               <div>
-                <label className="mb-1 block text-sm font-medium">Name</label>
+                <label className="text-sm font-semibold text-black mb-2 block">Name</label>
                 <input
                   type="text"
                   value={credentialForm.name}
                   onChange={(e) => setCredentialForm({ ...credentialForm, name: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Type</label>
+                <label className="text-sm font-semibold text-black mb-2 block">Type</label>
                 <select
                   value={credentialForm.type}
                   onChange={(e) => setCredentialForm({ ...credentialForm, type: e.target.value as any })}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                 >
                   <option value="form-based">Form-Based</option>
                   <option value="ntlm">NTLM</option>
@@ -613,21 +615,21 @@ export const AuthenticatedScanningPanel: React.FC = () => {
               {(credentialForm.type === 'form-based' || credentialForm.type === 'basic' || credentialForm.type === 'digest' || credentialForm.type === 'ntlm') && (
                 <>
                   <div>
-                    <label className="mb-1 block text-sm font-medium">Username</label>
+                    <label className="text-sm font-semibold text-black mb-2 block">Username</label>
                     <input
                       type="text"
                       value={credentialForm.username}
                       onChange={(e) => setCredentialForm({ ...credentialForm, username: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                      className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-sm font-medium">Password</label>
+                    <label className="text-sm font-semibold text-black mb-2 block">Password</label>
                     <input
                       type="password"
                       value={credentialForm.password}
                       onChange={(e) => setCredentialForm({ ...credentialForm, password: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                      className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                     />
                   </div>
                 </>
@@ -635,48 +637,48 @@ export const AuthenticatedScanningPanel: React.FC = () => {
 
               {credentialForm.type === 'ntlm' && (
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Domain</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Domain</label>
                   <input
                     type="text"
                     value={credentialForm.domain}
                     onChange={(e) => setCredentialForm({ ...credentialForm, domain: e.target.value })}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
               )}
 
               {credentialForm.type === 'form-based' && (
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Login URL</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Login URL</label>
                   <input
                     type="url"
                     value={credentialForm.loginUrl}
                     onChange={(e) => setCredentialForm({ ...credentialForm, loginUrl: e.target.value })}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
               )}
 
               {credentialForm.type === 'bearer' && (
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Bearer Token</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Bearer Token</label>
                   <input
                     type="text"
                     value={credentialForm.token}
                     onChange={(e) => setCredentialForm({ ...credentialForm, token: e.target.value })}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
               )}
 
               {credentialForm.type === 'api-key' && (
                 <div>
-                  <label className="mb-1 block text-sm font-medium">API Key</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">API Key</label>
                   <input
                     type="text"
                     value={credentialForm.apiKey}
                     onChange={(e) => setCredentialForm({ ...credentialForm, apiKey: e.target.value })}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
               )}
@@ -687,13 +689,13 @@ export const AuthenticatedScanningPanel: React.FC = () => {
                   setShowCredentialForm(false);
                   setCredentialForm({ name: '', type: 'form-based' });
                 }}
-                className="rounded-lg bg-gray-200 px-4 py-2 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                className="rounded-xl bg-gray-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-gray-700 shadow-sm"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveCredential}
-                className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
               >
                 Save Credential
               </button>
@@ -705,46 +707,46 @@ export const AuthenticatedScanningPanel: React.FC = () => {
       {/* Macro Form Modal */}
       {showMacroForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="max-h-[90vh] w-full max-w-3xl overflow-auto rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-            <h3 className="mb-4 text-xl font-bold">Add Authentication Macro</h3>
+          <div className="max-h-[90vh] w-full max-w-3xl overflow-auto apple-card rounded-2xl border border-gray-200 bg-white p-6">
+            <h3 className="mb-4 text-lg font-bold text-black uppercase tracking-wide">Add Authentication Macro</h3>
             <div className="space-y-3">
               <div>
-                <label className="mb-1 block text-sm font-medium">Macro Name</label>
+                <label className="text-sm font-semibold text-black mb-2 block">Macro Name</label>
                 <input
                   type="text"
                   value={macroForm.name}
                   onChange={(e) => setMacroForm({ ...macroForm, name: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Description</label>
+                <label className="text-sm font-semibold text-black mb-2 block">Description</label>
                 <textarea
                   value={macroForm.description}
                   onChange={(e) => setMacroForm({ ...macroForm, description: e.target.value })}
                   rows={2}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                 />
               </div>
 
               <div>
                 <div className="mb-2 flex items-center justify-between">
-                  <label className="text-sm font-medium">Steps</label>
+                  <label className="text-sm font-semibold text-black">Steps</label>
                   <button
                     onClick={addMacroStep}
-                    className="rounded-lg bg-blue-500 px-3 py-1 text-sm text-white hover:bg-blue-600"
+                    className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                   >
                     <IconPlus size={16} />
                   </button>
                 </div>
                 <div className="space-y-2">
                   {(macroForm.steps || []).map((step, index) => (
-                    <div key={index} className="rounded-lg border border-gray-200 p-3 dark:border-gray-700">
+                    <div key={index} className="rounded-2xl border border-gray-200 p-3 bg-gray-50">
                       <div className="mb-2 flex items-center justify-between">
-                        <span className="text-sm font-medium">Step {index + 1}</span>
+                        <span className="text-sm font-semibold text-black">Step {index + 1}</span>
                         <button
                           onClick={() => removeMacroStep(index)}
-                          className="text-red-500 hover:text-red-600"
+                          className="text-red-600 hover:text-red-700"
                         >
                           <IconTrash size={16} />
                         </button>
@@ -753,7 +755,7 @@ export const AuthenticatedScanningPanel: React.FC = () => {
                         <select
                           value={step.type}
                           onChange={(e) => updateMacroStep(index, { ...step, type: e.target.value as any })}
-                          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm dark:border-gray-600 dark:bg-gray-700"
+                          className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                         >
                           <option value="request">HTTP Request</option>
                           <option value="extract">Extract Value</option>
@@ -768,12 +770,12 @@ export const AuthenticatedScanningPanel: React.FC = () => {
                               placeholder="URL"
                               value={step.url}
                               onChange={(e) => updateMacroStep(index, { ...step, url: e.target.value })}
-                              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm dark:border-gray-600 dark:bg-gray-700"
+                              className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                             />
                             <select
                               value={step.method}
                               onChange={(e) => updateMacroStep(index, { ...step, method: e.target.value })}
-                              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm dark:border-gray-600 dark:bg-gray-700"
+                              className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                             >
                               <option value="GET">GET</option>
                               <option value="POST">POST</option>
@@ -790,14 +792,14 @@ export const AuthenticatedScanningPanel: React.FC = () => {
                               placeholder="Variable name"
                               value={step.extractVariable}
                               onChange={(e) => updateMacroStep(index, { ...step, extractVariable: e.target.value })}
-                              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm dark:border-gray-600 dark:bg-gray-700"
+                              className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                             />
                             <input
                               type="text"
                               placeholder="Regex pattern"
                               value={step.extractRegex}
                               onChange={(e) => updateMacroStep(index, { ...step, extractRegex: e.target.value })}
-                              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm dark:border-gray-600 dark:bg-gray-700"
+                              className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                             />
                           </>
                         )}
@@ -808,7 +810,7 @@ export const AuthenticatedScanningPanel: React.FC = () => {
                             placeholder="Wait time (ms)"
                             value={step.waitMs}
                             onChange={(e) => updateMacroStep(index, { ...step, waitMs: parseInt(e.target.value) })}
-                            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm dark:border-gray-600 dark:bg-gray-700"
+                            className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                           />
                         )}
 
@@ -818,7 +820,7 @@ export const AuthenticatedScanningPanel: React.FC = () => {
                             value={step.script}
                             onChange={(e) => updateMacroStep(index, { ...step, script: e.target.value })}
                             rows={3}
-                            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-mono dark:border-gray-600 dark:bg-gray-700"
+                            className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full font-mono"
                           />
                         )}
                       </div>
@@ -833,13 +835,13 @@ export const AuthenticatedScanningPanel: React.FC = () => {
                   setShowMacroForm(false);
                   setMacroForm({ name: '', description: '', steps: [] });
                 }}
-                className="rounded-lg bg-gray-200 px-4 py-2 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                className="rounded-xl bg-gray-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-gray-700 shadow-sm"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveMacro}
-                className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
               >
                 Save Macro
               </button>

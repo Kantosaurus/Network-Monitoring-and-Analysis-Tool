@@ -193,86 +193,78 @@ export const ImportExportToolPanel: React.FC = () => {
   };
 
   return (
-    <div className="flex h-full flex-col gap-4">
+    <div className="flex flex-col h-full bg-white">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Import/Export & Tool Interoperability</h2>
+      <div className="px-6 py-5 border-b border-gray-200">
+        <h2 className="text-lg font-bold text-black uppercase tracking-wide">Import/Export & Tool Interoperability</h2>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex border-b border-gray-200 px-6 bg-gray-50">
         <button
           onClick={() => setActiveTab('import')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'import'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconFileImport size={18} />
-            Import ({importResults.length})
-          </div>
+          <IconFileImport size={18} />
+          Import ({importResults.length})
         </button>
         <button
           onClick={() => setActiveTab('export')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'export'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconFileExport size={18} />
-            Export ({exportResults.length})
-          </div>
+          <IconFileExport size={18} />
+          Export ({exportResults.length})
         </button>
         <button
           onClick={() => setActiveTab('tools')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'tools'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconTerminal size={18} />
-            Tools ({toolIntegrations.length})
-          </div>
+          <IconTerminal size={18} />
+          Tools ({toolIntegrations.length})
         </button>
         <button
           onClick={() => setActiveTab('cicd')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'cicd'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconCloud size={18} />
-            CI/CD
-          </div>
+          <IconCloud size={18} />
+          CI/CD
         </button>
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-y-auto p-4">
         {/* Import Tab */}
         {activeTab === 'import' && (
           <div className="space-y-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">Import Configuration</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="text-lg font-bold text-black uppercase tracking-wide mb-3">Import Configuration</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Source Format</label>
+                  <label className="mb-2 block text-sm font-semibold text-black">Source Format</label>
                   <select
                     value={importConfig.source}
                     onChange={(e) => setImportConfig({ ...importConfig, source: e.target.value as any })}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                   >
                     <option value="burp">Burp Suite</option>
                     <option value="zap">OWASP ZAP</option>
@@ -284,21 +276,21 @@ export const ImportExportToolPanel: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium">File Path</label>
+                  <label className="mb-2 block text-sm font-semibold text-black">File Path</label>
                   <div className="flex gap-2">
                     <input
                       type="text"
                       value={importConfig.filePath}
                       onChange={(e) => setImportConfig({ ...importConfig, filePath: e.target.value })}
                       placeholder="C:\path\to\file.burp"
-                      className="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                      className="apple-input flex-1 rounded-xl px-4 py-2.5 text-sm text-black"
                     />
                     <button
                       onClick={() => {
                         const path = prompt('Enter file path:');
                         if (path) setImportConfig({ ...importConfig, filePath: path });
                       }}
-                      className="rounded-lg bg-gray-200 px-3 py-2 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+                      className="rounded-xl bg-gray-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-gray-700 shadow-sm"
                     >
                       Browse
                     </button>
@@ -306,7 +298,7 @@ export const ImportExportToolPanel: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Import Options</label>
+                  <label className="mb-2 block text-sm font-semibold text-black">Import Options</label>
                   <div className="space-y-2">
                     <label className="flex items-center gap-2">
                       <input
@@ -318,9 +310,9 @@ export const ImportExportToolPanel: React.FC = () => {
                             importOptions: { ...importConfig.importOptions!, importHistory: e.target.checked },
                           })
                         }
-                        className="h-4 w-4"
+                        className="h-4 w-4 rounded"
                       />
-                      <span className="text-sm">Import HTTP History</span>
+                      <span className="text-sm text-black">Import HTTP History</span>
                     </label>
                     <label className="flex items-center gap-2">
                       <input
@@ -332,9 +324,9 @@ export const ImportExportToolPanel: React.FC = () => {
                             importOptions: { ...importConfig.importOptions!, importFindings: e.target.checked },
                           })
                         }
-                        className="h-4 w-4"
+                        className="h-4 w-4 rounded"
                       />
-                      <span className="text-sm">Import Findings</span>
+                      <span className="text-sm text-black">Import Findings</span>
                     </label>
                     <label className="flex items-center gap-2">
                       <input
@@ -346,18 +338,18 @@ export const ImportExportToolPanel: React.FC = () => {
                             importOptions: { ...importConfig.importOptions!, importConfiguration: e.target.checked },
                           })
                         }
-                        className="h-4 w-4"
+                        className="h-4 w-4 rounded"
                       />
-                      <span className="text-sm">Import Configuration</span>
+                      <span className="text-sm text-black">Import Configuration</span>
                     </label>
                     <label className="flex items-center gap-2">
                       <input
                         type="checkbox"
                         checked={importConfig.mergeWithExisting}
                         onChange={(e) => setImportConfig({ ...importConfig, mergeWithExisting: e.target.checked })}
-                        className="h-4 w-4"
+                        className="h-4 w-4 rounded"
                       />
-                      <span className="text-sm">Merge with Existing Data</span>
+                      <span className="text-sm text-black">Merge with Existing Data</span>
                     </label>
                   </div>
                 </div>
@@ -365,7 +357,7 @@ export const ImportExportToolPanel: React.FC = () => {
                 <button
                   onClick={handleImportFile}
                   disabled={importing}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm disabled:opacity-50"
                 >
                   <IconFileImport size={18} />
                   {importing ? 'Importing...' : 'Import File'}
@@ -374,16 +366,16 @@ export const ImportExportToolPanel: React.FC = () => {
             </div>
 
             {/* Import Results */}
-            <div className="space-y-2">
-              <h3 className="font-semibold">Import History</h3>
+            <div className="space-y-3">
+              <h3 className="text-sm font-bold text-black uppercase tracking-wide">Import History</h3>
               {importResults.map((result, index) => (
                 <div
                   key={index}
                   className={cn(
-                    'rounded-lg border p-4',
+                    'rounded-2xl border-2 p-5',
                     result.success
-                      ? 'border-green-300 bg-green-50 dark:border-green-700 dark:bg-green-900/20'
-                      : 'border-red-300 bg-red-50 dark:border-red-700 dark:bg-red-900/20'
+                      ? 'border-green-600 bg-green-50'
+                      : 'border-red-600 bg-red-50'
                   )}
                 >
                   <div className="flex items-center gap-2 mb-2">
@@ -392,17 +384,17 @@ export const ImportExportToolPanel: React.FC = () => {
                     ) : (
                       <IconX size={18} className="text-red-600" />
                     )}
-                    <span className="font-semibold">{result.success ? 'Import Successful' : 'Import Failed'}</span>
+                    <span className="font-bold text-black uppercase tracking-wide">{result.success ? 'Import Successful' : 'Import Failed'}</span>
                   </div>
                   {result.success && (
-                    <div className="space-y-1 text-sm">
+                    <div className="space-y-1 text-sm text-black">
                       <p>Items Imported: {result.itemsImported}</p>
                       <p>Requests: {result.requestsImported}</p>
                       <p>Findings: {result.findingsImported}</p>
                     </div>
                   )}
                   {result.errors.length > 0 && (
-                    <div className="mt-2 text-sm text-red-600 dark:text-red-400">
+                    <div className="mt-2 text-sm text-red-600">
                       <p>Errors: {result.errors.join(', ')}</p>
                     </div>
                   )}
@@ -415,8 +407,8 @@ export const ImportExportToolPanel: React.FC = () => {
         {/* Export Tab */}
         {activeTab === 'export' && (
           <div className="space-y-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">Export Data</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="text-lg font-bold text-black uppercase tracking-wide mb-3">Export Data</h3>
               <div className="space-y-2">
                 <button
                   onClick={() => {
@@ -425,10 +417,10 @@ export const ImportExportToolPanel: React.FC = () => {
                       window.api.exportToTool('burp', {}, { filePath: path });
                     }
                   }}
-                  className="flex w-full items-center gap-2 rounded-lg border border-gray-300 p-3 hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-700"
+                  className="flex w-full items-center gap-2 rounded-xl border border-gray-200 p-4 hover:bg-gray-50 transition-all"
                 >
-                  <IconFileExport size={18} />
-                  <span>Export to Burp Suite Format</span>
+                  <IconFileExport size={18} className="text-blue-600" />
+                  <span className="font-semibold text-black">Export to Burp Suite Format</span>
                 </button>
                 <button
                   onClick={() => {
@@ -437,27 +429,27 @@ export const ImportExportToolPanel: React.FC = () => {
                       window.api.exportToTool('zap', {}, { filePath: path });
                     }
                   }}
-                  className="flex w-full items-center gap-2 rounded-lg border border-gray-300 p-3 hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-700"
+                  className="flex w-full items-center gap-2 rounded-xl border border-gray-200 p-4 hover:bg-gray-50 transition-all"
                 >
-                  <IconFileExport size={18} />
-                  <span>Export to OWASP ZAP Format</span>
+                  <IconFileExport size={18} className="text-blue-600" />
+                  <span className="font-semibold text-black">Export to OWASP ZAP Format</span>
                 </button>
               </div>
             </div>
 
             {/* Export Results */}
-            <div className="space-y-2">
-              <h3 className="font-semibold">Export History</h3>
+            <div className="space-y-3">
+              <h3 className="text-sm font-bold text-black uppercase tracking-wide">Export History</h3>
               {exportResults.map((result, index) => (
                 <div
                   key={index}
-                  className="rounded-lg border border-green-300 bg-green-50 p-4 dark:border-green-700 dark:bg-green-900/20"
+                  className="rounded-2xl border-2 border-green-600 bg-green-50 p-5"
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <IconCheck size={18} className="text-green-600" />
-                    <span className="font-semibold">Export Successful</span>
+                    <span className="font-bold text-black uppercase tracking-wide">Export Successful</span>
                   </div>
-                  <div className="space-y-1 text-sm">
+                  <div className="space-y-1 text-sm text-black">
                     <p>File: {result.filePath}</p>
                     <p>Format: {result.format}</p>
                     <p>Items: {result.itemsExported}</p>
@@ -472,15 +464,15 @@ export const ImportExportToolPanel: React.FC = () => {
         {/* Tools Tab */}
         {activeTab === 'tools' && (
           <div className="space-y-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">Add Tool Integration</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="text-lg font-bold text-black uppercase tracking-wide mb-3">Add Tool Integration</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Tool</label>
+                  <label className="mb-2 block text-sm font-semibold text-black">Tool</label>
                   <select
                     value={toolForm.tool}
                     onChange={(e) => setToolForm({ ...toolForm, tool: e.target.value as any })}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                   >
                     <option value="zap">OWASP ZAP</option>
                     <option value="metasploit">Metasploit</option>
@@ -492,13 +484,13 @@ export const ImportExportToolPanel: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Executable Path</label>
+                  <label className="mb-2 block text-sm font-semibold text-black">Executable Path</label>
                   <input
                     type="text"
                     value={toolForm.path}
                     onChange={(e) => setToolForm({ ...toolForm, path: e.target.value })}
                     placeholder="C:\Program Files\tool\tool.exe"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                   />
                 </div>
 
@@ -507,14 +499,14 @@ export const ImportExportToolPanel: React.FC = () => {
                     type="checkbox"
                     checked={toolForm.autoImportResults}
                     onChange={(e) => setToolForm({ ...toolForm, autoImportResults: e.target.checked })}
-                    className="h-4 w-4"
+                    className="h-4 w-4 rounded"
                   />
-                  <span className="text-sm">Auto-import results after scan</span>
+                  <span className="text-sm text-black">Auto-import results after scan</span>
                 </label>
 
                 <button
                   onClick={handleAddToolIntegration}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                 >
                   <IconPlus size={18} />
                   Add Integration
@@ -523,43 +515,43 @@ export const ImportExportToolPanel: React.FC = () => {
             </div>
 
             {/* Tool Integrations List */}
-            <div className="space-y-2">
+            <div className="space-y-3">
               {toolIntegrations.map((integration, index) => (
                 <div
                   key={index}
-                  className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+                  className="apple-card rounded-2xl p-5 border border-gray-200"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <IconTerminal size={18} className="text-blue-500" />
-                        <span className="font-semibold">{integration.tool}</span>
+                        <IconTerminal size={18} className="text-blue-600" />
+                        <span className="font-bold text-black uppercase tracking-wide">{integration.tool}</span>
                         <span
                           className={cn(
-                            'rounded px-2 py-0.5 text-xs font-medium',
+                            'rounded px-2 py-0.5 text-xs font-semibold',
                             integration.enabled
-                              ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                              : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-gray-100 text-gray-800'
                           )}
                         >
                           {integration.enabled ? 'Enabled' : 'Disabled'}
                         </span>
                       </div>
-                      <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{integration.path}</p>
+                      <p className="mt-2 text-sm text-black opacity-80">{integration.path}</p>
                       {integration.autoImportResults && (
-                        <p className="mt-1 text-xs text-gray-500">Auto-import enabled</p>
+                        <p className="mt-1 text-xs text-black opacity-60">Auto-import enabled</p>
                       )}
                     </div>
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleRunTool(integration.tool)}
-                        className="rounded-lg bg-green-500 px-3 py-1.5 text-sm text-white hover:bg-green-600"
+                        className="rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm"
                       >
                         Run
                       </button>
                       <button
                         onClick={() => handleRemoveToolIntegration(integration.tool)}
-                        className="rounded-lg bg-red-500 px-3 py-1.5 text-sm text-white hover:bg-red-600"
+                        className="rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 shadow-sm"
                       >
                         <IconTrash size={16} />
                       </button>
@@ -569,9 +561,9 @@ export const ImportExportToolPanel: React.FC = () => {
               ))}
 
               {toolIntegrations.length === 0 && (
-                <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+                <div className="apple-card rounded-2xl border border-gray-200 p-8 text-center">
                   <IconTerminal size={48} className="mx-auto mb-3 text-gray-400" />
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-black opacity-60">
                     No tool integrations configured. Add integrations to work with external security tools.
                   </p>
                 </div>
@@ -583,15 +575,15 @@ export const ImportExportToolPanel: React.FC = () => {
         {/* CI/CD Tab */}
         {activeTab === 'cicd' && (
           <div className="space-y-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">CI/CD Configuration</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="text-lg font-bold text-black uppercase tracking-wide mb-3">CI/CD Configuration</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">CI/CD Provider</label>
+                  <label className="mb-2 block text-sm font-semibold text-black">CI/CD Provider</label>
                   <select
                     value={cicdForm.provider}
                     onChange={(e) => setCicdForm({ ...cicdForm, provider: e.target.value as any })}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                   >
                     <option value="github">GitHub Actions</option>
                     <option value="gitlab">GitLab CI/CD</option>
@@ -603,29 +595,29 @@ export const ImportExportToolPanel: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Webhook URL</label>
+                  <label className="mb-2 block text-sm font-semibold text-black">Webhook URL</label>
                   <input
                     type="url"
                     value={cicdForm.webhookUrl}
                     onChange={(e) => setCicdForm({ ...cicdForm, webhookUrl: e.target.value })}
                     placeholder="https://api.github.com/repos/user/repo/dispatches"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium">API Key / Token</label>
+                  <label className="mb-2 block text-sm font-semibold text-black">API Key / Token</label>
                   <input
                     type="password"
                     value={cicdForm.apiKey}
                     onChange={(e) => setCicdForm({ ...cicdForm, apiKey: e.target.value })}
                     placeholder="Enter your API key"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Fail Pipeline On Severity</label>
+                  <label className="mb-2 block text-sm font-semibold text-black">Fail Pipeline On Severity</label>
                   <div className="flex gap-2">
                     {['critical', 'high', 'medium', 'low'].map((severity) => (
                       <label key={severity} className="flex items-center gap-1">
@@ -643,9 +635,9 @@ export const ImportExportToolPanel: React.FC = () => {
                               });
                             }
                           }}
-                          className="h-4 w-4"
+                          className="h-4 w-4 rounded"
                         />
-                        <span className="text-sm capitalize">{severity}</span>
+                        <span className="text-sm capitalize text-black">{severity}</span>
                       </label>
                     ))}
                   </div>
@@ -656,14 +648,14 @@ export const ImportExportToolPanel: React.FC = () => {
                     type="checkbox"
                     checked={cicdForm.generateReport}
                     onChange={(e) => setCicdForm({ ...cicdForm, generateReport: e.target.checked })}
-                    className="h-4 w-4"
+                    className="h-4 w-4 rounded"
                   />
-                  <span className="text-sm">Generate report after scan</span>
+                  <span className="text-sm text-black">Generate report after scan</span>
                 </label>
 
                 <button
                   onClick={handleSaveCICDConfig}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                 >
                   <IconDeviceFloppy size={18} />
                   Save Configuration
@@ -672,18 +664,18 @@ export const ImportExportToolPanel: React.FC = () => {
             </div>
 
             {cicdConfig && (
-              <div className="rounded-lg border border-green-300 bg-green-50 p-4 dark:border-green-700 dark:bg-green-900/20">
+              <div className="rounded-2xl border-2 border-green-600 bg-green-50 p-5">
                 <div className="mb-3 flex items-center gap-2">
                   <IconCheck size={18} className="text-green-600" />
-                  <span className="font-semibold">CI/CD Configured</span>
+                  <span className="font-bold text-black uppercase tracking-wide">CI/CD Configured</span>
                 </div>
-                <div className="space-y-1 text-sm">
+                <div className="space-y-1 text-sm text-black">
                   <p>Provider: {cicdConfig.provider}</p>
                   <p>Webhook: {cicdConfig.webhookUrl}</p>
                 </div>
                 <button
                   onClick={handleTriggerCIScan}
-                  className="mt-3 flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700"
+                  className="mt-3 flex items-center gap-2 rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm"
                 >
                   <IconRefresh size={18} />
                   Trigger CI/CD Scan

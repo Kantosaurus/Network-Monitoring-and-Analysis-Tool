@@ -38,21 +38,21 @@ export const SpiderPanel: React.FC = () => {
   };
 
   return (
-    <div className="h-full flex flex-col gap-4">
+    <div className="h-full flex flex-col gap-4 bg-white">
       {/* Controls */}
       <div className="flex items-end gap-3 flex-wrap">
         <div className="flex-1 min-w-xs">
-          <label className="text-xs font-medium text-gray-700 dark:text-gray-300 block mb-1">Target URL</label>
+          <label className="text-sm font-semibold text-black mb-2 block">Target URL</label>
           <input
             value={target}
             onChange={e => setTarget(e.target.value)}
             disabled={isRunning}
             placeholder="https://example.com"
-            className="w-full glass-card dark:glass-card-dark px-3 py-2 rounded-xl text-sm disabled:opacity-50"
+            className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full disabled:opacity-50"
           />
         </div>
         <div>
-          <label className="text-xs font-medium text-gray-700 dark:text-gray-300 block mb-1">Depth</label>
+          <label className="text-sm font-semibold text-black mb-2 block">Depth</label>
           <input
             type="number"
             value={depth}
@@ -60,13 +60,13 @@ export const SpiderPanel: React.FC = () => {
             disabled={isRunning}
             min={1}
             max={10}
-            className="w-20 glass-card dark:glass-card-dark px-3 py-2 rounded-xl text-sm disabled:opacity-50"
+            className="w-20 apple-input rounded-xl px-4 py-2.5 text-sm text-black disabled:opacity-50"
           />
         </div>
         <button
           onClick={handleRun}
           disabled={isRunning || !target.trim()}
-          className="rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 px-6 py-2 text-sm font-medium text-white shadow-lg hover:shadow-xl transition-all disabled:opacity-50 flex items-center gap-2"
+          className="rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 transition-all disabled:opacity-50 flex items-center gap-2"
         >
           {isRunning ? (
             <>
@@ -109,9 +109,9 @@ export const SpiderPanel: React.FC = () => {
             </div>
             <ul className="space-y-1">
               {urls.map((url, i) => (
-                <li key={i} className="rounded-lg glass-card dark:glass-card-dark p-2 text-xs font-mono break-all flex items-start gap-2">
-                  <IconLink size={14} className="flex-shrink-0 mt-0.5 opacity-50" />
-                  <span className="text-gray-700 dark:text-gray-300">{url}</span>
+                <li key={i} className="apple-card rounded-xl p-3 text-xs font-mono break-all flex items-start gap-2 border border-gray-200">
+                  <IconLink size={14} className="flex-shrink-0 mt-0.5 text-gray-400" />
+                  <span className="text-black">{url}</span>
                 </li>
               ))}
             </ul>

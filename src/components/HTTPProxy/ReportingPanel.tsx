@@ -267,98 +267,90 @@ export const ReportingPanel: React.FC = () => {
   };
 
   return (
-    <div className="flex h-full flex-col gap-4">
+    <div className="flex flex-col h-full bg-white">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Reporting & Exporting</h2>
+      <div className="px-6 py-5 border-b border-gray-200">
+        <h2 className="text-lg font-bold text-black uppercase tracking-wide">Reporting & Exporting</h2>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex border-b border-gray-200 px-6 bg-gray-50">
         <button
           onClick={() => setActiveTab('reports')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'reports'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconFileText size={18} />
-            Reports ({reports.length})
-          </div>
+          <IconFileText size={18} />
+          Reports ({reports.length})
         </button>
         <button
           onClick={() => setActiveTab('templates')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'templates'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconSettings size={18} />
-            Templates ({templates.length})
-          </div>
+          <IconSettings size={18} />
+          Templates ({templates.length})
         </button>
         <button
           onClick={() => setActiveTab('export')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'export'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconFileDownload size={18} />
-            Export
-          </div>
+          <IconFileDownload size={18} />
+          Export
         </button>
         <button
           onClick={() => setActiveTab('findings')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'findings'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconCheck size={18} />
-            Findings ({findings.length})
-          </div>
+          <IconCheck size={18} />
+          Findings ({findings.length})
         </button>
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-y-auto p-4">
         {/* Reports Tab */}
         {activeTab === 'reports' && (
           <div className="space-y-4">
             {/* Generate Report Form */}
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">Generate New Report</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="mb-3 font-bold text-black uppercase tracking-wide">Generate New Report</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Project Name</label>
+                  <label className="mb-2 block text-sm font-semibold text-black">Project Name</label>
                   <input
                     type="text"
                     value={reportForm.projectName}
                     onChange={(e) => setReportForm({ ...reportForm, projectName: e.target.value })}
                     placeholder="My Security Assessment"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                   />
                 </div>
 
                 <div>
-                  <div className="mb-1 flex items-center justify-between">
-                    <label className="text-sm font-medium">Target URLs</label>
+                  <div className="mb-2 flex items-center justify-between">
+                    <label className="text-sm font-semibold text-black">Target URLs</label>
                     <button
                       onClick={addTargetUrl}
-                      className="rounded bg-blue-500 px-2 py-1 text-xs text-white hover:bg-blue-600"
+                      className="rounded-xl bg-blue-600 px-3 py-1.5 text-xs text-white hover:bg-blue-700 shadow-sm flex items-center gap-1"
                     >
                       <IconPlus size={14} />
                     </button>
@@ -371,12 +363,12 @@ export const ReportingPanel: React.FC = () => {
                           value={url}
                           onChange={(e) => updateTargetUrl(index, e.target.value)}
                           placeholder="https://example.com"
-                          className="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                          className="apple-input flex-1 rounded-xl px-4 py-2.5 text-sm text-black"
                         />
                         {reportForm.targetUrls.length > 1 && (
                           <button
                             onClick={() => removeTargetUrl(index)}
-                            className="text-red-500 hover:text-red-600"
+                            className="text-red-600 hover:text-red-700"
                           >
                             <IconTrash size={18} />
                           </button>
@@ -387,11 +379,11 @@ export const ReportingPanel: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Template</label>
+                  <label className="mb-2 block text-sm font-semibold text-black">Template</label>
                   <select
                     value={reportForm.templateId}
                     onChange={(e) => setReportForm({ ...reportForm, templateId: e.target.value })}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                   >
                     <option value="">-- Select Template --</option>
                     {templates.map((template) => (
@@ -403,7 +395,7 @@ export const ReportingPanel: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Format</label>
+                  <label className="mb-2 block text-sm font-semibold text-black">Format</label>
                   <div className="flex gap-4">
                     <label className="flex items-center gap-2">
                       <input
@@ -413,7 +405,7 @@ export const ReportingPanel: React.FC = () => {
                         onChange={(e) => setReportForm({ ...reportForm, format: e.target.value as any })}
                         className="h-4 w-4"
                       />
-                      <span>HTML</span>
+                      <span className="text-sm text-black">HTML</span>
                     </label>
                     <label className="flex items-center gap-2">
                       <input
@@ -423,7 +415,7 @@ export const ReportingPanel: React.FC = () => {
                         onChange={(e) => setReportForm({ ...reportForm, format: e.target.value as any })}
                         className="h-4 w-4"
                       />
-                      <span>PDF</span>
+                      <span className="text-sm text-black">PDF</span>
                     </label>
                   </div>
                 </div>
@@ -431,7 +423,7 @@ export const ReportingPanel: React.FC = () => {
                 <button
                   onClick={handleGenerateReport}
                   disabled={generating}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm disabled:opacity-50"
                 >
                   {reportForm.format === 'pdf' ? <IconFileTypePdf size={18} /> : <IconFileText size={18} />}
                   {generating ? 'Generating...' : 'Generate Report'}
@@ -440,32 +432,32 @@ export const ReportingPanel: React.FC = () => {
             </div>
 
             {/* Reports List */}
-            <div className="space-y-2">
+            <div className="space-y-3">
               {reports.map((report) => (
                 <div
                   key={report.id}
-                  className="cursor-pointer rounded-lg border border-gray-200 bg-white p-4 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-750"
+                  className="apple-card cursor-pointer rounded-2xl p-5 hover:bg-gray-50 transition-all border border-gray-200"
                   onClick={() => setSelectedReport(report)}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         {report.type === 'pdf' ? (
-                          <IconFileTypePdf size={18} className="text-red-500" />
+                          <IconFileTypePdf size={18} className="text-red-600" />
                         ) : (
-                          <IconFileText size={18} className="text-blue-500" />
+                          <IconFileText size={18} className="text-blue-600" />
                         )}
-                        <span className="font-semibold">{report.name}</span>
-                        <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                        <span className="font-bold text-black">{report.name}</span>
+                        <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-800">
                           {report.type.toUpperCase()}
                         </span>
                       </div>
-                      <div className="mt-2 flex gap-4 text-sm text-gray-600 dark:text-gray-400">
+                      <div className="mt-2 flex gap-4 text-sm text-black opacity-80">
                         <span>Findings: {report.findings.length}</span>
                         <span>Size: {formatFileSize(report.size)}</span>
                         <span>Created: {new Date(report.createdAt).toLocaleString()}</span>
                       </div>
-                      <div className="mt-2 text-xs text-gray-500">
+                      <div className="mt-2 text-xs text-black opacity-60">
                         Template: {report.template} | Project: {report.metadata.projectName}
                       </div>
                     </div>
@@ -475,7 +467,7 @@ export const ReportingPanel: React.FC = () => {
                           e.stopPropagation();
                           handleExportReport(report.id, 'pdf');
                         }}
-                        className="rounded-lg bg-blue-500 px-3 py-1.5 text-sm text-white hover:bg-blue-600"
+                        className="rounded-xl bg-blue-600 px-3 py-2 text-sm text-white hover:bg-blue-700 shadow-sm"
                       >
                         <IconFileDownload size={16} />
                       </button>
@@ -484,7 +476,7 @@ export const ReportingPanel: React.FC = () => {
                           e.stopPropagation();
                           handleDeleteReport(report.id);
                         }}
-                        className="rounded-lg bg-red-500 px-3 py-1.5 text-sm text-white hover:bg-red-600"
+                        className="rounded-xl bg-red-600 px-3 py-2 text-sm text-white hover:bg-red-700 shadow-sm"
                       >
                         <IconTrash size={16} />
                       </button>
@@ -494,9 +486,9 @@ export const ReportingPanel: React.FC = () => {
               ))}
 
               {reports.length === 0 && (
-                <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+                <div className="apple-card rounded-2xl border border-gray-200 p-8 text-center">
                   <IconFileText size={48} className="mx-auto mb-3 text-gray-400" />
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-black opacity-60">
                     No reports generated yet. Fill out the form above to create your first report.
                   </p>
                 </div>
@@ -511,40 +503,40 @@ export const ReportingPanel: React.FC = () => {
             <div className="flex justify-end">
               <button
                 onClick={() => setShowTemplateEditor(true)}
-                className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm flex items-center gap-2"
               >
                 <IconPlus size={18} />
                 Create Template
               </button>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-3">
               {templates.map((template) => (
                 <div
                   key={template.id}
-                  className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+                  className="apple-card rounded-2xl p-5 border border-gray-200"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <IconSettings size={18} className="text-blue-500" />
-                        <span className="font-semibold">{template.name}</span>
-                        <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                        <IconSettings size={18} className="text-blue-600" />
+                        <span className="font-bold text-black">{template.name}</span>
+                        <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-800">
                           {template.type}
                         </span>
-                        <span className="rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                        <span className="rounded bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-800">
                           {template.format.toUpperCase()}
                         </span>
                       </div>
-                      <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{template.description}</p>
-                      <p className="mt-1 text-xs text-gray-500">
+                      <p className="mt-2 text-sm text-black opacity-80">{template.description}</p>
+                      <p className="mt-1 text-xs text-black opacity-60">
                         {template.sections.length} sections | {template.customizable ? 'Customizable' : 'Fixed'}
                       </p>
                     </div>
                     {template.customizable && (
                       <button
                         onClick={() => handleDeleteTemplate(template.id)}
-                        className="rounded-lg bg-red-500 px-3 py-1.5 text-sm text-white hover:bg-red-600"
+                        className="rounded-xl bg-red-600 px-3 py-2 text-sm text-white hover:bg-red-700 shadow-sm"
                       >
                         <IconTrash size={16} />
                       </button>
@@ -554,9 +546,9 @@ export const ReportingPanel: React.FC = () => {
               ))}
 
               {templates.length === 0 && (
-                <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+                <div className="apple-card rounded-2xl border border-gray-200 p-8 text-center">
                   <IconSettings size={48} className="mx-auto mb-3 text-gray-400" />
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-black opacity-60">
                     No templates available. Click "Create Template" to get started.
                   </p>
                 </div>
@@ -568,15 +560,15 @@ export const ReportingPanel: React.FC = () => {
         {/* Export Tab */}
         {activeTab === 'export' && (
           <div className="space-y-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">Export Configuration</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="mb-3 font-bold text-black uppercase tracking-wide">Export Configuration</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Export Format</label>
+                  <label className="mb-2 block text-sm font-semibold text-black">Export Format</label>
                   <select
                     value={exportConfig.format}
                     onChange={(e) => setExportConfig({ ...exportConfig, format: e.target.value as any })}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                   >
                     <option value="json">JSON</option>
                     <option value="xml">XML</option>
@@ -592,7 +584,7 @@ export const ReportingPanel: React.FC = () => {
                       onChange={(e) => setExportConfig({ ...exportConfig, includeEvidence: e.target.checked })}
                       className="h-4 w-4"
                     />
-                    <span className="text-sm">Include Evidence</span>
+                    <span className="text-sm text-black">Include Evidence</span>
                   </label>
                   <label className="flex items-center gap-2">
                     <input
@@ -601,13 +593,13 @@ export const ReportingPanel: React.FC = () => {
                       onChange={(e) => setExportConfig({ ...exportConfig, includeSummary: e.target.checked })}
                       className="h-4 w-4"
                     />
-                    <span className="text-sm">Include Summary</span>
+                    <span className="text-sm text-black">Include Summary</span>
                   </label>
                 </div>
 
                 <button
                   onClick={handleExportFindings}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                 >
                   <IconFileDownload size={18} />
                   Export to File
@@ -615,19 +607,19 @@ export const ReportingPanel: React.FC = () => {
               </div>
             </div>
 
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">Issue Tracker Integration</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="mb-3 font-bold text-black uppercase tracking-wide">Issue Tracker Integration</h3>
               <div className="space-y-2">
                 <button
                   onClick={handleExportToJira}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                 >
                   <IconFileDownload size={18} />
                   Export to Jira
                 </button>
                 <button
                   onClick={handleExportToGitHub}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-gray-800 px-4 py-2 text-white hover:bg-gray-900"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-gray-800 px-4 py-2.5 text-sm font-semibold text-white hover:bg-gray-900 shadow-sm"
                 >
                   <IconBrandGithub size={18} />
                   Export to GitHub Issues
@@ -639,14 +631,14 @@ export const ReportingPanel: React.FC = () => {
 
         {/* Findings Tab */}
         {activeTab === 'findings' && (
-          <div className="space-y-2">
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+          <div className="space-y-3">
+            <p className="text-sm text-black opacity-80">
               Findings will be populated from your scans and tests. {findings.length} findings ready for reporting.
             </p>
             {findings.length === 0 && (
-              <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+              <div className="apple-card rounded-2xl border border-gray-200 p-8 text-center">
                 <IconCheck size={48} className="mx-auto mb-3 text-gray-400" />
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-black opacity-60">
                   No findings available. Run scans to populate findings for reporting.
                 </p>
               </div>
@@ -658,33 +650,33 @@ export const ReportingPanel: React.FC = () => {
       {/* Template Editor Modal */}
       {showTemplateEditor && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="w-full max-w-2xl rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-            <h3 className="mb-4 text-xl font-bold">Create Report Template</h3>
+          <div className="w-full max-w-2xl rounded-2xl border border-gray-200 bg-white p-6 shadow-xl">
+            <h3 className="mb-4 text-xl font-bold text-black uppercase tracking-wide">Create Report Template</h3>
             <div className="space-y-3">
               <div>
-                <label className="mb-1 block text-sm font-medium">Template Name</label>
+                <label className="mb-2 block text-sm font-semibold text-black">Template Name</label>
                 <input
                   type="text"
                   value={templateForm.name}
                   onChange={(e) => setTemplateForm({ ...templateForm, name: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Description</label>
+                <label className="mb-2 block text-sm font-semibold text-black">Description</label>
                 <textarea
                   value={templateForm.description}
                   onChange={(e) => setTemplateForm({ ...templateForm, description: e.target.value })}
                   rows={3}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Template Type</label>
+                <label className="mb-2 block text-sm font-semibold text-black">Template Type</label>
                 <select
                   value={templateForm.type}
                   onChange={(e) => setTemplateForm({ ...templateForm, type: e.target.value as any })}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                 >
                   <option value="technical">Technical Report</option>
                   <option value="executive">Executive Summary</option>
@@ -693,11 +685,11 @@ export const ReportingPanel: React.FC = () => {
                 </select>
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Format</label>
+                <label className="mb-2 block text-sm font-semibold text-black">Format</label>
                 <select
                   value={templateForm.format}
                   onChange={(e) => setTemplateForm({ ...templateForm, format: e.target.value as any })}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                 >
                   <option value="html">HTML</option>
                   <option value="pdf">PDF</option>
@@ -710,13 +702,13 @@ export const ReportingPanel: React.FC = () => {
                   setShowTemplateEditor(false);
                   setTemplateForm({ name: '', description: '', type: 'technical', format: 'html', sections: [] });
                 }}
-                className="rounded-lg bg-gray-200 px-4 py-2 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                className="rounded-xl bg-gray-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-gray-700 shadow-sm"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveTemplate}
-                className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
               >
                 Save Template
               </button>

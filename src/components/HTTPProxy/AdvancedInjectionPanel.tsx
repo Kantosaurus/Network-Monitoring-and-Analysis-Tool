@@ -181,111 +181,91 @@ export const AdvancedInjectionPanel: React.FC = () => {
   // helper icons/functionality removed because not referenced by the UI at present
 
   return (
-    <div className="flex h-full flex-col gap-4">
+    <div className="flex h-full flex-col gap-4 bg-white">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Advanced Injection & Exploitation</h2>
+      <div className="px-6 py-5 border-b border-gray-200">
+        <h2 className="text-lg font-bold text-black uppercase tracking-wide">Advanced Injection & Exploitation</h2>
+        <p className="text-xs text-black opacity-60 mt-1">Test for SQL, NoSQL, Command Injection and more</p>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex border-b border-gray-200 px-6 bg-gray-50 overflow-x-auto">
         <button
           onClick={() => setActiveTab('sql')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
             activeTab === 'sql'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconDatabase size={18} />
-            SQL Injection
-          </div>
+          SQL Injection
         </button>
         <button
           onClick={() => setActiveTab('nosql')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
             activeTab === 'nosql'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconDatabase size={18} />
-            NoSQL Injection
-          </div>
+          NoSQL Injection
         </button>
         <button
           onClick={() => setActiveTab('command')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
             activeTab === 'command'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconTerminal size={18} />
-            Command Injection
-          </div>
+          Command Injection
         </button>
         <button
           onClick={() => setActiveTab('template')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
             activeTab === 'template'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconFlask size={18} />
-            Template Injection
-          </div>
+          Template Injection
         </button>
         <button
           onClick={() => setActiveTab('xxe')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
             activeTab === 'xxe'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconBug size={18} />
-            XXE
-          </div>
+          XXE
         </button>
         <button
           onClick={() => setActiveTab('deserialization')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
             activeTab === 'deserialization'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconBug size={18} />
-            Deserialization
-          </div>
+          Deserialization
         </button>
         <button
           onClick={() => setActiveTab('collaborator')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'flex items-center gap-2 px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap',
             activeTab === 'collaborator'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconNetwork size={18} />
-            Collaborator ({collaboratorInteractions.length})
-          </div>
+          Collaborator ({collaboratorInteractions.length})
         </button>
       </div>
 
@@ -294,35 +274,35 @@ export const AdvancedInjectionPanel: React.FC = () => {
         {/* SQL Injection Tab */}
         {activeTab === 'sql' && (
           <div className="space-y-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">SQL Injection Testing</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="mb-3 text-sm font-semibold text-black">SQL Injection Testing</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Target URL</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Target URL</label>
                   <input
                     type="url"
                     value={testConfig.target}
                     onChange={(e) => setTestConfig({ ...testConfig, target: e.target.value })}
                     placeholder="https://example.com/api/users"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Parameter Name</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Parameter Name</label>
                   <input
                     type="text"
                     value={testConfig.parameter}
                     onChange={(e) => setTestConfig({ ...testConfig, parameter: e.target.value })}
                     placeholder="id"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Detection Method</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Detection Method</label>
                   <select
                     value={testConfig.method}
                     onChange={(e) => setTestConfig({ ...testConfig, method: e.target.value as any })}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   >
                     <option value="in-band">In-Band (Error-based)</option>
                     <option value="blind">Blind (Boolean-based)</option>
@@ -333,7 +313,7 @@ export const AdvancedInjectionPanel: React.FC = () => {
                 <button
                   onClick={handleTestSQL}
                   disabled={testing}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm disabled:opacity-50"
                 >
                   <IconPlayerPlay size={18} />
                   {testing ? 'Testing...' : 'Test SQL Injection'}
@@ -404,33 +384,33 @@ export const AdvancedInjectionPanel: React.FC = () => {
         {/* NoSQL Injection Tab */}
         {activeTab === 'nosql' && (
           <div className="space-y-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">NoSQL Injection Testing</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="mb-3 text-sm font-semibold text-black">NoSQL Injection Testing</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Target URL</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Target URL</label>
                   <input
                     type="url"
                     value={testConfig.target}
                     onChange={(e) => setTestConfig({ ...testConfig, target: e.target.value })}
                     placeholder="https://example.com/api/users"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Parameter Name</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Parameter Name</label>
                   <input
                     type="text"
                     value={testConfig.parameter}
                     onChange={(e) => setTestConfig({ ...testConfig, parameter: e.target.value })}
                     placeholder="id"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
                 <button
                   onClick={handleTestNoSQL}
                   disabled={testing}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm disabled:opacity-50"
                 >
                   <IconPlayerPlay size={18} />
                   {testing ? 'Testing...' : 'Test NoSQL Injection'}
@@ -477,33 +457,33 @@ export const AdvancedInjectionPanel: React.FC = () => {
         {/* Command Injection Tab */}
         {activeTab === 'command' && (
           <div className="space-y-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">Command Injection Testing</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="mb-3 text-sm font-semibold text-black">Command Injection Testing</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Target URL</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Target URL</label>
                   <input
                     type="url"
                     value={testConfig.target}
                     onChange={(e) => setTestConfig({ ...testConfig, target: e.target.value })}
                     placeholder="https://example.com/api/ping"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Parameter Name</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Parameter Name</label>
                   <input
                     type="text"
                     value={testConfig.parameter}
                     onChange={(e) => setTestConfig({ ...testConfig, parameter: e.target.value })}
                     placeholder="host"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
                 <button
                   onClick={handleTestCommand}
                   disabled={testing}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm disabled:opacity-50"
                 >
                   <IconPlayerPlay size={18} />
                   {testing ? 'Testing...' : 'Test Command Injection'}
@@ -550,33 +530,33 @@ export const AdvancedInjectionPanel: React.FC = () => {
         {/* Template Injection Tab */}
         {activeTab === 'template' && (
           <div className="space-y-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">Server-Side Template Injection (SSTI)</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="mb-3 text-sm font-semibold text-black">Server-Side Template Injection (SSTI)</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Target URL</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Target URL</label>
                   <input
                     type="url"
                     value={testConfig.target}
                     onChange={(e) => setTestConfig({ ...testConfig, target: e.target.value })}
                     placeholder="https://example.com/template"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Parameter Name</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Parameter Name</label>
                   <input
                     type="text"
                     value={testConfig.parameter}
                     onChange={(e) => setTestConfig({ ...testConfig, parameter: e.target.value })}
                     placeholder="template"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
                 <button
                   onClick={handleTestTemplate}
                   disabled={testing}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm disabled:opacity-50"
                 >
                   <IconPlayerPlay size={18} />
                   {testing ? 'Testing...' : 'Test Template Injection'}
@@ -589,23 +569,23 @@ export const AdvancedInjectionPanel: React.FC = () => {
         {/* XXE Tab */}
         {activeTab === 'xxe' && (
           <div className="space-y-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">XML External Entity (XXE) Testing</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="mb-3 text-sm font-semibold text-black">XML External Entity (XXE) Testing</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Target URL</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Target URL</label>
                   <input
                     type="url"
                     value={testConfig.target}
                     onChange={(e) => setTestConfig({ ...testConfig, target: e.target.value })}
                     placeholder="https://example.com/api/xml"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
                 <button
                   onClick={handleTestXXE}
                   disabled={testing}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm disabled:opacity-50"
                 >
                   <IconPlayerPlay size={18} />
                   {testing ? 'Testing...' : 'Test XXE Vulnerability'}
@@ -651,25 +631,25 @@ export const AdvancedInjectionPanel: React.FC = () => {
         {/* Deserialization Tab */}
         {activeTab === 'deserialization' && (
           <div className="space-y-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">Insecure Deserialization Testing</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="mb-3 text-sm font-semibold text-black">Insecure Deserialization Testing</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Target URL</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Target URL</label>
                   <input
                     type="url"
                     value={testConfig.target}
                     onChange={(e) => setTestConfig({ ...testConfig, target: e.target.value })}
                     placeholder="https://example.com/api/deserialize"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Language/Platform</label>
+                  <label className="text-sm font-semibold text-black mb-2 block">Language/Platform</label>
                   <select
                     value={testConfig.language}
                     onChange={(e) => setTestConfig({ ...testConfig, language: e.target.value as any })}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                   >
                     <option value="java">Java</option>
                     <option value="php">PHP</option>
@@ -681,7 +661,7 @@ export const AdvancedInjectionPanel: React.FC = () => {
                 <button
                   onClick={handleTestDeserialization}
                   disabled={testing}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm disabled:opacity-50"
                 >
                   <IconPlayerPlay size={18} />
                   {testing ? 'Testing...' : 'Test Deserialization'}
@@ -694,16 +674,16 @@ export const AdvancedInjectionPanel: React.FC = () => {
         {/* Collaborator Tab */}
         {activeTab === 'collaborator' && (
           <div className="space-y-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">Out-of-Band Collaborator</h3>
-              <p className="mb-3 text-sm text-gray-600 dark:text-gray-400">
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="mb-3 text-sm font-semibold text-black">Out-of-Band Collaborator</h3>
+              <p className="mb-3 text-sm text-black opacity-60">
                 The collaborator allows you to detect vulnerabilities that use out-of-band techniques, such as blind SQL injection, XXE, and SSRF.
               </p>
               <div className="flex gap-2">
                 <button
                   onClick={handleStartCollaborator}
                   disabled={!!collaboratorUrl}
-                  className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                  className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm disabled:opacity-50"
                 >
                   <IconPlayerPlay size={18} />
                   {collaboratorUrl ? 'Collaborator Running' : 'Start Collaborator'}
@@ -711,7 +691,7 @@ export const AdvancedInjectionPanel: React.FC = () => {
                 {collaboratorUrl && (
                   <button
                     onClick={loadCollaboratorInteractions}
-                    className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+                    className="flex items-center gap-2 rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm"
                   >
                     <IconRefresh size={18} />
                     Refresh
@@ -719,9 +699,9 @@ export const AdvancedInjectionPanel: React.FC = () => {
                 )}
               </div>
               {collaboratorUrl && (
-                <div className="mt-3 rounded-lg border border-blue-300 bg-blue-50 p-3 dark:border-blue-700 dark:bg-blue-900/20">
-                  <p className="text-sm font-medium">Collaborator URL:</p>
-                  <code className="mt-1 block break-all font-mono text-sm">{collaboratorUrl}</code>
+                <div className="mt-3 apple-card rounded-2xl p-5 bg-blue-50 border border-blue-200">
+                  <p className="text-sm font-semibold text-black">Collaborator URL:</p>
+                  <code className="mt-1 block break-all font-mono text-sm text-black opacity-75">{collaboratorUrl}</code>
                 </div>
               )}
             </div>
@@ -756,7 +736,7 @@ export const AdvancedInjectionPanel: React.FC = () => {
               ))}
 
               {collaboratorInteractions.length === 0 && (
-                <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+                <div className="apple-card rounded-2xl p-8 text-center border border-gray-200">
                   <IconNetwork size={48} className="mx-auto mb-3 text-gray-400" />
                   <p className="text-gray-600 dark:text-gray-400">
                     No interactions received yet. Use the collaborator URL in your payloads to detect out-of-band vulnerabilities.

@@ -144,166 +144,158 @@ export const JavaScriptSPAPanel: React.FC = () => {
   };
 
   return (
-    <div className="flex h-full flex-col gap-4">
+    <div className="flex flex-col h-full bg-white">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">JavaScript & SPA Awareness</h2>
-        <div className="flex items-center gap-3">
-          <label className="flex items-center gap-2 text-sm">
+      <div className="px-6 py-5 border-b border-gray-200">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-bold text-black uppercase tracking-wide">JavaScript & SPA Awareness</h2>
+          <label className="flex items-center gap-2">
             <input
               type="checkbox"
               checked={headlessBrowserEnabled}
               onChange={handleToggleHeadlessBrowser}
               className="h-4 w-4 rounded"
             />
-            <span>Headless Browser</span>
+            <span className="text-sm font-semibold text-black">Headless Browser</span>
           </label>
         </div>
       </div>
 
       {/* Controls */}
-      <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-        <div className="flex gap-2">
-          <input
-            type="url"
-            value={targetUrl}
-            onChange={(e) => setTargetUrl(e.target.value)}
-            placeholder="https://example.com"
-            className="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
-          />
-          <button
-            onClick={handleDiscoverEndpoints}
-            disabled={analyzing}
-            className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
-          >
-            <IconSearch size={18} />
-            {analyzing ? 'Analyzing...' : 'Discover Endpoints'}
-          </button>
-          <button
-            onClick={handleScanForSecrets}
-            disabled={analyzing}
-            className="flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-white hover:bg-orange-600 disabled:opacity-50"
-          >
-            <IconKey size={18} />
-            Scan for Secrets
-          </button>
-          <button
-            onClick={handleTestDOMXSS}
-            disabled={analyzing}
-            className="flex items-center gap-2 rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600 disabled:opacity-50"
-          >
-            <IconAlertTriangle size={18} />
-            Test DOM XSS
-          </button>
-        </div>
-
-        {headlessBrowserEnabled && (
-          <div className="mt-3 flex gap-2">
+      <div className="px-4 py-4">
+        <div className="apple-card rounded-2xl p-5 border border-gray-200">
+          <div className="flex gap-2">
             <input
-              type="number"
-              value={crawlDepth}
-              onChange={(e) => setCrawlDepth(parseInt(e.target.value))}
-              min={1}
-              max={10}
-              className="w-24 rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+              type="url"
+              value={targetUrl}
+              onChange={(e) => setTargetUrl(e.target.value)}
+              placeholder="https://example.com"
+              className="apple-input flex-1 rounded-xl px-4 py-2.5 text-sm text-black"
             />
             <button
-              onClick={handleCrawlSPA}
-              disabled={crawling}
-              className="flex items-center gap-2 rounded-lg bg-purple-500 px-4 py-2 text-white hover:bg-purple-600 disabled:opacity-50"
+              onClick={handleDiscoverEndpoints}
+              disabled={analyzing}
+              className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm disabled:opacity-50 flex items-center gap-2"
             >
-              <IconRefresh size={18} />
-              {crawling ? 'Crawling...' : 'Crawl SPA (Depth)'}
+              <IconSearch size={18} />
+              {analyzing ? 'Analyzing...' : 'Discover Endpoints'}
+            </button>
+            <button
+              onClick={handleScanForSecrets}
+              disabled={analyzing}
+              className="rounded-xl bg-orange-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-orange-700 shadow-sm disabled:opacity-50 flex items-center gap-2"
+            >
+              <IconKey size={18} />
+              Scan Secrets
+            </button>
+            <button
+              onClick={handleTestDOMXSS}
+              disabled={analyzing}
+              className="rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 shadow-sm disabled:opacity-50 flex items-center gap-2"
+            >
+              <IconAlertTriangle size={18} />
+              Test DOM XSS
             </button>
           </div>
-        )}
+
+          {headlessBrowserEnabled && (
+            <div className="mt-3 flex gap-2">
+              <input
+                type="number"
+                value={crawlDepth}
+                onChange={(e) => setCrawlDepth(parseInt(e.target.value))}
+                min={1}
+                max={10}
+                className="apple-input w-24 rounded-xl px-4 py-2.5 text-sm text-black"
+              />
+              <button
+                onClick={handleCrawlSPA}
+                disabled={crawling}
+                className="rounded-xl bg-purple-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-purple-700 shadow-sm disabled:opacity-50 flex items-center gap-2"
+              >
+                <IconRefresh size={18} />
+                {crawling ? 'Crawling...' : 'Crawl SPA (Depth)'}
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex border-b border-gray-200 px-6 bg-gray-50">
         <button
           onClick={() => setActiveTab('files')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'files'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconBrandJavascript size={18} />
-            JS Files ({jsFiles.length})
-          </div>
+          <IconBrandJavascript size={18} />
+          JS Files ({jsFiles.length})
         </button>
         <button
           onClick={() => setActiveTab('secrets')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'secrets'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconKey size={18} />
-            Secrets ({secrets.length})
-          </div>
+          <IconKey size={18} />
+          Secrets ({secrets.length})
         </button>
         <button
           onClick={() => setActiveTab('dom-xss')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'dom-xss'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconAlertTriangle size={18} />
-            DOM XSS ({xssVectors.length})
-          </div>
+          <IconAlertTriangle size={18} />
+          DOM XSS ({xssVectors.length})
         </button>
         <button
           onClick={() => setActiveTab('endpoints')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'endpoints'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconCode size={18} />
-            Endpoints ({spaEndpoints.length})
-          </div>
+          <IconCode size={18} />
+          Endpoints ({spaEndpoints.length})
         </button>
         <button
           onClick={() => setActiveTab('deobfuscate')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'deobfuscate'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconEye size={18} />
-            Deobfuscate
-          </div>
+          <IconEye size={18} />
+          Deobfuscate
         </button>
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-y-auto p-4">
         {/* JS Files Tab */}
         {activeTab === 'files' && (
-          <div className="space-y-2">
-            <div className="mb-3 rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-800">
+          <div className="space-y-3">
+            <div className="apple-card rounded-2xl p-4 border border-gray-200">
               <div className="flex gap-2">
                 <input
                   type="url"
                   placeholder="https://example.com/app.js"
-                  className="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input flex-1 rounded-xl px-4 py-2.5 text-sm text-black"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       handleAnalyzeFile((e.target as HTMLInputElement).value);
@@ -315,7 +307,7 @@ export const JavaScriptSPAPanel: React.FC = () => {
                     const input = (e.target as HTMLElement).parentElement?.querySelector('input');
                     if (input?.value) handleAnalyzeFile(input.value);
                   }}
-                  className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                  className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                 >
                   Analyze File
                 </button>
@@ -325,21 +317,21 @@ export const JavaScriptSPAPanel: React.FC = () => {
             {jsFiles.map((file, index) => (
               <div
                 key={index}
-                className="cursor-pointer rounded-lg border border-gray-200 bg-white p-4 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-750"
+                className="apple-card cursor-pointer rounded-2xl p-5 hover:bg-gray-50 transition-all border border-gray-200"
                 onClick={() => setSelectedFile(file)}
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <IconBrandJavascript size={18} className="text-yellow-500" />
-                      <span className="font-mono text-sm">{file.url}</span>
+                      <span className="font-mono text-sm text-black">{file.url}</span>
                       {file.sourceMapped && (
-                        <span className="rounded bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-200">
+                        <span className="rounded bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-800">
                           Source Mapped
                         </span>
                       )}
                     </div>
-                    <div className="mt-2 flex gap-4 text-sm text-gray-600 dark:text-gray-400">
+                    <div className="mt-2 flex gap-4 text-sm text-black opacity-80">
                       <span>Size: {(file.size / 1024).toFixed(2)} KB</span>
                       <span>Vulnerabilities: {file.vulnerabilities.length}</span>
                       <span>Secrets: {file.secrets.length}</span>
@@ -351,9 +343,9 @@ export const JavaScriptSPAPanel: React.FC = () => {
             ))}
 
             {jsFiles.length === 0 && (
-              <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+              <div className="apple-card rounded-2xl border border-gray-200 p-8 text-center">
                 <IconBrandJavascript size={48} className="mx-auto mb-3 text-gray-400" />
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-black opacity-60">
                   No JavaScript files analyzed yet. Enter a URL and analyze it, or discover endpoints from a target.
                 </p>
               </div>
@@ -363,33 +355,33 @@ export const JavaScriptSPAPanel: React.FC = () => {
 
         {/* Secrets Tab */}
         {activeTab === 'secrets' && (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {secrets.map((secret, index) => (
               <div
                 key={index}
                 className={cn(
-                  'rounded-lg border p-4',
+                  'rounded-2xl border-2 p-5',
                   secret.confidence >= 0.8
-                    ? 'border-red-300 bg-red-50 dark:border-red-700 dark:bg-red-900/20'
+                    ? 'border-red-600 bg-red-50'
                     : secret.confidence >= 0.5
-                    ? 'border-orange-300 bg-orange-50 dark:border-orange-700 dark:bg-orange-900/20'
-                    : 'border-yellow-300 bg-yellow-50 dark:border-yellow-700 dark:bg-yellow-900/20'
+                    ? 'border-orange-600 bg-orange-50'
+                    : 'border-yellow-600 bg-yellow-50'
                 )}
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <IconKey size={18} />
-                      <span className="rounded bg-white px-2 py-0.5 text-xs font-bold uppercase dark:bg-gray-800">
+                      <span className="rounded bg-white px-2 py-0.5 text-xs font-bold uppercase text-black">
                         {secret.type}
                       </span>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                      <span className="text-sm text-black opacity-80">
                         Confidence: {(secret.confidence * 100).toFixed(0)}%
                       </span>
                     </div>
                     <div className="mt-2 space-y-1">
-                      <p className="font-mono text-sm break-all">{secret.value}</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                      <p className="font-mono text-sm break-all text-black">{secret.value}</p>
+                      <p className="text-xs text-black opacity-60">
                         {secret.location.file}:{secret.location.line}
                       </p>
                     </div>
@@ -399,9 +391,9 @@ export const JavaScriptSPAPanel: React.FC = () => {
             ))}
 
             {secrets.length === 0 && (
-              <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+              <div className="apple-card rounded-2xl border border-gray-200 p-8 text-center">
                 <IconKey size={48} className="mx-auto mb-3 text-gray-400" />
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-black opacity-60">
                   No secrets found yet. Click "Scan for Secrets" to search for hardcoded credentials and API keys.
                 </p>
               </div>
@@ -411,15 +403,15 @@ export const JavaScriptSPAPanel: React.FC = () => {
 
         {/* DOM XSS Tab */}
         {activeTab === 'dom-xss' && (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {xssVectors.map((vector, index) => (
               <div
                 key={index}
                 className={cn(
-                  'rounded-lg border p-4',
+                  'rounded-2xl border-2 p-5',
                   vector.vulnerable
-                    ? 'border-red-300 bg-red-50 dark:border-red-700 dark:bg-red-900/20'
-                    : 'border-green-300 bg-green-50 dark:border-green-700 dark:bg-green-900/20'
+                    ? 'border-red-600 bg-red-50'
+                    : 'border-green-600 bg-green-50'
                 )}
               >
                 <div className="flex items-start justify-between">
@@ -427,18 +419,18 @@ export const JavaScriptSPAPanel: React.FC = () => {
                     <div className="flex items-center gap-2">
                       <IconAlertTriangle size={18} />
                       <span className={cn(
-                        'rounded px-2 py-0.5 text-xs font-bold',
+                        'rounded px-2 py-0.5 text-xs font-bold uppercase',
                         vector.vulnerable
-                          ? 'bg-red-200 text-red-900 dark:bg-red-800 dark:text-red-100'
-                          : 'bg-green-200 text-green-900 dark:bg-green-800 dark:text-green-100'
+                          ? 'bg-red-200 text-red-900'
+                          : 'bg-green-200 text-green-900'
                       )}>
                         {vector.vulnerable ? 'VULNERABLE' : 'NOT VULNERABLE'}
                       </span>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                      <span className="text-sm text-black opacity-80">
                         Confidence: {(vector.confidence * 100).toFixed(0)}%
                       </span>
                     </div>
-                    <div className="mt-2 space-y-1 text-sm">
+                    <div className="mt-2 space-y-1 text-sm text-black">
                       <p><span className="font-semibold">Source:</span> <code className="font-mono text-xs">{vector.source}</code></p>
                       <p><span className="font-semibold">Sink:</span> <code className="font-mono text-xs">{vector.sink}</code></p>
                       <p><span className="font-semibold">Payload:</span> <code className="font-mono text-xs">{vector.payload}</code></p>
@@ -449,9 +441,9 @@ export const JavaScriptSPAPanel: React.FC = () => {
             ))}
 
             {xssVectors.length === 0 && (
-              <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+              <div className="apple-card rounded-2xl border border-gray-200 p-8 text-center">
                 <IconAlertTriangle size={48} className="mx-auto mb-3 text-gray-400" />
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-black opacity-60">
                   No DOM-based XSS tests run yet. Click "Test DOM XSS" to analyze potential client-side XSS vectors.
                 </p>
               </div>
@@ -461,21 +453,21 @@ export const JavaScriptSPAPanel: React.FC = () => {
 
         {/* Endpoints Tab */}
         {activeTab === 'endpoints' && (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {spaEndpoints.map((endpoint, index) => (
               <div
                 key={index}
-                className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+                className="apple-card rounded-2xl p-5 border border-gray-200"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-mono font-bold text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                      <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-mono font-bold text-blue-800">
                         {endpoint.method}
                       </span>
-                      <span className="font-mono text-sm">{endpoint.url}</span>
+                      <span className="font-mono text-sm text-black">{endpoint.url}</span>
                     </div>
-                    <div className="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-400">
+                    <div className="mt-2 space-y-1 text-sm text-black opacity-80">
                       <p>Discovered by: {endpoint.discoveredBy}</p>
                       {endpoint.parameters.length > 0 && (
                         <p>Parameters: {endpoint.parameters.join(', ')}</p>
@@ -487,9 +479,9 @@ export const JavaScriptSPAPanel: React.FC = () => {
             ))}
 
             {spaEndpoints.length === 0 && (
-              <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+              <div className="apple-card rounded-2xl border border-gray-200 p-8 text-center">
                 <IconCode size={48} className="mx-auto mb-3 text-gray-400" />
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-black opacity-60">
                   No endpoints discovered yet. Use "Discover Endpoints" or "Crawl SPA" to find client-side endpoints.
                 </p>
               </div>
@@ -501,19 +493,19 @@ export const JavaScriptSPAPanel: React.FC = () => {
         {activeTab === 'deobfuscate' && (
           <div className="space-y-3">
             <div>
-              <label className="mb-1 block text-sm font-medium">Obfuscated JavaScript Code</label>
+              <label className="mb-2 block text-sm font-semibold text-black">Obfuscated JavaScript Code</label>
               <textarea
                 value={codeToDeobfuscate}
                 onChange={(e) => setCodeToDeobfuscate(e.target.value)}
                 rows={10}
                 placeholder="Paste obfuscated JavaScript code here..."
-                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-sm dark:border-gray-600 dark:bg-gray-700"
+                className="apple-input w-full rounded-2xl px-4 py-3 font-mono text-sm text-black border border-gray-200"
               />
             </div>
 
             <button
               onClick={handleDeobfuscate}
-              className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+              className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm flex items-center gap-2"
             >
               <IconPlayerPlay size={18} />
               Deobfuscate
@@ -521,8 +513,8 @@ export const JavaScriptSPAPanel: React.FC = () => {
 
             {deobfuscatedCode && (
               <div>
-                <label className="mb-1 block text-sm font-medium">Deobfuscated Code</label>
-                <pre className="max-h-96 overflow-auto rounded-lg border border-gray-300 bg-gray-50 p-3 text-xs dark:border-gray-600 dark:bg-gray-900">
+                <label className="mb-2 block text-sm font-semibold text-black">Deobfuscated Code</label>
+                <pre className="apple-card max-h-96 overflow-auto rounded-2xl border border-gray-200 p-4 text-xs text-black">
                   {deobfuscatedCode}
                 </pre>
               </div>
@@ -534,9 +526,9 @@ export const JavaScriptSPAPanel: React.FC = () => {
       {/* Selected File Details Modal */}
       {selectedFile && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={() => setSelectedFile(null)}>
-          <div className="max-h-[90vh] w-full max-w-6xl overflow-auto rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800" onClick={(e) => e.stopPropagation()}>
+          <div className="max-h-[90vh] w-full max-w-6xl overflow-auto rounded-2xl border border-gray-200 bg-white p-6 shadow-xl" onClick={(e) => e.stopPropagation()}>
             <div className="mb-4 flex items-center justify-between">
-              <h3 className="text-xl font-bold">JavaScript File Analysis</h3>
+              <h3 className="text-xl font-bold text-black uppercase tracking-wide">JavaScript File Analysis</h3>
               <button onClick={() => setSelectedFile(null)} className="text-gray-500 hover:text-gray-700">
                 <IconX size={24} />
               </button>
@@ -544,11 +536,11 @@ export const JavaScriptSPAPanel: React.FC = () => {
 
             <div className="space-y-4">
               <div>
-                <h4 className="mb-2 font-semibold">URL</h4>
-                <p className="font-mono text-sm text-gray-600 dark:text-gray-400">{selectedFile.url}</p>
+                <h4 className="mb-2 font-semibold text-black uppercase tracking-wide">URL</h4>
+                <p className="font-mono text-sm text-black opacity-80">{selectedFile.url}</p>
               </div>
 
-              <div className="flex gap-4 text-sm">
+              <div className="flex gap-4 text-sm text-black opacity-80">
                 <div>Size: {(selectedFile.size / 1024).toFixed(2)} KB</div>
                 <div>Vulnerabilities: {selectedFile.vulnerabilities.length}</div>
                 <div>Secrets: {selectedFile.secrets.length}</div>
@@ -557,22 +549,22 @@ export const JavaScriptSPAPanel: React.FC = () => {
 
               {selectedFile.vulnerabilities.length > 0 && (
                 <div>
-                  <h4 className="mb-2 font-semibold">Vulnerabilities</h4>
+                  <h4 className="mb-2 font-semibold text-black uppercase tracking-wide">Vulnerabilities</h4>
                   <div className="space-y-2">
                     {selectedFile.vulnerabilities.map((vuln, index) => (
-                      <div key={index} className="rounded-lg border border-red-300 bg-red-50 p-3 dark:border-red-700 dark:bg-red-900/20">
+                      <div key={index} className="rounded-2xl border-2 border-red-600 bg-red-50 p-4">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="rounded bg-red-200 px-2 py-0.5 text-xs font-bold uppercase text-red-900 dark:bg-red-800 dark:text-red-100">
+                          <span className="rounded bg-red-200 px-2 py-0.5 text-xs font-bold uppercase text-red-900">
                             {vuln.severity}
                           </span>
-                          <span className="font-semibold">{vuln.type}</span>
+                          <span className="font-semibold text-black">{vuln.type}</span>
                         </div>
-                        <p className="text-sm">{vuln.description}</p>
-                        <div className="mt-2 text-xs text-gray-600 dark:text-gray-400">
+                        <p className="text-sm text-black">{vuln.description}</p>
+                        <div className="mt-2 text-xs text-black opacity-60">
                           Location: {vuln.location.file}:{vuln.location.line}:{vuln.location.column}
                         </div>
-                        <pre className="mt-2 overflow-auto rounded bg-white p-2 text-xs dark:bg-gray-800">{vuln.code}</pre>
-                        <p className="mt-2 text-sm"><strong>Remediation:</strong> {vuln.remediation}</p>
+                        <pre className="mt-2 overflow-auto rounded-xl bg-white p-3 text-xs border border-red-200">{vuln.code}</pre>
+                        <p className="mt-2 text-sm text-black"><strong>Remediation:</strong> {vuln.remediation}</p>
                       </div>
                     ))}
                   </div>
@@ -581,15 +573,15 @@ export const JavaScriptSPAPanel: React.FC = () => {
 
               {selectedFile.secrets.length > 0 && (
                 <div>
-                  <h4 className="mb-2 font-semibold">Secrets Found</h4>
+                  <h4 className="mb-2 font-semibold text-black uppercase tracking-wide">Secrets Found</h4>
                   <div className="space-y-2">
                     {selectedFile.secrets.map((secret, index) => (
-                      <div key={index} className="rounded-lg border border-orange-300 bg-orange-50 p-3 text-sm dark:border-orange-700 dark:bg-orange-900/20">
+                      <div key={index} className="rounded-2xl border-2 border-orange-600 bg-orange-50 p-4 text-sm">
                         <div className="flex items-center gap-2">
-                          <span className="rounded bg-orange-200 px-2 py-0.5 text-xs font-bold uppercase text-orange-900 dark:bg-orange-800 dark:text-orange-100">
+                          <span className="rounded bg-orange-200 px-2 py-0.5 text-xs font-bold uppercase text-orange-900">
                             {secret.type}
                           </span>
-                          <code className="font-mono">{secret.value}</code>
+                          <code className="font-mono text-black">{secret.value}</code>
                         </div>
                       </div>
                     ))}
@@ -599,10 +591,10 @@ export const JavaScriptSPAPanel: React.FC = () => {
 
               {selectedFile.endpoints.length > 0 && (
                 <div>
-                  <h4 className="mb-2 font-semibold">Endpoints Discovered</h4>
+                  <h4 className="mb-2 font-semibold text-black uppercase tracking-wide">Endpoints Discovered</h4>
                   <div className="space-y-1">
                     {selectedFile.endpoints.map((endpoint, index) => (
-                      <div key={index} className="rounded bg-gray-50 p-2 font-mono text-sm dark:bg-gray-900">
+                      <div key={index} className="rounded-xl bg-gray-50 p-3 font-mono text-sm text-black border border-gray-200">
                         {endpoint}
                       </div>
                     ))}
@@ -611,8 +603,8 @@ export const JavaScriptSPAPanel: React.FC = () => {
               )}
 
               <div>
-                <h4 className="mb-2 font-semibold">Source Code</h4>
-                <pre className="max-h-96 overflow-auto rounded-lg border border-gray-300 bg-gray-50 p-3 text-xs dark:border-gray-600 dark:bg-gray-900">
+                <h4 className="mb-2 font-semibold text-black uppercase tracking-wide">Source Code</h4>
+                <pre className="max-h-96 overflow-auto rounded-2xl border border-gray-200 bg-gray-50 p-4 text-xs text-black">
                   {selectedFile.code}
                 </pre>
               </div>

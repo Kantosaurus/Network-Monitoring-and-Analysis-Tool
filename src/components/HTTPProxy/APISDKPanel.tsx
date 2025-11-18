@@ -25,15 +25,15 @@ const CodeEditorModal: React.FC<CodeEditorModalProps> = ({ file, onSave, onClose
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-gray-800 rounded-lg shadow-xl max-w-6xl w-full max-h-[90vh] flex flex-col">
-        <div className="p-4 border-b border-gray-700 flex justify-between items-center">
+      <div className="bg-white rounded-2xl shadow-xl max-w-6xl w-full max-h-[90vh] flex flex-col">
+        <div className="px-6 py-5 border-b border-gray-200 flex justify-between items-center">
           <div>
-            <h3 className="text-lg font-semibold text-white">{file.path}</h3>
-            <p className="text-sm text-gray-400 capitalize">{file.language} • {file.type}</p>
+            <h3 className="text-lg font-bold text-black uppercase tracking-wide">{file.path}</h3>
+            <p className="text-sm text-black opacity-80 capitalize">{file.language} • {file.type}</p>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white transition-colors"
+            className="text-black opacity-60 hover:opacity-100 transition-colors"
           >
             <span className="text-2xl">×</span>
           </button>
@@ -42,14 +42,14 @@ const CodeEditorModal: React.FC<CodeEditorModalProps> = ({ file, onSave, onClose
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            className="w-full h-full p-4 bg-gray-900 text-white font-mono text-sm rounded border border-gray-700 focus:border-blue-500 focus:outline-none resize-none"
+            className="apple-input w-full h-full p-4 text-black font-mono text-sm rounded-xl focus:outline-none resize-none"
             spellCheck={false}
           />
         </div>
-        <div className="p-4 border-t border-gray-700 flex justify-end gap-2">
+        <div className="p-4 border-t border-gray-200 flex justify-end gap-2">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-500"
+            className="rounded-xl bg-gray-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-gray-700 shadow-sm"
           >
             Cancel
           </button>
@@ -58,7 +58,7 @@ const CodeEditorModal: React.FC<CodeEditorModalProps> = ({ file, onSave, onClose
               onSave(content);
               onClose();
             }}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
           >
             Save
           </button>
@@ -268,57 +268,57 @@ export const APISDKPanel: React.FC = () => {
   });
 
   return (
-    <div className="flex flex-col h-full bg-gray-900 text-white">
-      <div className="bg-gray-800 border-b border-gray-700 p-4">
-        <h2 className="text-xl font-semibold mb-4">APIs & SDK</h2>
+    <div className="flex flex-col h-full bg-white">
+      <div className="px-6 py-5 border-b border-gray-200">
+        <h2 className="text-lg font-bold text-black uppercase tracking-wide mb-4">APIs & SDK</h2>
 
-        <div className="flex gap-2">
+        <div className="flex border-b border-gray-200 px-6 bg-gray-50">
           <button
             onClick={() => setActiveTab('projects')}
-            className={`px-4 py-2 rounded ${
+            className={`px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap ${
               activeTab === 'projects'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                ? 'border-blue-600 text-blue-600 bg-white'
+                : 'border-transparent text-black opacity-60 hover:opacity-100'
             }`}
           >
             Extension Projects
           </button>
           <button
             onClick={() => setActiveTab('api-docs')}
-            className={`px-4 py-2 rounded ${
+            className={`px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap ${
               activeTab === 'api-docs'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                ? 'border-blue-600 text-blue-600 bg-white'
+                : 'border-transparent text-black opacity-60 hover:opacity-100'
             }`}
           >
             API Documentation
           </button>
           <button
             onClick={() => setActiveTab('examples')}
-            className={`px-4 py-2 rounded ${
+            className={`px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap ${
               activeTab === 'examples'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                ? 'border-blue-600 text-blue-600 bg-white'
+                : 'border-transparent text-black opacity-60 hover:opacity-100'
             }`}
           >
             SDK Examples
           </button>
           <button
             onClick={() => setActiveTab('rest-api')}
-            className={`px-4 py-2 rounded ${
+            className={`px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap ${
               activeTab === 'rest-api'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                ? 'border-blue-600 text-blue-600 bg-white'
+                : 'border-transparent text-black opacity-60 hover:opacity-100'
             }`}
           >
             REST API
           </button>
           <button
             onClick={() => setActiveTab('logs')}
-            className={`px-4 py-2 rounded ${
+            className={`px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap ${
               activeTab === 'logs'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                ? 'border-blue-600 text-blue-600 bg-white'
+                : 'border-transparent text-black opacity-60 hover:opacity-100'
             }`}
           >
             Logs
@@ -330,35 +330,35 @@ export const APISDKPanel: React.FC = () => {
         {activeTab === 'projects' && (
           <div>
             <div className="mb-4 flex justify-between items-center">
-              <h3 className="text-lg font-semibold text-white">Extension Projects</h3>
+              <h3 className="text-lg font-bold text-black uppercase tracking-wide">Extension Projects</h3>
               <button
                 onClick={() => setShowNewProjectForm(!showNewProjectForm)}
-                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                className="rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm"
               >
                 + New Project
               </button>
             </div>
 
             {showNewProjectForm && (
-              <div className="mb-4 p-4 bg-gray-800 rounded-lg border border-gray-700">
-                <h4 className="text-md font-semibold text-white mb-3">Create New Extension Project</h4>
+              <div className="apple-card rounded-2xl p-5 border border-gray-200 mb-4">
+                <h4 className="text-lg font-bold text-black uppercase tracking-wide mb-3">Create New Extension Project</h4>
                 <div className="grid grid-cols-2 gap-3 mb-3">
                   <div>
-                    <label className="block text-sm text-gray-300 mb-1">Project Name</label>
+                    <label className="text-sm font-semibold text-black mb-2 block">Project Name</label>
                     <input
                       type="text"
                       value={newProjectName}
                       onChange={(e) => setNewProjectName(e.target.value)}
                       placeholder="My Extension"
-                      className="w-full p-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-blue-500 focus:outline-none"
+                      className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm text-gray-300 mb-1">Language</label>
+                    <label className="text-sm font-semibold text-black mb-2 block">Language</label>
                     <select
                       value={newProjectLanguage}
                       onChange={(e) => setNewProjectLanguage(e.target.value as any)}
-                      className="w-full p-2 bg-gray-700 text-white rounded border border-gray-600"
+                      className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full"
                     >
                       <option value="java">Java</option>
                       <option value="python">Python (Jython)</option>
@@ -370,7 +370,7 @@ export const APISDKPanel: React.FC = () => {
                   <button
                     onClick={handleCreateProject}
                     disabled={loading || !newProjectName}
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+                    className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm disabled:opacity-50"
                   >
                     Create
                   </button>
@@ -379,7 +379,7 @@ export const APISDKPanel: React.FC = () => {
                       setShowNewProjectForm(false);
                       setNewProjectName('');
                     }}
-                    className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-500"
+                    className="rounded-xl bg-gray-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-gray-700 shadow-sm"
                   >
                     Cancel
                   </button>
@@ -389,24 +389,24 @@ export const APISDKPanel: React.FC = () => {
 
             <div className="space-y-3">
               {projects.length === 0 ? (
-                <div className="text-center py-8 text-gray-400">
+                <div className="text-center py-8 text-black opacity-60">
                   No projects yet. Create your first extension project to get started!
                 </div>
               ) : (
                 projects.map((project) => (
                   <div
                     key={project.id}
-                    className="bg-gray-800 rounded-lg p-4 border border-gray-700"
+                    className="apple-card rounded-2xl p-5 border border-gray-200"
                   >
                     <div className="flex justify-between items-start mb-3">
                       <div>
-                        <h4 className="text-lg font-semibold text-white">{project.name}</h4>
-                        <p className="text-sm text-gray-400">
+                        <h4 className="text-lg font-bold text-black uppercase tracking-wide">{project.name}</h4>
+                        <p className="text-sm text-black opacity-80">
                           {project.language} • v{project.version} •{' '}
                           {project.files.length} files
                         </p>
                         {project.description && (
-                          <p className="text-sm text-gray-300 mt-1">{project.description}</p>
+                          <p className="text-sm text-black opacity-80 mt-1">{project.description}</p>
                         )}
                       </div>
                       <div className="flex gap-2">
@@ -416,35 +416,35 @@ export const APISDKPanel: React.FC = () => {
                               selectedProject?.id === project.id ? null : project
                             )
                           }
-                          className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
+                          className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                         >
                           {selectedProject?.id === project.id ? 'Hide' : 'View Files'}
                         </button>
                         <button
                           onClick={() => handleBuildProject(project.id)}
                           disabled={loading}
-                          className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 text-sm disabled:opacity-50"
+                          className="rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm disabled:opacity-50"
                         >
                           Build
                         </button>
                         <button
                           onClick={() => handleTestProject(project.id)}
                           disabled={loading}
-                          className="px-3 py-1 bg-yellow-600 text-white rounded hover:bg-yellow-700 text-sm disabled:opacity-50"
+                          className="rounded-xl bg-yellow-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-yellow-700 shadow-sm disabled:opacity-50"
                         >
                           Test
                         </button>
                         <button
                           onClick={() => handleDeployProject(project.id)}
                           disabled={loading}
-                          className="px-3 py-1 bg-purple-600 text-white rounded hover:bg-purple-700 text-sm disabled:opacity-50"
+                          className="rounded-xl bg-purple-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-purple-700 shadow-sm disabled:opacity-50"
                         >
                           Deploy
                         </button>
                         <button
                           onClick={() => handleDeleteProject(project.id)}
                           disabled={loading}
-                          className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm disabled:opacity-50"
+                          className="rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 shadow-sm disabled:opacity-50"
                         >
                           Delete
                         </button>
@@ -452,23 +452,23 @@ export const APISDKPanel: React.FC = () => {
                     </div>
 
                     {selectedProject?.id === project.id && (
-                      <div className="mt-3 pt-3 border-t border-gray-700">
-                        <h5 className="text-sm font-semibold text-white mb-2">Project Files</h5>
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <h5 className="text-sm font-semibold text-black mb-2 block">Project Files</h5>
                         <div className="space-y-2">
                           {project.files.map((file, index) => (
                             <div
                               key={index}
-                              className="flex justify-between items-center p-2 bg-gray-700 rounded"
+                              className="flex justify-between items-center p-2 apple-card rounded-xl border border-gray-200"
                             >
                               <div className="flex-1">
-                                <span className="text-white">{file.path}</span>
-                                <span className="ml-2 text-sm text-gray-400 capitalize">
+                                <span className="text-black">{file.path}</span>
+                                <span className="ml-2 text-sm text-black opacity-80 capitalize">
                                   ({file.type})
                                 </span>
                               </div>
                               <button
                                 onClick={() => setEditingFile(file)}
-                                className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
+                                className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                               >
                                 Edit
                               </button>
@@ -479,31 +479,31 @@ export const APISDKPanel: React.FC = () => {
                     )}
 
                     {buildOutput && selectedProject?.id === project.id && (
-                      <div className="mt-3 pt-3 border-t border-gray-700">
-                        <h5 className="text-sm font-semibold text-white mb-2">Build Output</h5>
-                        <pre className="p-3 bg-gray-900 rounded text-xs text-gray-300 overflow-x-auto">
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <h5 className="text-sm font-semibold text-black mb-2 block">Build Output</h5>
+                        <pre className="p-3 apple-card rounded-xl text-xs text-black overflow-x-auto">
                           {buildOutput}
                         </pre>
                       </div>
                     )}
 
                     {testResult && testResult.extensionId === project.id && (
-                      <div className="mt-3 pt-3 border-t border-gray-700">
-                        <h5 className="text-sm font-semibold text-white mb-2">Test Results</h5>
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <h5 className="text-sm font-semibold text-black mb-2 block">Test Results</h5>
                         <div
-                          className={`p-3 rounded mb-2 ${
-                            testResult.passed ? 'bg-green-900' : 'bg-red-900'
+                          className={`p-3 rounded-xl mb-2 ${
+                            testResult.passed ? 'bg-green-100' : 'bg-red-100'
                           }`}
                         >
-                          <span className="font-semibold">
+                          <span className="font-semibold text-black">
                             {testResult.passed ? '✓ All Tests Passed' : '✗ Tests Failed'}
                           </span>
-                          <span className="ml-2 text-sm">
+                          <span className="ml-2 text-sm text-black opacity-80">
                             ({testResult.tests.filter((t) => t.passed).length}/
                             {testResult.tests.length} passed)
                           </span>
                           {testResult.coverage && (
-                            <span className="ml-2 text-sm">
+                            <span className="ml-2 text-sm text-black opacity-80">
                               • {testResult.coverage}% coverage
                             </span>
                           )}
@@ -512,17 +512,17 @@ export const APISDKPanel: React.FC = () => {
                           {testResult.tests.map((test, index) => (
                             <div
                               key={index}
-                              className={`p-2 rounded text-sm ${
-                                test.passed ? 'bg-gray-700' : 'bg-red-800'
+                              className={`p-2 rounded-xl text-sm ${
+                                test.passed ? 'apple-card border border-gray-200' : 'bg-red-100'
                               }`}
                             >
-                              <span>{test.passed ? '✓' : '✗'}</span>
-                              <span className="ml-2">{test.name}</span>
-                              <span className="ml-2 text-gray-400">
+                              <span className="text-black">{test.passed ? '✓' : '✗'}</span>
+                              <span className="ml-2 text-black">{test.name}</span>
+                              <span className="ml-2 text-black opacity-80">
                                 ({test.duration}ms)
                               </span>
                               {test.error && (
-                                <div className="mt-1 text-red-300">{test.error}</div>
+                                <div className="mt-1 text-red-600">{test.error}</div>
                               )}
                             </div>
                           ))}
@@ -536,18 +536,18 @@ export const APISDKPanel: React.FC = () => {
 
             {/* Loaded Extensions Section */}
             <div className="mt-6">
-              <h3 className="text-lg font-semibold text-white mb-3">Loaded Extensions</h3>
+              <h3 className="text-lg font-bold text-black uppercase tracking-wide mb-3">Loaded Extensions</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <h4 className="text-md font-semibold text-white mb-2">Python (Jython)</h4>
+                  <h4 className="text-sm font-semibold text-black mb-2 block">Python (Jython)</h4>
                   <div className="space-y-2">
                     {pythonExtensions.length === 0 ? (
-                      <div className="text-sm text-gray-400">No Python extensions loaded</div>
+                      <div className="text-sm text-black opacity-60">No Python extensions loaded</div>
                     ) : (
                       pythonExtensions.map((ext, index) => (
-                        <div key={index} className="p-2 bg-gray-800 rounded text-sm">
-                          <div className="text-white font-medium">{ext.name}</div>
-                          <div className="text-gray-400">
+                        <div key={index} className="p-2 apple-card rounded-xl border border-gray-200 text-sm">
+                          <div className="text-black font-semibold">{ext.name}</div>
+                          <div className="text-black opacity-80">
                             {ext.jythonVersion} • {ext.modules.length} modules
                           </div>
                         </div>
@@ -556,15 +556,15 @@ export const APISDKPanel: React.FC = () => {
                   </div>
                 </div>
                 <div>
-                  <h4 className="text-md font-semibold text-white mb-2">Java</h4>
+                  <h4 className="text-sm font-semibold text-black mb-2 block">Java</h4>
                   <div className="space-y-2">
                     {javaExtensions.length === 0 ? (
-                      <div className="text-sm text-gray-400">No Java extensions loaded</div>
+                      <div className="text-sm text-black opacity-60">No Java extensions loaded</div>
                     ) : (
                       javaExtensions.map((ext, index) => (
-                        <div key={index} className="p-2 bg-gray-800 rounded text-sm">
-                          <div className="text-white font-medium">{ext.name}</div>
-                          <div className="text-gray-400">
+                        <div key={index} className="p-2 apple-card rounded-xl border border-gray-200 text-sm">
+                          <div className="text-black font-semibold">{ext.name}</div>
+                          <div className="text-black opacity-80">
                             {ext.javaVersion} • {ext.mainClass}
                           </div>
                         </div>
@@ -579,12 +579,12 @@ export const APISDKPanel: React.FC = () => {
 
         {activeTab === 'api-docs' && (
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">API Documentation</h3>
+            <h3 className="text-lg font-bold text-black uppercase tracking-wide mb-4">API Documentation</h3>
             <div className="space-y-3">
               {apiDocs.map((doc, index) => (
                 <div
                   key={index}
-                  className="bg-gray-800 rounded-lg p-4 border border-gray-700 cursor-pointer hover:border-gray-600"
+                  className="apple-card rounded-2xl p-5 border border-gray-200 cursor-pointer hover:shadow-md transition-shadow"
                   onClick={() =>
                     setSelectedApiDoc(selectedApiDoc?.path === doc.path ? null : doc)
                   }
@@ -593,7 +593,7 @@ export const APISDKPanel: React.FC = () => {
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <span
-                          className={`px-2 py-1 text-xs font-semibold rounded ${
+                          className={`px-2 py-1 text-xs font-semibold rounded-xl ${
                             doc.method === 'GET'
                               ? 'bg-blue-600'
                               : doc.method === 'POST'
@@ -605,29 +605,29 @@ export const APISDKPanel: React.FC = () => {
                         >
                           {doc.method}
                         </span>
-                        <span className="text-white font-mono">{doc.path}</span>
+                        <span className="text-black font-mono">{doc.path}</span>
                       </div>
-                      <p className="text-sm text-gray-400">{doc.description}</p>
+                      <p className="text-sm text-black opacity-80">{doc.description}</p>
                     </div>
-                    <span className="text-xs text-gray-500 capitalize">{doc.category}</span>
+                    <span className="text-xs text-black opacity-60 capitalize">{doc.category}</span>
                   </div>
 
                   {selectedApiDoc?.path === doc.path && (
-                    <div className="mt-4 pt-4 border-t border-gray-700 space-y-3">
+                    <div className="mt-4 pt-4 border-t border-gray-200 space-y-3">
                       <div>
-                        <h5 className="text-sm font-semibold text-white mb-2">Parameters</h5>
+                        <h5 className="text-sm font-semibold text-black mb-2 block">Parameters</h5>
                         {doc.parameters.length === 0 ? (
-                          <div className="text-sm text-gray-400">No parameters</div>
+                          <div className="text-sm text-black opacity-60">No parameters</div>
                         ) : (
                           <div className="space-y-2">
                             {doc.parameters.map((param, pIndex) => (
                               <div key={pIndex} className="text-sm">
-                                <span className="text-blue-400">{param.name}</span>
-                                <span className="text-gray-500 ml-2">({param.type})</span>
+                                <span className="text-blue-600 font-semibold">{param.name}</span>
+                                <span className="text-black opacity-60 ml-2">({param.type})</span>
                                 {param.required && (
-                                  <span className="ml-2 text-red-400">*required</span>
+                                  <span className="ml-2 text-red-600">*required</span>
                                 )}
-                                <div className="text-gray-400 ml-4">{param.description}</div>
+                                <div className="text-black opacity-80 ml-4">{param.description}</div>
                               </div>
                             ))}
                           </div>
@@ -635,15 +635,15 @@ export const APISDKPanel: React.FC = () => {
                       </div>
 
                       <div>
-                        <h5 className="text-sm font-semibold text-white mb-2">Example Request</h5>
-                        <pre className="p-3 bg-gray-900 rounded text-xs text-gray-300 overflow-x-auto">
+                        <h5 className="text-sm font-semibold text-black mb-2 block">Example Request</h5>
+                        <pre className="p-3 apple-card rounded-xl text-xs text-black overflow-x-auto">
                           {doc.exampleRequest}
                         </pre>
                       </div>
 
                       <div>
-                        <h5 className="text-sm font-semibold text-white mb-2">Example Response</h5>
-                        <pre className="p-3 bg-gray-900 rounded text-xs text-gray-300 overflow-x-auto">
+                        <h5 className="text-sm font-semibold text-black mb-2 block">Example Response</h5>
+                        <pre className="p-3 apple-card rounded-xl text-xs text-black overflow-x-auto">
                           {doc.exampleResponse}
                         </pre>
                       </div>
@@ -661,7 +661,7 @@ export const APISDKPanel: React.FC = () => {
               <select
                 value={exampleLanguageFilter}
                 onChange={(e) => setExampleLanguageFilter(e.target.value)}
-                className="p-2 bg-gray-700 text-white rounded border border-gray-600"
+                className="apple-input rounded-xl px-4 py-2.5 text-sm text-black"
               >
                 <option value="all">All Languages</option>
                 <option value="java">Java</option>
@@ -671,7 +671,7 @@ export const APISDKPanel: React.FC = () => {
               <select
                 value={exampleCategoryFilter}
                 onChange={(e) => setExampleCategoryFilter(e.target.value)}
-                className="p-2 bg-gray-700 text-white rounded border border-gray-600"
+                className="apple-input rounded-xl px-4 py-2.5 text-sm text-black"
               >
                 <option value="all">All Categories</option>
                 <option value="scanner">Scanner</option>
@@ -685,21 +685,21 @@ export const APISDKPanel: React.FC = () => {
               {filteredExamples.map((example) => (
                 <div
                   key={example.id}
-                  className="bg-gray-800 rounded-lg p-4 border border-gray-700 cursor-pointer hover:border-gray-600"
+                  className="apple-card rounded-2xl p-5 border border-gray-200 cursor-pointer hover:shadow-md transition-shadow"
                   onClick={() =>
                     setSelectedExample(selectedExample?.id === example.id ? null : example)
                   }
                 >
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <h4 className="text-lg font-semibold text-white">{example.title}</h4>
-                      <p className="text-sm text-gray-400">{example.description}</p>
+                      <h4 className="text-lg font-bold text-black uppercase tracking-wide">{example.title}</h4>
+                      <p className="text-sm text-black opacity-80">{example.description}</p>
                     </div>
                     <div className="flex gap-2">
-                      <span className="px-2 py-1 bg-blue-600 text-white text-xs rounded">
+                      <span className="px-2 py-1 bg-blue-600 text-white text-xs rounded-xl font-semibold">
                         {example.language}
                       </span>
-                      <span className="px-2 py-1 bg-gray-700 text-white text-xs rounded capitalize">
+                      <span className="px-2 py-1 bg-gray-200 text-black text-xs rounded-xl capitalize font-semibold">
                         {example.category}
                       </span>
                     </div>
@@ -710,7 +710,7 @@ export const APISDKPanel: React.FC = () => {
                       {example.tags.map((tag, index) => (
                         <span
                           key={index}
-                          className="px-2 py-0.5 bg-gray-700 text-gray-300 text-xs rounded"
+                          className="px-2 py-0.5 bg-gray-100 text-black text-xs rounded-xl"
                         >
                           {tag}
                         </span>
@@ -719,8 +719,8 @@ export const APISDKPanel: React.FC = () => {
                   )}
 
                   {selectedExample?.id === example.id && (
-                    <div className="mt-3 pt-3 border-t border-gray-700">
-                      <pre className="p-3 bg-gray-900 rounded text-xs text-gray-300 overflow-x-auto">
+                    <div className="mt-3 pt-3 border-t border-gray-200">
+                      <pre className="p-3 apple-card rounded-xl text-xs text-black overflow-x-auto">
                         {example.code}
                       </pre>
                     </div>

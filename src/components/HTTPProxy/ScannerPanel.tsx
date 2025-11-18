@@ -47,35 +47,35 @@ export const ScannerPanel: React.FC = () => {
   const getSeverityColor = (severity: string) => {
     switch (severity) {
       case 'critical':
-        return 'bg-red-900/20 border-red-600/50 text-red-600';
+        return 'bg-red-50 border-red-200 text-red-600';
       case 'high':
-        return 'bg-orange-900/20 border-orange-600/50 text-orange-600';
+        return 'bg-orange-50 border-orange-200 text-orange-600';
       case 'medium':
-        return 'bg-yellow-900/20 border-yellow-600/50 text-yellow-600';
+        return 'bg-yellow-50 border-yellow-200 text-yellow-600';
       case 'low':
-        return 'bg-blue-900/20 border-blue-600/50 text-blue-600';
+        return 'bg-blue-50 border-blue-200 text-blue-600';
       default:
-        return 'bg-gray-900/20 border-gray-600/50 text-gray-600';
+        return 'bg-gray-50 border-gray-200 text-gray-600';
     }
   };
 
   return (
-    <div className="h-full flex flex-col gap-4">
+    <div className="h-full flex flex-col gap-4 bg-white">
       {/* Controls */}
       <div className="flex items-end gap-3 flex-wrap">
         <div className="flex-1 min-w-xs">
-          <label className="text-xs font-medium text-gray-700 dark:text-gray-300 block mb-1">Target URL</label>
+          <label className="text-sm font-semibold text-black mb-2 block">Target URL</label>
           <input
             value={target}
             onChange={e => setTarget(e.target.value)}
             disabled={isRunning}
             placeholder="https://example.com"
-            className="w-full glass-card dark:glass-card-dark px-3 py-2 rounded-xl text-sm disabled:opacity-50"
+            className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full disabled:opacity-50"
           />
         </div>
         <div>
-          <label className="text-xs font-medium text-gray-700 dark:text-gray-300 block mb-1">Scan Type</label>
-          <select value={scanType} onChange={e => setScanType(e.target.value as any)} disabled={isRunning} className="glass-card dark:glass-card-dark rounded-lg border px-3 py-2 text-sm disabled:opacity-50">
+          <label className="text-sm font-semibold text-black mb-2 block">Scan Type</label>
+          <select value={scanType} onChange={e => setScanType(e.target.value as any)} disabled={isRunning} className="apple-input rounded-xl px-4 py-2.5 text-sm text-black disabled:opacity-50">
             <option value="quick">Quick</option>
             <option value="full">Full</option>
             <option value="web">Web</option>
@@ -85,7 +85,7 @@ export const ScannerPanel: React.FC = () => {
         <button
           onClick={handleRun}
           disabled={isRunning || !target.trim()}
-          className="rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 px-6 py-2 text-sm font-medium text-white shadow-lg hover:shadow-xl transition-all disabled:opacity-50 flex items-center gap-2"
+          className="rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 transition-all disabled:opacity-50 flex items-center gap-2"
         >
           {isRunning ? (
             <>
@@ -131,7 +131,7 @@ export const ScannerPanel: React.FC = () => {
                 key={vuln.id}
                 onClick={() => setExpandedId(expandedId === vuln.id ? null : vuln.id)}
                 className={cn(
-                  'rounded-lg border p-3 cursor-pointer transition-all',
+                  'apple-card rounded-2xl border p-5 cursor-pointer transition-all',
                   getSeverityColor(vuln.severity),
                   expandedId === vuln.id && 'ring-2 ring-offset-1'
                 )}

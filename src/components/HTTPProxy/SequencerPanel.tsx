@@ -31,15 +31,15 @@ export const SequencerPanel: React.FC = () => {
   const getTokenTypeColor = (type: string) => {
     switch (type) {
       case 'jwt':
-        return 'bg-purple-900/20 border-purple-600/50 text-purple-600';
+        return 'bg-purple-50 border-purple-200 text-purple-600';
       case 'bearer':
-        return 'bg-blue-900/20 border-blue-600/50 text-blue-600';
+        return 'bg-blue-50 border-blue-200 text-blue-600';
       case 'cookie':
-        return 'bg-orange-900/20 border-orange-600/50 text-orange-600';
+        return 'bg-orange-50 border-orange-200 text-orange-600';
       case 'session-id':
-        return 'bg-green-900/20 border-green-600/50 text-green-600';
+        return 'bg-green-50 border-green-200 text-green-600';
       default:
-        return 'bg-gray-900/20 border-gray-600/50 text-gray-600';
+        return 'bg-gray-50 border-gray-200 text-gray-600';
     }
   };
 
@@ -54,13 +54,13 @@ export const SequencerPanel: React.FC = () => {
   };
 
   return (
-    <div className="h-full flex flex-col gap-4">
+    <div className="h-full flex flex-col gap-4 bg-white">
       {/* Controls */}
       <div className="flex items-center gap-3">
         <button
           onClick={handleRun}
           disabled={isRunning}
-          className="rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 px-6 py-2 text-sm font-medium text-white shadow-lg hover:shadow-xl transition-all disabled:opacity-50 flex items-center gap-2"
+          className="rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 transition-all disabled:opacity-50 flex items-center gap-2"
         >
           {isRunning ? (
             <>
@@ -112,7 +112,7 @@ export const SequencerPanel: React.FC = () => {
                   key={i}
                   onClick={() => setExpandedId(expandedId === i.toString() ? null : i.toString())}
                   className={cn(
-                    'rounded-lg border p-3 cursor-pointer transition-all',
+                    'apple-card rounded-2xl border p-5 cursor-pointer transition-all',
                     getTokenTypeColor(token.type),
                     expandedId === i.toString() && 'ring-2 ring-offset-1'
                   )}

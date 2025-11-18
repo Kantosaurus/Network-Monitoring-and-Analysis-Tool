@@ -227,13 +227,13 @@ export const ProjectWorkspacePanel: React.FC = () => {
   };
 
   return (
-    <div className="flex h-full flex-col gap-4">
+    <div className="flex flex-col h-full bg-white">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Project & Workspace Management</h2>
-        <div className="flex gap-2">
+      <div className="px-6 py-5 border-b border-gray-200">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-bold text-black uppercase tracking-wide">Project & Workspace Management</h2>
           {currentProject && (
-            <span className="rounded-lg bg-blue-100 px-3 py-2 text-sm font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+            <span className="rounded-xl bg-blue-100 px-3 py-2 text-sm font-semibold text-blue-800">
               Current: {currentProject.name}
             </span>
           )}
@@ -241,78 +241,70 @@ export const ProjectWorkspacePanel: React.FC = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex border-b border-gray-200 px-6 bg-gray-50">
         <button
           onClick={() => setActiveTab('projects')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'projects'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconFolder size={18} />
-            Projects ({projects.length})
-          </div>
+          <IconFolder size={18} />
+          Projects ({projects.length})
         </button>
         <button
           onClick={() => setActiveTab('workspaces')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'workspaces'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconFolderPlus size={18} />
-            Workspaces ({workspaces.length})
-          </div>
+          <IconFolderPlus size={18} />
+          Workspaces ({workspaces.length})
         </button>
         {currentProject && (
           <>
             <button
               onClick={() => setActiveTab('saved-items')}
               className={cn(
-                'px-4 py-2 font-medium transition-colors',
+                'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
                 activeTab === 'saved-items'
-                  ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-                  : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+                  ? 'border-blue-600 text-blue-600 bg-white'
+                  : 'border-transparent text-black opacity-60 hover:opacity-100'
               )}
             >
-              <div className="flex items-center gap-2">
-                <IconTag size={18} />
-                Saved Items ({currentProject.savedItems.length})
-              </div>
+              <IconTag size={18} />
+              Saved Items ({currentProject.savedItems.length})
             </button>
             <button
               onClick={() => setActiveTab('configuration')}
               className={cn(
-                'px-4 py-2 font-medium transition-colors',
+                'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
                 activeTab === 'configuration'
-                  ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-                  : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+                  ? 'border-blue-600 text-blue-600 bg-white'
+                  : 'border-transparent text-black opacity-60 hover:opacity-100'
               )}
             >
-              <div className="flex items-center gap-2">
-                <IconSettings size={18} />
-                Configuration
-              </div>
+              <IconSettings size={18} />
+              Configuration
             </button>
           </>
         )}
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-y-auto p-4">
         {/* Projects Tab */}
         {activeTab === 'projects' && (
           <div className="space-y-4">
             <div className="flex gap-2">
               <button
                 onClick={() => setShowProjectForm(true)}
-                className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm flex items-center gap-2"
               >
                 <IconFolderPlus size={18} />
                 New Project
@@ -322,35 +314,35 @@ export const ProjectWorkspacePanel: React.FC = () => {
                   const path = prompt('Enter project file path:');
                   if (path) handleOpenProject(path);
                 }}
-                className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+                className="rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 shadow-sm flex items-center gap-2"
               >
                 <IconFolder size={18} />
                 Open Project
               </button>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-3">
               {projects.map((project) => (
                 <div
                   key={project.id}
                   className={cn(
-                    'rounded-lg border p-4',
+                    'rounded-2xl border-2 p-5',
                     currentProject?.id === project.id
-                      ? 'border-blue-500 bg-blue-50 dark:border-blue-600 dark:bg-blue-900/20'
-                      : 'border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800'
+                      ? 'border-blue-600 bg-blue-50'
+                      : 'border-gray-200 apple-card'
                   )}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <IconFolder size={18} className="text-blue-500" />
-                        <span className="font-semibold">{project.name}</span>
+                        <IconFolder size={18} className="text-blue-600" />
+                        <span className="font-bold text-black">{project.name}</span>
                         {project.tags.length > 0 && (
                           <div className="flex gap-1">
                             {project.tags.map((tag, index) => (
                               <span
                                 key={index}
-                                className="rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+                                className="rounded bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-800"
                               >
                                 {tag}
                               </span>
@@ -359,9 +351,9 @@ export const ProjectWorkspacePanel: React.FC = () => {
                         )}
                       </div>
                       {project.description && (
-                        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{project.description}</p>
+                        <p className="mt-1 text-sm text-black opacity-80">{project.description}</p>
                       )}
-                      <div className="mt-2 flex gap-4 text-xs text-gray-500">
+                      <div className="mt-2 flex gap-4 text-xs text-black opacity-60">
                         <span>Created: {formatDate(project.createdAt)}</span>
                         <span>Modified: {formatDate(project.modifiedAt)}</span>
                         <span>Size: {formatFileSize(project.size)}</span>
@@ -369,16 +361,16 @@ export const ProjectWorkspacePanel: React.FC = () => {
                       </div>
                       <div className="mt-2 flex gap-2 text-xs">
                         <span className={cn(
-                          'rounded px-2 py-0.5 font-medium',
-                          project.scanState.status === 'running' && 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
-                          project.scanState.status === 'completed' && 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
-                          project.scanState.status === 'idle' && 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200',
-                          project.scanState.status === 'error' && 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                          'rounded px-2 py-0.5 font-semibold',
+                          project.scanState.status === 'running' && 'bg-yellow-100 text-yellow-800',
+                          project.scanState.status === 'completed' && 'bg-green-100 text-green-800',
+                          project.scanState.status === 'idle' && 'bg-gray-100 text-gray-800',
+                          project.scanState.status === 'error' && 'bg-red-100 text-red-800'
                         )}>
                           {project.scanState.status}
                         </span>
                         {project.scanState.findings.length > 0 && (
-                          <span className="rounded bg-orange-100 px-2 py-0.5 font-medium text-orange-800 dark:bg-orange-900 dark:text-orange-200">
+                          <span className="rounded bg-orange-100 px-2 py-0.5 font-semibold text-orange-800">
                             {project.scanState.findings.length} findings
                           </span>
                         )}
@@ -387,21 +379,21 @@ export const ProjectWorkspacePanel: React.FC = () => {
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleSaveProject(project.id)}
-                        className="rounded-lg bg-blue-500 px-3 py-1.5 text-sm text-white hover:bg-blue-600"
+                        className="rounded-xl bg-blue-600 px-3 py-2 text-sm text-white hover:bg-blue-700 shadow-sm"
                         title="Save"
                       >
                         <IconDeviceFloppy size={16} />
                       </button>
                       <button
                         onClick={() => handleExportProject(project.id)}
-                        className="rounded-lg bg-green-500 px-3 py-1.5 text-sm text-white hover:bg-green-600"
+                        className="rounded-xl bg-green-600 px-3 py-2 text-sm text-white hover:bg-green-700 shadow-sm"
                         title="Export"
                       >
                         <IconDownload size={16} />
                       </button>
                       <button
                         onClick={() => handleCloseProject(project.id)}
-                        className="rounded-lg bg-red-500 px-3 py-1.5 text-sm text-white hover:bg-red-600"
+                        className="rounded-xl bg-red-600 px-3 py-2 text-sm text-white hover:bg-red-700 shadow-sm"
                         title="Close"
                       >
                         <IconTrash size={16} />
@@ -412,9 +404,9 @@ export const ProjectWorkspacePanel: React.FC = () => {
               ))}
 
               {projects.length === 0 && (
-                <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+                <div className="apple-card rounded-2xl border border-gray-200 p-8 text-center">
                   <IconFolder size={48} className="mx-auto mb-3 text-gray-400" />
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-black opacity-60">
                     No projects open. Create a new project or open an existing one.
                   </p>
                 </div>
@@ -429,37 +421,37 @@ export const ProjectWorkspacePanel: React.FC = () => {
             <div className="flex justify-end">
               <button
                 onClick={() => setShowWorkspaceForm(true)}
-                className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm flex items-center gap-2"
               >
                 <IconPlus size={18} />
                 New Workspace
               </button>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-3">
               {workspaces.map((workspace) => (
                 <div
                   key={workspace.id}
-                  className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+                  className="apple-card rounded-2xl p-5 border border-gray-200"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <IconFolderPlus size={18} className="text-blue-500" />
-                        <span className="font-semibold">{workspace.name}</span>
+                        <IconFolderPlus size={18} className="text-blue-600" />
+                        <span className="font-bold text-black">{workspace.name}</span>
                       </div>
-                      <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                      <p className="mt-2 text-sm text-black opacity-80">
                         {workspace.projects.length} projects
                       </p>
                       {workspace.activeProjectId && (
-                        <p className="mt-1 text-xs text-gray-500">
+                        <p className="mt-1 text-xs text-black opacity-60">
                           Active: {workspace.projects.find((p) => p.id === workspace.activeProjectId)?.name || 'Unknown'}
                         </p>
                       )}
                     </div>
                     <button
                       onClick={() => handleLoadWorkspace(workspace.id)}
-                      className="rounded-lg bg-blue-500 px-3 py-1.5 text-sm text-white hover:bg-blue-600"
+                      className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                     >
                       Load
                     </button>
@@ -468,9 +460,9 @@ export const ProjectWorkspacePanel: React.FC = () => {
               ))}
 
               {workspaces.length === 0 && (
-                <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+                <div className="apple-card rounded-2xl border border-gray-200 p-8 text-center">
                   <IconFolderPlus size={48} className="mx-auto mb-3 text-gray-400" />
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-black opacity-60">
                     No workspaces created. Create a workspace to manage multiple projects.
                   </p>
                 </div>
@@ -481,31 +473,31 @@ export const ProjectWorkspacePanel: React.FC = () => {
 
         {/* Saved Items Tab */}
         {activeTab === 'saved-items' && currentProject && (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {currentProject.savedItems.map((item) => (
               <div
                 key={item.id}
-                className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+                className="apple-card rounded-2xl p-5 border border-gray-200"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                      <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-800">
                         {item.type}
                       </span>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                      <span className="text-sm text-black opacity-80">
                         {formatDate(item.timestamp)}
                       </span>
                     </div>
                     {item.notes && (
-                      <p className="mt-2 text-sm">{item.notes}</p>
+                      <p className="mt-2 text-sm text-black">{item.notes}</p>
                     )}
                     {item.tags.length > 0 && (
                       <div className="mt-2 flex gap-1">
                         {item.tags.map((tag, index) => (
                           <span
                             key={index}
-                            className="rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+                            className="rounded bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-800"
                           >
                             {tag}
                           </span>
@@ -520,7 +512,7 @@ export const ProjectWorkspacePanel: React.FC = () => {
                         loadCurrentProject();
                       }
                     }}
-                    className="text-red-500 hover:text-red-600"
+                    className="text-red-600 hover:text-red-700"
                   >
                     <IconTrash size={16} />
                   </button>
@@ -529,9 +521,9 @@ export const ProjectWorkspacePanel: React.FC = () => {
             ))}
 
             {currentProject.savedItems.length === 0 && (
-              <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+              <div className="apple-card rounded-2xl border border-gray-200 p-8 text-center">
                 <IconTag size={48} className="mx-auto mb-3 text-gray-400" />
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-black opacity-60">
                   No saved items in this project yet.
                 </p>
               </div>
@@ -542,12 +534,12 @@ export const ProjectWorkspacePanel: React.FC = () => {
         {/* Configuration Tab */}
         {activeTab === 'configuration' && currentProject && (
           <div className="space-y-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
               <div className="mb-4 flex items-center justify-between">
-                <h3 className="font-semibold">Project Configuration</h3>
+                <h3 className="font-bold text-black uppercase tracking-wide">Project Configuration</h3>
                 <button
                   onClick={() => setShowConfigEditor(true)}
-                  className="flex items-center gap-2 rounded-lg bg-blue-500 px-3 py-2 text-sm text-white hover:bg-blue-600"
+                  className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm flex items-center gap-2"
                 >
                   <IconSettings size={16} />
                   Edit
@@ -556,10 +548,10 @@ export const ProjectWorkspacePanel: React.FC = () => {
 
               <div className="space-y-4">
                 <div>
-                  <h4 className="mb-2 text-sm font-semibold">Target Scope</h4>
+                  <h4 className="mb-2 text-sm font-bold text-black uppercase tracking-wide">Target Scope</h4>
                   <div className="space-y-1">
                     {currentProject.configuration.targetScope.map((url, index) => (
-                      <div key={index} className="rounded bg-gray-50 px-3 py-2 text-sm dark:bg-gray-900">
+                      <div key={index} className="rounded-xl bg-gray-50 px-3 py-2 text-sm border border-gray-200 text-black">
                         {url}
                       </div>
                     ))}
@@ -567,37 +559,37 @@ export const ProjectWorkspacePanel: React.FC = () => {
                 </div>
 
                 <div>
-                  <h4 className="mb-2 text-sm font-semibold">Scanner Settings</h4>
-                  <div className="grid grid-cols-2 gap-3 text-sm">
+                  <h4 className="mb-2 text-sm font-bold text-black uppercase tracking-wide">Scanner Settings</h4>
+                  <div className="grid grid-cols-2 gap-3 text-sm text-black">
                     <div>
-                      <span className="text-gray-600 dark:text-gray-400">Max Threads:</span>{' '}
-                      <span className="font-medium">{currentProject.configuration.scannerSettings.maxThreads}</span>
+                      <span className="opacity-60">Max Threads:</span>{' '}
+                      <span className="font-semibold">{currentProject.configuration.scannerSettings.maxThreads}</span>
                     </div>
                     <div>
-                      <span className="text-gray-600 dark:text-gray-400">Requests/sec:</span>{' '}
-                      <span className="font-medium">{currentProject.configuration.scannerSettings.requestsPerSecond}</span>
+                      <span className="opacity-60">Requests/sec:</span>{' '}
+                      <span className="font-semibold">{currentProject.configuration.scannerSettings.requestsPerSecond}</span>
                     </div>
                     <div>
-                      <span className="text-gray-600 dark:text-gray-400">Timeout:</span>{' '}
-                      <span className="font-medium">{currentProject.configuration.scannerSettings.timeout}ms</span>
+                      <span className="opacity-60">Timeout:</span>{' '}
+                      <span className="font-semibold">{currentProject.configuration.scannerSettings.timeout}ms</span>
                     </div>
                     <div>
-                      <span className="text-gray-600 dark:text-gray-400">Scan Depth:</span>{' '}
-                      <span className="font-medium">{currentProject.configuration.scannerSettings.scanDepth}</span>
+                      <span className="opacity-60">Scan Depth:</span>{' '}
+                      <span className="font-semibold">{currentProject.configuration.scannerSettings.scanDepth}</span>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="mb-2 text-sm font-semibold">Proxy Settings</h4>
-                  <div className="grid grid-cols-2 gap-3 text-sm">
+                  <h4 className="mb-2 text-sm font-bold text-black uppercase tracking-wide">Proxy Settings</h4>
+                  <div className="grid grid-cols-2 gap-3 text-sm text-black">
                     <div>
-                      <span className="text-gray-600 dark:text-gray-400">Enabled:</span>{' '}
-                      <span className="font-medium">{currentProject.configuration.proxySettings.enabled ? 'Yes' : 'No'}</span>
+                      <span className="opacity-60">Enabled:</span>{' '}
+                      <span className="font-semibold">{currentProject.configuration.proxySettings.enabled ? 'Yes' : 'No'}</span>
                     </div>
                     <div>
-                      <span className="text-gray-600 dark:text-gray-400">Port:</span>{' '}
-                      <span className="font-medium">{currentProject.configuration.proxySettings.port}</span>
+                      <span className="opacity-60">Port:</span>{' '}
+                      <span className="font-semibold">{currentProject.configuration.proxySettings.port}</span>
                     </div>
                   </div>
                 </div>
@@ -610,25 +602,25 @@ export const ProjectWorkspacePanel: React.FC = () => {
       {/* Project Form Modal */}
       {showProjectForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-            <h3 className="mb-4 text-xl font-bold">Create New Project</h3>
+          <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-xl">
+            <h3 className="mb-4 text-xl font-bold text-black uppercase tracking-wide">Create New Project</h3>
             <div className="space-y-3">
               <div>
-                <label className="mb-1 block text-sm font-medium">Project Name</label>
+                <label className="mb-2 block text-sm font-semibold text-black">Project Name</label>
                 <input
                   type="text"
                   value={projectForm.name}
                   onChange={(e) => setProjectForm({ ...projectForm, name: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Description (optional)</label>
+                <label className="mb-2 block text-sm font-semibold text-black">Description (optional)</label>
                 <textarea
                   value={projectForm.description}
                   onChange={(e) => setProjectForm({ ...projectForm, description: e.target.value })}
                   rows={3}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                 />
               </div>
             </div>
@@ -638,13 +630,13 @@ export const ProjectWorkspacePanel: React.FC = () => {
                   setShowProjectForm(false);
                   setProjectForm({ name: '', description: '' });
                 }}
-                className="rounded-lg bg-gray-200 px-4 py-2 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                className="rounded-xl bg-gray-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-gray-700 shadow-sm"
               >
                 Cancel
               </button>
               <button
                 onClick={handleCreateProject}
-                className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
               >
                 Create Project
               </button>
@@ -656,16 +648,16 @@ export const ProjectWorkspacePanel: React.FC = () => {
       {/* Workspace Form Modal */}
       {showWorkspaceForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-            <h3 className="mb-4 text-xl font-bold">Create New Workspace</h3>
+          <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-xl">
+            <h3 className="mb-4 text-xl font-bold text-black uppercase tracking-wide">Create New Workspace</h3>
             <div className="space-y-3">
               <div>
-                <label className="mb-1 block text-sm font-medium">Workspace Name</label>
+                <label className="mb-2 block text-sm font-semibold text-black">Workspace Name</label>
                 <input
                   type="text"
                   value={workspaceForm.name}
                   onChange={(e) => setWorkspaceForm({ ...workspaceForm, name: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                 />
               </div>
             </div>
@@ -675,13 +667,13 @@ export const ProjectWorkspacePanel: React.FC = () => {
                   setShowWorkspaceForm(false);
                   setWorkspaceForm({ name: '' });
                 }}
-                className="rounded-lg bg-gray-200 px-4 py-2 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                className="rounded-xl bg-gray-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-gray-700 shadow-sm"
               >
                 Cancel
               </button>
               <button
                 onClick={handleCreateWorkspace}
-                className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
               >
                 Create Workspace
               </button>
@@ -693,15 +685,15 @@ export const ProjectWorkspacePanel: React.FC = () => {
       {/* Configuration Editor Modal */}
       {showConfigEditor && currentProject && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="max-h-[90vh] w-full max-w-2xl overflow-auto rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-            <h3 className="mb-4 text-xl font-bold">Edit Configuration</h3>
+          <div className="max-h-[90vh] w-full max-w-2xl overflow-auto rounded-2xl border border-gray-200 bg-white p-6 shadow-xl">
+            <h3 className="mb-4 text-xl font-bold text-black uppercase tracking-wide">Edit Configuration</h3>
             <div className="space-y-4">
               <div>
                 <div className="mb-2 flex items-center justify-between">
-                  <label className="text-sm font-medium">Target Scope</label>
+                  <label className="text-sm font-semibold text-black">Target Scope</label>
                   <button
                     onClick={addTargetScope}
-                    className="rounded bg-blue-500 px-2 py-1 text-xs text-white hover:bg-blue-600"
+                    className="rounded-xl bg-blue-600 px-3 py-1.5 text-xs text-white hover:bg-blue-700 shadow-sm flex items-center gap-1"
                   >
                     <IconPlus size={14} />
                   </button>
@@ -714,12 +706,12 @@ export const ProjectWorkspacePanel: React.FC = () => {
                         value={url}
                         onChange={(e) => updateTargetScope(index, e.target.value)}
                         placeholder="https://example.com"
-                        className="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+                        className="apple-input flex-1 rounded-xl px-4 py-2.5 text-sm text-black"
                       />
                       {(configForm.targetScope?.length || 0) > 1 && (
                         <button
                           onClick={() => removeTargetScope(index)}
-                          className="text-red-500 hover:text-red-600"
+                          className="text-red-600 hover:text-red-700"
                         >
                           <IconTrash size={16} />
                         </button>
@@ -730,10 +722,10 @@ export const ProjectWorkspacePanel: React.FC = () => {
               </div>
 
               <div>
-                <h4 className="mb-2 text-sm font-semibold">Scanner Settings</h4>
+                <h4 className="mb-2 text-sm font-bold text-black uppercase tracking-wide">Scanner Settings</h4>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="mb-1 block text-xs text-gray-600 dark:text-gray-400">Max Threads</label>
+                    <label className="mb-1 block text-xs text-black opacity-60">Max Threads</label>
                     <input
                       type="number"
                       value={configForm.scannerSettings?.maxThreads}
@@ -746,11 +738,11 @@ export const ProjectWorkspacePanel: React.FC = () => {
                           },
                         })
                       }
-                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+                      className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs text-gray-600 dark:text-gray-400">Requests/sec</label>
+                    <label className="mb-1 block text-xs text-black opacity-60">Requests/sec</label>
                     <input
                       type="number"
                       value={configForm.scannerSettings?.requestsPerSecond}
@@ -763,11 +755,11 @@ export const ProjectWorkspacePanel: React.FC = () => {
                           },
                         })
                       }
-                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+                      className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs text-gray-600 dark:text-gray-400">Timeout (ms)</label>
+                    <label className="mb-1 block text-xs text-black opacity-60">Timeout (ms)</label>
                     <input
                       type="number"
                       value={configForm.scannerSettings?.timeout}
@@ -780,11 +772,11 @@ export const ProjectWorkspacePanel: React.FC = () => {
                           },
                         })
                       }
-                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+                      className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs text-gray-600 dark:text-gray-400">Scan Depth</label>
+                    <label className="mb-1 block text-xs text-black opacity-60">Scan Depth</label>
                     <input
                       type="number"
                       value={configForm.scannerSettings?.scanDepth}
@@ -797,7 +789,7 @@ export const ProjectWorkspacePanel: React.FC = () => {
                           },
                         })
                       }
-                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-700"
+                      className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                     />
                   </div>
                 </div>
@@ -806,13 +798,13 @@ export const ProjectWorkspacePanel: React.FC = () => {
             <div className="mt-6 flex justify-end gap-2">
               <button
                 onClick={() => setShowConfigEditor(false)}
-                className="rounded-lg bg-gray-200 px-4 py-2 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                className="rounded-xl bg-gray-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-gray-700 shadow-sm"
               >
                 Cancel
               </button>
               <button
                 onClick={handleUpdateConfig}
-                className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
               >
                 Save Configuration
               </button>

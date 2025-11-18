@@ -184,104 +184,96 @@ export const WebSocketProtocolPanel: React.FC = () => {
   };
 
   return (
-    <div className="flex h-full flex-col gap-4">
+    <div className="flex flex-col h-full bg-white">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">WebSocket & Protocol Support</h2>
+      <div className="px-6 py-5 border-b border-gray-200">
+        <h2 className="text-lg font-bold text-black uppercase tracking-wide">WebSocket & Protocol Support</h2>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex border-b border-gray-200 px-6 bg-gray-50">
         <button
           onClick={() => setActiveTab('connections')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'connections'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconPlugConnected size={18} />
-            Connections ({connections.length})
-          </div>
+          <IconPlugConnected size={18} />
+          Connections ({connections.length})
         </button>
         <button
           onClick={() => setActiveTab('messages')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'messages'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconSend size={18} />
-            Messages
-          </div>
+          <IconSend size={18} />
+          Messages
         </button>
         <button
           onClick={() => setActiveTab('protocols')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'protocols'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconNetwork size={18} />
-            Custom Protocols ({customProtocols.length})
-          </div>
+          <IconNetwork size={18} />
+          Custom Protocols ({customProtocols.length})
         </button>
         <button
           onClick={() => setActiveTab('history')}
           className={cn(
-            'px-4 py-2 font-medium transition-colors',
+            'px-5 py-3.5 text-sm font-semibold border-b-2 transition-all whitespace-nowrap flex items-center gap-2',
             activeTab === 'history'
-              ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
-              : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-blue-600 text-blue-600 bg-white'
+              : 'border-transparent text-black opacity-60 hover:opacity-100'
           )}
         >
-          <div className="flex items-center gap-2">
-            <IconSettings size={18} />
-            Protocol Messages ({protocolMessages.length})
-          </div>
+          <IconSettings size={18} />
+          Protocol Messages ({protocolMessages.length})
         </button>
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-y-auto p-4">
         {/* Connections Tab */}
         {activeTab === 'connections' && (
           <div className="space-y-4">
             {/* New Connection Form */}
-            <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-3 font-semibold">New WebSocket Connection</h3>
+            <div className="apple-card rounded-2xl p-5 border border-gray-200">
+              <h3 className="mb-3 font-bold text-black uppercase tracking-wide">New WebSocket Connection</h3>
               <div className="space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">WebSocket URL</label>
+                  <label className="mb-2 block text-sm font-semibold text-black">WebSocket URL</label>
                   <input
                     type="url"
                     value={wsUrl}
                     onChange={(e) => setWsUrl(e.target.value)}
                     placeholder="ws://example.com/socket or wss://example.com/socket"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Sub-protocols (comma-separated, optional)</label>
+                  <label className="mb-2 block text-sm font-semibold text-black">Sub-protocols (comma-separated, optional)</label>
                   <input
                     type="text"
                     value={wsProtocols}
                     onChange={(e) => setWsProtocols(e.target.value)}
                     placeholder="chat, superchat"
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                    className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                   />
                 </div>
                 <button
                   onClick={handleConnect}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                 >
                   <IconPlugConnected size={18} />
                   Connect
@@ -290,11 +282,11 @@ export const WebSocketProtocolPanel: React.FC = () => {
             </div>
 
             {/* Active Connections */}
-            <div className="space-y-2">
+            <div className="space-y-3">
               {connections.map((connection) => (
                 <div
                   key={connection.id}
-                  className="cursor-pointer rounded-lg border border-gray-200 bg-white p-4 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-750"
+                  className="apple-card cursor-pointer rounded-2xl p-5 hover:bg-gray-50 transition-all border border-gray-200"
                   onClick={() => {
                     setSelectedConnection(connection);
                     setActiveTab('messages');
@@ -304,25 +296,25 @@ export const WebSocketProtocolPanel: React.FC = () => {
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         {connection.status === 'open' ? (
-                          <IconPlugConnected size={18} className="text-green-500" />
+                          <IconPlugConnected size={18} className="text-green-600" />
                         ) : (
-                          <IconPlugConnectedX size={18} className="text-red-500" />
+                          <IconPlugConnectedX size={18} className="text-red-600" />
                         )}
-                        <span className="font-mono text-sm">{connection.url}</span>
+                        <span className="font-mono text-sm text-black">{connection.url}</span>
                         <span
                           className={cn(
-                            'rounded px-2 py-0.5 text-xs font-medium',
+                            'rounded px-2 py-0.5 text-xs font-semibold',
                             connection.status === 'open'
-                              ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                              ? 'bg-green-100 text-green-800'
                               : connection.status === 'connecting'
-                              ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
-                              : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                              ? 'bg-yellow-100 text-yellow-800'
+                              : 'bg-red-100 text-red-800'
                           )}
                         >
                           {connection.status}
                         </span>
                       </div>
-                      <div className="mt-2 flex gap-4 text-sm text-gray-600 dark:text-gray-400">
+                      <div className="mt-2 flex gap-4 text-sm text-black opacity-80">
                         <span>Protocol: {connection.protocol || 'none'}</span>
                         <span>Messages: {connection.messages.length}</span>
                         <span>Started: {formatTimestamp(connection.startTime)}</span>
@@ -335,7 +327,7 @@ export const WebSocketProtocolPanel: React.FC = () => {
                           e.stopPropagation();
                           handleToggleIntercept(connection.id, true);
                         }}
-                        className="rounded-lg bg-orange-500 px-3 py-1.5 text-sm text-white hover:bg-orange-600"
+                        className="rounded-xl bg-orange-600 px-3 py-2 text-sm text-white hover:bg-orange-700 shadow-sm"
                       >
                         <IconPlayerPlay size={16} />
                       </button>
@@ -344,7 +336,7 @@ export const WebSocketProtocolPanel: React.FC = () => {
                           e.stopPropagation();
                           handleDisconnect(connection.id);
                         }}
-                        className="rounded-lg bg-red-500 px-3 py-1.5 text-sm text-white hover:bg-red-600"
+                        className="rounded-xl bg-red-600 px-3 py-2 text-sm text-white hover:bg-red-700 shadow-sm"
                       >
                         <IconPlugConnectedX size={16} />
                       </button>
@@ -354,9 +346,9 @@ export const WebSocketProtocolPanel: React.FC = () => {
               ))}
 
               {connections.length === 0 && (
-                <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+                <div className="apple-card rounded-2xl border border-gray-200 p-8 text-center">
                   <IconPlugConnected size={48} className="mx-auto mb-3 text-gray-400" />
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-black opacity-60">
                     No WebSocket connections. Enter a URL above to connect.
                   </p>
                 </div>
@@ -371,20 +363,20 @@ export const WebSocketProtocolPanel: React.FC = () => {
             {selectedConnection ? (
               <>
                 {/* Connection Info */}
-                <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
+                <div className="apple-card rounded-2xl p-5 border border-gray-200">
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="flex items-center gap-2">
-                        <IconPlugConnected size={18} className="text-green-500" />
-                        <span className="font-mono text-sm">{selectedConnection.url}</span>
+                        <IconPlugConnected size={18} className="text-green-600" />
+                        <span className="font-mono text-sm text-black">{selectedConnection.url}</span>
                       </div>
-                      <p className="mt-1 text-xs text-gray-600 dark:text-gray-400">
+                      <p className="mt-1 text-xs text-black opacity-60">
                         {selectedConnection.messages.length} messages
                       </p>
                     </div>
                     <button
                       onClick={() => setSelectedConnection(null)}
-                      className="rounded-lg bg-gray-200 px-3 py-1.5 text-sm hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+                      className="rounded-xl bg-gray-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-gray-700 shadow-sm"
                     >
                       Close
                     </button>
@@ -392,39 +384,39 @@ export const WebSocketProtocolPanel: React.FC = () => {
                 </div>
 
                 {/* Messages List */}
-                <div className="max-h-96 space-y-2 overflow-auto">
+                <div className="max-h-96 space-y-3 overflow-auto">
                   {selectedConnection.messages.map((message) => (
                     <div
                       key={message.id}
                       className={cn(
-                        'rounded-lg border p-3',
+                        'rounded-2xl border-2 p-4',
                         message.direction === 'sent'
-                          ? 'border-blue-300 bg-blue-50 dark:border-blue-700 dark:bg-blue-900/20'
-                          : 'border-green-300 bg-green-50 dark:border-green-700 dark:bg-green-900/20'
+                          ? 'border-blue-600 bg-blue-50'
+                          : 'border-green-600 bg-green-50'
                       )}
                     >
-                      <div className="mb-1 flex items-center justify-between text-xs text-gray-600 dark:text-gray-400">
-                        <span className="font-semibold">
+                      <div className="mb-2 flex items-center justify-between text-xs text-black opacity-80">
+                        <span className="font-bold uppercase tracking-wide">
                           {message.direction === 'sent' ? 'Sent' : 'Received'}
                         </span>
                         <span>{formatTimestamp(message.timestamp)}</span>
                       </div>
-                      <div className="flex items-center gap-2 mb-1">
+                      <div className="flex items-center gap-2 mb-2">
                         <span
                           className={cn(
-                            'rounded px-2 py-0.5 text-xs font-medium',
+                            'rounded px-2 py-0.5 text-xs font-semibold',
                             message.type === 'text'
-                              ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
-                              : 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'
+                              ? 'bg-blue-100 text-blue-800'
+                              : 'bg-purple-100 text-purple-800'
                           )}
                         >
                           {message.type}
                         </span>
-                        <span className="text-xs text-gray-600 dark:text-gray-400">
+                        <span className="text-xs text-black opacity-60">
                           {message.size} bytes
                         </span>
                       </div>
-                      <pre className="overflow-auto text-xs font-mono">
+                      <pre className="overflow-auto text-xs font-mono text-black rounded-xl bg-white p-3 border border-gray-200">
                         {message.type === 'text' ? message.data : `[Binary data: ${message.size} bytes]`}
                       </pre>
                     </div>
@@ -433,14 +425,14 @@ export const WebSocketProtocolPanel: React.FC = () => {
 
                 {/* Send Message Form */}
                 {selectedConnection.status === 'open' && (
-                  <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-                    <h3 className="mb-3 font-semibold">Send Message</h3>
+                  <div className="apple-card rounded-2xl p-5 border border-gray-200">
+                    <h3 className="mb-3 font-bold text-black uppercase tracking-wide">Send Message</h3>
                     <div className="space-y-3">
                       <div className="flex gap-2">
                         <select
                           value={messageType}
                           onChange={(e) => setMessageType(e.target.value as any)}
-                          className="w-32 rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                          className="apple-input w-32 rounded-xl px-4 py-2.5 text-sm text-black"
                         >
                           <option value="text">Text</option>
                           <option value="binary">Binary</option>
@@ -450,12 +442,12 @@ export const WebSocketProtocolPanel: React.FC = () => {
                           onChange={(e) => setMessageToSend(e.target.value)}
                           rows={3}
                           placeholder="Enter message..."
-                          className="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-sm dark:border-gray-600 dark:bg-gray-700"
+                          className="apple-input flex-1 rounded-xl px-4 py-2.5 font-mono text-sm text-black"
                         />
                       </div>
                       <button
                         onClick={handleSendMessage}
-                        className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
                       >
                         <IconSend size={18} />
                         Send Message
@@ -465,9 +457,9 @@ export const WebSocketProtocolPanel: React.FC = () => {
                 )}
               </>
             ) : (
-              <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+              <div className="apple-card rounded-2xl border border-gray-200 p-8 text-center">
                 <IconSend size={48} className="mx-auto mb-3 text-gray-400" />
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-black opacity-60">
                   Select a WebSocket connection from the Connections tab to view and send messages.
                 </p>
               </div>
@@ -481,39 +473,39 @@ export const WebSocketProtocolPanel: React.FC = () => {
             <div className="flex justify-end">
               <button
                 onClick={() => setShowProtocolForm(true)}
-                className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm flex items-center gap-2"
               >
                 <IconPlus size={18} />
                 Add Protocol
               </button>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-3">
               {customProtocols.map((protocol, index) => (
                 <div
                   key={index}
-                  className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+                  className="apple-card rounded-2xl p-5 border border-gray-200"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <IconNetwork size={18} className="text-blue-500" />
-                        <span className="font-semibold">{protocol.name}</span>
-                        <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                        <IconNetwork size={18} className="text-blue-600" />
+                        <span className="font-bold text-black">{protocol.name}</span>
+                        <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-800">
                           Port {protocol.port}
                         </span>
-                        <span className="rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                        <span className="rounded bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-800">
                           {protocol.type}
                         </span>
                       </div>
-                      <div className="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-400">
+                      <div className="mt-2 space-y-1 text-sm text-black opacity-80">
                         {protocol.parser && <p>Parser: {protocol.parser}</p>}
                         {protocol.dissector && <p>Dissector: {protocol.dissector}</p>}
                       </div>
                     </div>
                     <button
                       onClick={() => handleDeleteProtocol(protocol.name)}
-                      className="rounded-lg bg-red-500 px-3 py-1.5 text-sm text-white hover:bg-red-600"
+                      className="rounded-xl bg-red-600 px-3 py-2 text-sm text-white hover:bg-red-700 shadow-sm"
                     >
                       <IconTrash size={16} />
                     </button>
@@ -522,9 +514,9 @@ export const WebSocketProtocolPanel: React.FC = () => {
               ))}
 
               {customProtocols.length === 0 && (
-                <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+                <div className="apple-card rounded-2xl border border-gray-200 p-8 text-center">
                   <IconNetwork size={48} className="mx-auto mb-3 text-gray-400" />
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-black opacity-60">
                     No custom protocols registered. Click "Add Protocol" to create one.
                   </p>
                 </div>
@@ -535,32 +527,32 @@ export const WebSocketProtocolPanel: React.FC = () => {
 
         {/* Protocol Messages Tab */}
         {activeTab === 'history' && (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {protocolMessages.map((message, index) => (
               <div
                 key={index}
-                className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+                className="apple-card rounded-2xl p-5 border border-gray-200"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                      <span className="rounded bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-800">
                         {message.protocol}
                       </span>
-                      <span className="rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                      <span className="rounded bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-800">
                         {message.direction}
                       </span>
-                      <span className="text-xs text-gray-600 dark:text-gray-400">
+                      <span className="text-xs text-black opacity-60">
                         {formatTimestamp(message.timestamp)}
                       </span>
                     </div>
                     <div className="mt-2 text-sm">
                       {message.parsedData ? (
-                        <pre className="overflow-auto rounded-lg bg-gray-50 p-2 text-xs dark:bg-gray-900">
+                        <pre className="overflow-auto rounded-xl bg-gray-50 p-3 text-xs border border-gray-200 text-black">
                           {JSON.stringify(message.parsedData, null, 2)}
                         </pre>
                       ) : (
-                        <p className="text-gray-600 dark:text-gray-400">
+                        <p className="text-black opacity-60">
                           Raw data: {message.rawData.length} bytes
                         </p>
                       )}
@@ -571,9 +563,9 @@ export const WebSocketProtocolPanel: React.FC = () => {
             ))}
 
             {protocolMessages.length === 0 && (
-              <div className="rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+              <div className="apple-card rounded-2xl border border-gray-200 p-8 text-center">
                 <IconSettings size={48} className="mx-auto mb-3 text-gray-400" />
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-black opacity-60">
                   No protocol messages captured yet.
                 </p>
               </div>
@@ -585,33 +577,33 @@ export const WebSocketProtocolPanel: React.FC = () => {
       {/* Protocol Form Modal */}
       {showProtocolForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="w-full max-w-2xl rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-            <h3 className="mb-4 text-xl font-bold">Add Custom Protocol</h3>
+          <div className="w-full max-w-2xl rounded-2xl border border-gray-200 bg-white p-6 shadow-xl">
+            <h3 className="mb-4 text-xl font-bold text-black uppercase tracking-wide">Add Custom Protocol</h3>
             <div className="space-y-3">
               <div>
-                <label className="mb-1 block text-sm font-medium">Protocol Name</label>
+                <label className="mb-2 block text-sm font-semibold text-black">Protocol Name</label>
                 <input
                   type="text"
                   value={protocolForm.name}
                   onChange={(e) => setProtocolForm({ ...protocolForm, name: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Port</label>
+                <label className="mb-2 block text-sm font-semibold text-black">Port</label>
                 <input
                   type="number"
                   value={protocolForm.port}
                   onChange={(e) => setProtocolForm({ ...protocolForm, port: parseInt(e.target.value) })}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Type</label>
+                <label className="mb-2 block text-sm font-semibold text-black">Type</label>
                 <select
                   value={protocolForm.type}
                   onChange={(e) => setProtocolForm({ ...protocolForm, type: e.target.value as any })}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input w-full rounded-xl px-4 py-2.5 text-sm text-black"
                 >
                   <option value="text">Text</option>
                   <option value="binary">Binary</option>
@@ -619,23 +611,23 @@ export const WebSocketProtocolPanel: React.FC = () => {
                 </select>
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Parser (JavaScript function, optional)</label>
+                <label className="mb-2 block text-sm font-semibold text-black">Parser (JavaScript function, optional)</label>
                 <textarea
                   value={protocolForm.parser}
                   onChange={(e) => setProtocolForm({ ...protocolForm, parser: e.target.value })}
                   rows={4}
                   placeholder="function parseMessage(data) { ... }"
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-sm dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input w-full rounded-xl px-4 py-2.5 font-mono text-sm text-black"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium">Dissector (Lua script, optional)</label>
+                <label className="mb-2 block text-sm font-semibold text-black">Dissector (Lua script, optional)</label>
                 <textarea
                   value={protocolForm.dissector}
                   onChange={(e) => setProtocolForm({ ...protocolForm, dissector: e.target.value })}
                   rows={4}
                   placeholder="-- Lua dissector code"
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-sm dark:border-gray-600 dark:bg-gray-700"
+                  className="apple-input w-full rounded-xl px-4 py-2.5 font-mono text-sm text-black"
                 />
               </div>
             </div>
@@ -645,13 +637,13 @@ export const WebSocketProtocolPanel: React.FC = () => {
                   setShowProtocolForm(false);
                   setProtocolForm({ name: '', port: 8080, type: 'text' });
                 }}
-                className="rounded-lg bg-gray-200 px-4 py-2 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                className="rounded-xl bg-gray-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-gray-700 shadow-sm"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveProtocol}
-                className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm"
               >
                 Save Protocol
               </button>

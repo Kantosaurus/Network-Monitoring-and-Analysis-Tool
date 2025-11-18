@@ -62,31 +62,40 @@ export const DecoderPanel: React.FC = () => {
   ];
 
   return (
-    <div className="h-full flex flex-col gap-4">
+    <div className="h-full flex flex-col bg-white">
+      {/* Header */}
+      <div className="px-6 py-5 border-b border-gray-200">
+        <h2 className="text-lg font-bold text-black uppercase tracking-wide">Decoder/Encoder</h2>
+      </div>
+
       {/* Controls */}
-      <div className="flex items-end gap-3 flex-wrap">
-        <div className="flex-1 min-w-xs">
-          <label className="text-xs font-medium text-gray-700 dark:text-gray-300 block mb-1">Transformation</label>
-          <select value={mode} onChange={e => setMode(e.target.value as any)} className="w-full glass-card dark:glass-card-dark rounded-lg border px-3 py-2 text-sm">
-            {modes.map((m) => (
-              <option key={m.value} value={m.value}>{m.label}</option>
-            ))}
-          </select>
+      <div className="px-6 py-4 border-b border-gray-100">
+        <div className="flex items-end gap-3 flex-wrap">
+          <div className="flex-1 min-w-xs">
+            <label className="text-sm font-semibold text-black mb-2 block">Transformation</label>
+            <select value={mode} onChange={e => setMode(e.target.value as any)} className="apple-input rounded-xl px-4 py-2.5 text-sm text-black w-full">
+              {modes.map((m) => (
+                <option key={m.value} value={m.value}>{m.label}</option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
       {/* Error */}
       {error && (
-        <div className="rounded-lg bg-red-900/20 border border-red-600/50 p-3 text-xs text-red-600">
-          <div className="font-semibold">Error</div>
-          <div className="mt-1">{error}</div>
+        <div className="mx-6 mt-4">
+          <div className="rounded-2xl bg-red-50 border border-red-200 p-5">
+            <div className="font-semibold text-sm text-red-900">Error</div>
+            <div className="mt-2 text-sm text-red-700">{error}</div>
+          </div>
         </div>
       )}
 
       {/* Input/Output */}
-      <div className="grid grid-cols-2 gap-4 h-full min-h-0">
+      <div className="flex-1 px-6 py-4 grid grid-cols-2 gap-4 min-h-0">
         <div className="flex flex-col">
-          <label className="text-xs font-medium text-gray-700 dark:text-gray-300 block mb-1">Input</label>
+          <label className="text-sm font-semibold text-black mb-2 block">Input</label>
           <textarea
             value={input}
             onChange={e => {
@@ -103,36 +112,38 @@ export const DecoderPanel: React.FC = () => {
               }
             }}
             placeholder="Enter text to decode/encode"
-            className="flex-1 glass-card dark:glass-card-dark rounded-xl p-3 font-mono text-xs resize-none"
+            className="flex-1 apple-input rounded-xl px-4 py-2.5 text-sm text-black font-mono resize-none"
           />
-          <div className="text-xs text-gray-500 mt-1">{input.length} characters</div>
+          <div className="text-xs text-gray-500 mt-2">{input.length} characters</div>
         </div>
 
         <div className="flex flex-col">
-          <label className="text-xs font-medium text-gray-700 dark:text-gray-300 block mb-1">Output</label>
+          <label className="text-sm font-semibold text-black mb-2 block">Output</label>
           <textarea
             value={output}
             readOnly
             placeholder="Output will appear here"
-            className="flex-1 glass-card dark:glass-card-dark rounded-xl p-3 font-mono text-xs resize-none opacity-75"
+            className="flex-1 apple-input rounded-xl px-4 py-2.5 text-sm text-black font-mono resize-none bg-gray-50"
           />
-          <div className="text-xs text-gray-500 mt-1">{output.length} characters</div>
+          <div className="text-xs text-gray-500 mt-2">{output.length} characters</div>
         </div>
       </div>
 
       {/* Quick copy button */}
       {output && (
-        <div className="flex justify-end">
-          <button
-            onClick={() => {
-              navigator.clipboard.writeText(output);
-              alert('Copied to clipboard!');
-            }}
-            className="rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 px-4 py-2 text-sm font-medium text-white shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
-          >
-            <IconArrowRightCircle size={16} />
-            Copy Output
-          </button>
+        <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
+          <div className="flex justify-end">
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(output);
+                alert('Copied to clipboard!');
+              }}
+              className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm flex items-center gap-2"
+            >
+              <IconArrowRightCircle size={16} />
+              Copy Output
+            </button>
+          </div>
         </div>
       )}
     </div>
