@@ -1,0 +1,50 @@
+# PyTorch and Deep Learning
+torch>=2.1.0
+torchvision>=0.16.0
+torchaudio>=2.1.0
+
+# Detectron2 for DensePose
+# Install separately: pip install detectron2 -f https://dl.fbaipublicfiles.com/detectron2/wheels/cu118/torch2.1/index.html
+
+# Computer Vision
+opencv-python>=4.8.0
+pillow>=10.0.0
+albumentations>=1.3.0
+pycocotools>=2.0.7
+
+# Scientific Computing
+numpy>=1.24.0
+scipy>=1.11.0
+scikit-learn>=1.3.0
+
+# Transformer and Model Utilities
+einops>=0.7.0
+timm>=0.9.0
+
+# Training and Visualization
+tensorboard>=2.15.0
+matplotlib>=3.8.0
+seaborn>=0.13.0
+tqdm>=4.66.0
+
+# API and Web
+flask>=3.0.0
+flask-cors>=4.0.0
+flask-restful>=0.3.10
+
+# Configuration and Logging
+pyyaml>=6.0
+python-dotenv>=1.0.0
+colorlog>=6.8.0
+
+# Data Processing
+pandas>=2.1.0
+h5py>=3.10.0
+
+# WiFi CSI Processing (if available)
+# Note: CSI extraction may require custom tools
+
+# Utilities
+requests>=2.31.0
+tqdm>=4.66.0
+psutil>=5.9.0
