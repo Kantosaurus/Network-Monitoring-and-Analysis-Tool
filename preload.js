@@ -330,8 +330,249 @@ contextBridge.exposeInMainWorld('api', {
     ipcRenderer.on('schedule-execution-failed', (event, data) => callback(data));
   },
 
-  // Report Generator
+  // API Testing
+  apiDiscoverEndpoints: (url) => ipcRenderer.invoke('api-discover-endpoints', url),
+  apiParseOpenAPI: (url) => ipcRenderer.invoke('api-parse-openapi', url),
+  apiTestEndpoint: (endpoint) => ipcRenderer.invoke('api-test-endpoint', endpoint),
+  apiScanEndpoint: (endpoint, scanType) => ipcRenderer.invoke('api-scan-endpoint', endpoint, scanType),
+  apiIntrospectGraphQL: (endpoint) => ipcRenderer.invoke('api-introspect-graphql', endpoint),
+  apiTestGraphQL: (endpoint, query, variables) => ipcRenderer.invoke('api-test-graphql', endpoint, query, variables),
+  apiScanGraphQL: (endpoint, schema) => ipcRenderer.invoke('api-scan-graphql', endpoint, schema),
+  apiGetDocumentation: (endpointId) => ipcRenderer.invoke('api-get-documentation', endpointId),
+  apiGetExamples: (endpointId) => ipcRenderer.invoke('api-get-examples', endpointId),
+  apiGetCallHistory: (endpointId) => ipcRenderer.invoke('api-get-call-history', endpointId),
+  apiGenerateKey: (keyType) => ipcRenderer.invoke('api-generate-key', keyType),
+  apiConfigGet: () => ipcRenderer.invoke('api-config-get'),
+  apiConfigSave: (config) => ipcRenderer.invoke('api-config-save', config),
+
+  // Mobile App Testing
+  mobileStartSession: (deviceType, deviceName) => ipcRenderer.invoke('mobile-start-session', deviceType, deviceName),
+  mobileStopSession: (sessionId) => ipcRenderer.invoke('mobile-stop-session', sessionId),
+  mobileBypassSSLPinning: (sessionId) => ipcRenderer.invoke('mobile-bypass-ssl-pinning', sessionId),
+  mobileGetSessions: () => ipcRenderer.invoke('mobile-get-sessions'),
+
+  // JavaScript/SPA Analysis
+  jsDiscoverEndpoints: (url) => ipcRenderer.invoke('js-discover-endpoints', url),
+  jsAnalyzeFile: (url) => ipcRenderer.invoke('js-analyze-file', url),
+  jsScanForSecrets: (url) => ipcRenderer.invoke('js-scan-for-secrets', url),
+  jsTestDOMXSS: (url) => ipcRenderer.invoke('js-test-dom-xss', url),
+  jsDeobfuscate: (code) => ipcRenderer.invoke('js-deobfuscate', code),
+  jsEnableHeadlessBrowser: (enabled) => ipcRenderer.invoke('js-enable-headless-browser', enabled),
+  jsCrawlSPA: (url, depth) => ipcRenderer.invoke('js-crawl-spa', url, depth),
+
+  // Advanced Injection
+  injectionTestSQL: (target, payload) => ipcRenderer.invoke('injection-test-sql', target, payload),
+  injectionTestNoSQL: (target, payload) => ipcRenderer.invoke('injection-test-nosql', target, payload),
+  injectionTestCommand: (target, payload) => ipcRenderer.invoke('injection-test-command', target, payload),
+  injectionTestTemplate: (target, payload) => ipcRenderer.invoke('injection-test-template', target, payload),
+  injectionTestDeserialization: (target, payload) => ipcRenderer.invoke('injection-test-deserialization', target, payload),
+  injectionTestXXE: (target, payload) => ipcRenderer.invoke('injection-test-xxe', target, payload),
+  injectionStartCollaborator: () => ipcRenderer.invoke('injection-start-collaborator'),
+  injectionGetCollaboratorInteractions: () => ipcRenderer.invoke('injection-get-collaborator-interactions'),
+
+  // WebSocket Protocol
+  websocketConnect: (url, options) => ipcRenderer.invoke('websocket-connect', url, options),
+  websocketDisconnect: (connectionId) => ipcRenderer.invoke('websocket-disconnect', connectionId),
+  websocketSend: (connectionId, message) => ipcRenderer.invoke('websocket-send', connectionId, message),
+  websocketIntercept: (connectionId, enabled) => ipcRenderer.invoke('websocket-intercept', connectionId, enabled),
+  websocketGetConnections: () => ipcRenderer.invoke('websocket-get-connections'),
+  websocketGetMessages: (connectionId) => ipcRenderer.invoke('websocket-get-messages', connectionId),
+  protocolRegisterCustom: (protocol) => ipcRenderer.invoke('protocol-register-custom', protocol),
+  protocolGetCustom: () => ipcRenderer.invoke('protocol-get-custom'),
+  protocolDeleteCustom: (protocolId) => ipcRenderer.invoke('protocol-delete-custom', protocolId),
+
+  // BApp Store / Extensions
+  extensionGetAll: () => ipcRenderer.invoke('extension-get-all'),
+  extensionGetInstalled: () => ipcRenderer.invoke('extension-get-installed'),
+  extensionSearch: (query, filters) => ipcRenderer.invoke('extension-search', query, filters),
+  extensionInstall: (extensionId) => ipcRenderer.invoke('extension-install', extensionId),
+  extensionUninstall: (extensionId) => ipcRenderer.invoke('extension-uninstall', extensionId),
+  extensionUpdate: (extensionId) => ipcRenderer.invoke('extension-update', extensionId),
+  extensionUpdateAll: () => ipcRenderer.invoke('extension-update-all'),
+  extensionEnable: (extensionId, enabled) => ipcRenderer.invoke('extension-enable', extensionId, enabled),
+  extensionGetCategories: () => ipcRenderer.invoke('extension-get-categories'),
+  extensionGetReviews: (extensionId) => ipcRenderer.invoke('extension-get-reviews', extensionId),
+  extensionSubmitReview: (extensionId, review) => ipcRenderer.invoke('extension-submit-review', extensionId, review),
+  extensionCheckUpdates: () => ipcRenderer.invoke('extension-check-updates'),
+  extensionGetLogs: (extensionId) => ipcRenderer.invoke('extension-get-logs', extensionId),
+  extensionClearLogs: (extensionId) => ipcRenderer.invoke('extension-clear-logs', extensionId),
+  extensionProjectCreate: (project) => ipcRenderer.invoke('extension-project-create', project),
+  extensionProjectGetAll: () => ipcRenderer.invoke('extension-project-get-all'),
+  extensionProjectBuild: (projectId) => ipcRenderer.invoke('extension-project-build', projectId),
+  extensionProjectTest: (projectId) => ipcRenderer.invoke('extension-project-test', projectId),
+  extensionProjectDeploy: (projectId) => ipcRenderer.invoke('extension-project-deploy', projectId),
+  extensionProjectDelete: (projectId) => ipcRenderer.invoke('extension-project-delete', projectId),
+  extensionFileUpdate: (projectId, filePath, content) => ipcRenderer.invoke('extension-file-update', projectId, filePath, content),
+  javaExtensionGetLoaded: () => ipcRenderer.invoke('java-extension-get-loaded'),
+  pythonExtensionGetLoaded: () => ipcRenderer.invoke('python-extension-get-loaded'),
+
+  // Reporting
+  reportGenerate: (config) => ipcRenderer.invoke('report-generate', config),
+  reportGetAll: () => ipcRenderer.invoke('report-get-all'),
+  reportExport: (reportId, format) => ipcRenderer.invoke('report-export', reportId, format),
+  reportDelete: (reportId) => ipcRenderer.invoke('report-delete', reportId),
+  reportGetTemplates: () => ipcRenderer.invoke('report-get-templates'),
+  reportSaveTemplate: (template) => ipcRenderer.invoke('report-save-template', template),
+  reportDeleteTemplate: (templateId) => ipcRenderer.invoke('report-delete-template', templateId),
   generateSecurityReport: (config) => ipcRenderer.invoke('generate-security-report', config),
   generateHtmlReport: (config) => ipcRenderer.invoke('generate-html-report', config),
-  saveReport: (reportData, format, filepath) => ipcRenderer.invoke('save-report', reportData, format, filepath)
+  saveReport: (reportData, format, filepath) => ipcRenderer.invoke('save-report', reportData, format, filepath),
+
+  // Project Workspace
+  projectCreate: (projectData) => ipcRenderer.invoke('project-create', projectData),
+  projectGetAll: () => ipcRenderer.invoke('project-get-all'),
+  projectGetCurrent: () => ipcRenderer.invoke('project-get-current'),
+  projectOpen: (projectId) => ipcRenderer.invoke('project-open', projectId),
+  projectClose: () => ipcRenderer.invoke('project-close'),
+  projectSave: () => ipcRenderer.invoke('project-save'),
+  projectExport: (projectId, format) => ipcRenderer.invoke('project-export', projectId, format),
+  projectUpdateConfig: (config) => ipcRenderer.invoke('project-update-config', config),
+  projectRemoveSavedItem: (projectId, itemId) => ipcRenderer.invoke('project-remove-saved-item', projectId, itemId),
+  workspaceCreate: (workspaceData) => ipcRenderer.invoke('workspace-create', workspaceData),
+  workspaceGetAll: () => ipcRenderer.invoke('workspace-get-all'),
+  workspaceLoad: (workspaceId) => ipcRenderer.invoke('workspace-load', workspaceId),
+
+  // Import/Export
+  importFromFile: (filepath, format) => ipcRenderer.invoke('import-from-file', filepath, format),
+  exportToFormat: (data, format) => ipcRenderer.invoke('export-to-format', data, format),
+  exportToTool: (data, tool) => ipcRenderer.invoke('export-to-tool', data, tool),
+  exportToJira: (data, config) => ipcRenderer.invoke('export-to-jira', data, config),
+  exportToGitHub: (data, config) => ipcRenderer.invoke('export-to-github', data, config),
+  toolIntegrationGet: () => ipcRenderer.invoke('tool-integration-get'),
+  toolIntegrationAdd: (integration) => ipcRenderer.invoke('tool-integration-add', integration),
+  toolIntegrationRemove: (integrationId) => ipcRenderer.invoke('tool-integration-remove', integrationId),
+  toolIntegrationRun: (integrationId, data) => ipcRenderer.invoke('tool-integration-run', integrationId, data),
+
+  // Headless Automation
+  headlessAgentRegister: (agentData) => ipcRenderer.invoke('headless-agent-register', agentData),
+  headlessAgentRemove: (agentId) => ipcRenderer.invoke('headless-agent-remove', agentId),
+  headlessAgentGetAll: () => ipcRenderer.invoke('headless-agent-get-all'),
+  headlessJobCreate: (agentId, jobData) => ipcRenderer.invoke('headless-job-create', agentId, jobData),
+  headlessJobCancel: (jobId) => ipcRenderer.invoke('headless-job-cancel', jobId),
+  dockerConfigGet: () => ipcRenderer.invoke('docker-config-get'),
+  dockerConfigSave: (config) => ipcRenderer.invoke('docker-config-save', config),
+  dockerContainerStart: (config) => ipcRenderer.invoke('docker-container-start', config),
+  dockerContainerStop: (containerId) => ipcRenderer.invoke('docker-container-stop', containerId),
+  pipelineCreate: (pipelineData) => ipcRenderer.invoke('pipeline-create', pipelineData),
+  pipelineGetAll: () => ipcRenderer.invoke('pipeline-get-all'),
+  pipelineRun: (pipelineId) => ipcRenderer.invoke('pipeline-run', pipelineId),
+  pipelineDelete: (pipelineId) => ipcRenderer.invoke('pipeline-delete', pipelineId),
+  cicdConfigGet: () => ipcRenderer.invoke('cicd-config-get'),
+  cicdConfigSave: (config) => ipcRenderer.invoke('cicd-config-save', config),
+  cicdTriggerScan: (config) => ipcRenderer.invoke('cicd-trigger-scan', config),
+
+  // Vulnerability Scan
+  vulnerabilityScan: (target, scanType) => ipcRenderer.invoke('vulnerability-scan', target, scanType),
+  runIntruder: (requestData, positions, payloads, attackType) => ipcRenderer.invoke('run-intruder', requestData, positions, payloads, attackType),
+
+  // API Testing events
+  onAPIEndpointDiscovered: (callback) => {
+    ipcRenderer.on('api-endpoint-discovered', (event, endpoint) => callback(endpoint));
+  },
+
+  onMobileRequest: (callback) => {
+    ipcRenderer.on('mobile-request', (event, request) => callback(request));
+  },
+
+  // JavaScript/SPA Analysis events
+  onJSVulnerabilityFound: (callback) => {
+    ipcRenderer.on('js-vulnerability-found', (event, vuln) => callback(vuln));
+  },
+
+  onJSSecretFound: (callback) => {
+    ipcRenderer.on('js-secret-found', (event, secret) => callback(secret));
+  },
+
+  // Headless Automation events
+  onHeadlessJobUpdate: (callback) => {
+    ipcRenderer.on('headless-job-update', (event, job) => callback(job));
+  },
+
+  onAgentStatusChange: (callback) => {
+    ipcRenderer.on('agent-status-change', (event, agent) => callback(agent));
+  },
+
+  onPipelineComplete: (callback) => {
+    ipcRenderer.on('pipeline-complete', (event, pipelineId, success) => callback(pipelineId, success));
+  },
+
+  // WebSocket Protocol events
+  onWebSocketMessage: (callback) => {
+    ipcRenderer.on('websocket-message', (event, message) => callback(message));
+  },
+
+  onWebSocketConnectionChange: (callback) => {
+    ipcRenderer.on('websocket-connection-change', (event, connection) => callback(connection));
+  },
+
+  onProtocolMessage: (callback) => {
+    ipcRenderer.on('protocol-message', (event, message) => callback(message));
+  },
+
+  // Extension events
+  onExtensionInstalled: (callback) => {
+    ipcRenderer.on('extension-installed', (event, extension) => callback(extension));
+  },
+
+  onExtensionUninstalled: (callback) => {
+    ipcRenderer.on('extension-uninstalled', (event, extensionId) => callback(extensionId));
+  },
+
+  onExtensionUpdated: (callback) => {
+    ipcRenderer.on('extension-updated', (event, extension) => callback(extension));
+  },
+
+  onExtensionLog: (callback) => {
+    ipcRenderer.on('extension-log', (event, log) => callback(log));
+  },
+
+  onExtensionBuildComplete: (callback) => {
+    ipcRenderer.on('extension-build-complete', (event, result) => callback(result));
+  },
+
+  // Reporting events
+  onReportGenerated: (callback) => {
+    ipcRenderer.on('report-generated', (event, report) => callback(report));
+  },
+
+  // Project events
+  onProjectSaved: (callback) => {
+    ipcRenderer.on('project-saved', (event, project) => callback(project));
+  },
+
+  onProjectModified: (callback) => {
+    ipcRenderer.on('project-modified', (event, changes) => callback(changes));
+  },
+
+  // Import/Export events
+  onImportComplete: (callback) => {
+    ipcRenderer.on('import-complete', (event, result) => callback(result));
+  },
+
+  onExportComplete: (callback) => {
+    ipcRenderer.on('export-complete', (event, result) => callback(result));
+  },
+
+  // Advanced Injection events
+  onInjectionFound: (callback) => {
+    ipcRenderer.on('injection-found', (event, injection) => callback(injection));
+  },
+
+  onCollaboratorInteraction: (callback) => {
+    ipcRenderer.on('collaborator-interaction', (event, interaction) => callback(interaction));
+  },
+
+  // API SDK events
+  onAPICall: (callback) => {
+    ipcRenderer.on('api-call', (event, callData) => callback(callData));
+  },
+
+  // AI Assistant
+  aiCallAnthropic: (params) => ipcRenderer.invoke('ai-call-anthropic', params),
+  aiCallGemini: (params) => ipcRenderer.invoke('ai-call-gemini', params),
+
+  // Settings
+  settingsGet: () => ipcRenderer.invoke('settings-get'),
+  settingsSave: (settings) => ipcRenderer.invoke('settings-save', settings),
+  settingsReset: () => ipcRenderer.invoke('settings-reset')
 });

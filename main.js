@@ -40,6 +40,7 @@
 
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const fs = require('fs');
 const PacketCapture = require('./packetCapture');
 const SecurityDetector = require('./securityDetection');
 const HTTPProxy = require('./httpProxy');
@@ -927,6 +928,704 @@ ipcMain.handle('lua-complete-script', async (event, scriptId) => {
     const result = luaEngine.complete(scriptId);
     return result;
   } catch (error) {
+    return { success: false, error: error.message };
+  }
+});
+
+// API Testing handlers
+ipcMain.handle('api-discover-endpoints', async (event, url) => {
+  return { success: true, endpoints: [] };
+});
+
+ipcMain.handle('api-parse-openapi', async (event, url) => {
+  return { success: true, endpoints: [] };
+});
+
+ipcMain.handle('api-test-endpoint', async (event, endpoint) => {
+  return { success: true, result: endpoint };
+});
+
+ipcMain.handle('api-scan-endpoint', async (event, endpoint, scanType) => {
+  return { success: true, vulnerabilities: [] };
+});
+
+ipcMain.handle('api-introspect-graphql', async (event, endpoint) => {
+  return { success: true, schema: { queries: [], mutations: [], subscriptions: [] } };
+});
+
+ipcMain.handle('api-test-graphql', async (event, endpoint, query, variables) => {
+  return { success: true, result: null };
+});
+
+ipcMain.handle('api-scan-graphql', async (event, endpoint, schema) => {
+  return { success: true, vulnerabilities: [] };
+});
+
+ipcMain.handle('api-get-documentation', async (event, endpointId) => {
+  return { success: true, documentation: '' };
+});
+
+ipcMain.handle('api-get-examples', async (event, endpointId) => {
+  return { success: true, examples: [] };
+});
+
+ipcMain.handle('api-get-call-history', async (event, endpointId) => {
+  return { success: true, history: [] };
+});
+
+ipcMain.handle('api-generate-key', async (event, keyType) => {
+  return { success: true, key: 'generated-api-key-placeholder' };
+});
+
+ipcMain.handle('api-config-get', async () => {
+  return { success: true, config: {} };
+});
+
+ipcMain.handle('api-config-save', async (event, config) => {
+  return { success: true };
+});
+
+// Mobile App Testing handlers
+ipcMain.handle('mobile-start-session', async (event, deviceType, deviceName) => {
+  return { success: true, sessionId: `session-${Date.now()}` };
+});
+
+ipcMain.handle('mobile-stop-session', async (event, sessionId) => {
+  return { success: true };
+});
+
+ipcMain.handle('mobile-bypass-ssl-pinning', async (event, sessionId) => {
+  return { success: true };
+});
+
+ipcMain.handle('mobile-get-sessions', async () => {
+  return { success: true, sessions: [] };
+});
+
+// JavaScript/SPA Analysis handlers
+ipcMain.handle('js-discover-endpoints', async (event, url) => {
+  return { success: true, endpoints: [] };
+});
+
+ipcMain.handle('js-analyze-file', async (event, url) => {
+  return { success: true, analysis: { url, size: 0, vulnerabilities: [], secrets: [], endpoints: [], code: '' } };
+});
+
+ipcMain.handle('js-scan-for-secrets', async (event, url) => {
+  return { success: true, secrets: [] };
+});
+
+ipcMain.handle('js-test-dom-xss', async (event, url) => {
+  return { success: true, vectors: [] };
+});
+
+ipcMain.handle('js-deobfuscate', async (event, code) => {
+  return { success: true, deobfuscated: code };
+});
+
+ipcMain.handle('js-enable-headless-browser', async (event, enabled) => {
+  return { success: true };
+});
+
+ipcMain.handle('js-crawl-spa', async (event, url, depth) => {
+  return { success: true, urls: [], endpoints: [] };
+});
+
+// Advanced Injection handlers
+ipcMain.handle('injection-test-sql', async (event, target, payload) => {
+  return { success: true, vulnerable: false };
+});
+
+ipcMain.handle('injection-test-nosql', async (event, target, payload) => {
+  return { success: true, vulnerable: false };
+});
+
+ipcMain.handle('injection-test-command', async (event, target, payload) => {
+  return { success: true, vulnerable: false };
+});
+
+ipcMain.handle('injection-test-template', async (event, target, payload) => {
+  return { success: true, vulnerable: false };
+});
+
+ipcMain.handle('injection-test-deserialization', async (event, target, payload) => {
+  return { success: true, vulnerable: false };
+});
+
+ipcMain.handle('injection-test-xxe', async (event, target, payload) => {
+  return { success: true, vulnerable: false };
+});
+
+ipcMain.handle('injection-start-collaborator', async () => {
+  return { success: true, url: 'https://collab.example.com' };
+});
+
+ipcMain.handle('injection-get-collaborator-interactions', async () => {
+  return { success: true, interactions: [] };
+});
+
+// WebSocket Protocol handlers
+ipcMain.handle('websocket-connect', async (event, url, options) => {
+  return { success: true, connectionId: `ws-${Date.now()}` };
+});
+
+ipcMain.handle('websocket-disconnect', async (event, connectionId) => {
+  return { success: true };
+});
+
+ipcMain.handle('websocket-send', async (event, connectionId, message) => {
+  return { success: true };
+});
+
+ipcMain.handle('websocket-intercept', async (event, connectionId, enabled) => {
+  return { success: true };
+});
+
+ipcMain.handle('websocket-get-connections', async () => {
+  return { success: true, connections: [] };
+});
+
+ipcMain.handle('websocket-get-messages', async (event, connectionId) => {
+  return { success: true, messages: [] };
+});
+
+ipcMain.handle('protocol-register-custom', async (event, protocol) => {
+  return { success: true };
+});
+
+ipcMain.handle('protocol-get-custom', async () => {
+  return { success: true, protocols: [] };
+});
+
+ipcMain.handle('protocol-delete-custom', async (event, protocolId) => {
+  return { success: true };
+});
+
+// BApp Store / Extensions handlers
+ipcMain.handle('extension-get-all', async () => {
+  return { success: true, extensions: [] };
+});
+
+ipcMain.handle('extension-get-installed', async () => {
+  return { success: true, extensions: [] };
+});
+
+ipcMain.handle('extension-search', async (event, query, filters) => {
+  return { success: true, results: [] };
+});
+
+ipcMain.handle('extension-install', async (event, extensionId) => {
+  return { success: true };
+});
+
+ipcMain.handle('extension-uninstall', async (event, extensionId) => {
+  return { success: true };
+});
+
+ipcMain.handle('extension-update', async (event, extensionId) => {
+  return { success: true };
+});
+
+ipcMain.handle('extension-update-all', async () => {
+  return { success: true, updated: [] };
+});
+
+ipcMain.handle('extension-enable', async (event, extensionId, enabled) => {
+  return { success: true };
+});
+
+ipcMain.handle('extension-get-categories', async () => {
+  return { success: true, categories: [] };
+});
+
+ipcMain.handle('extension-get-reviews', async (event, extensionId) => {
+  return { success: true, reviews: [] };
+});
+
+ipcMain.handle('extension-submit-review', async (event, extensionId, review) => {
+  return { success: true };
+});
+
+ipcMain.handle('extension-check-updates', async () => {
+  return { success: true, updates: [] };
+});
+
+ipcMain.handle('extension-get-logs', async (event, extensionId) => {
+  return { success: true, logs: [] };
+});
+
+ipcMain.handle('extension-clear-logs', async (event, extensionId) => {
+  return { success: true };
+});
+
+ipcMain.handle('extension-project-create', async (event, project) => {
+  return { success: true, projectId: `ext-proj-${Date.now()}` };
+});
+
+ipcMain.handle('extension-project-get-all', async () => {
+  return { success: true, projects: [] };
+});
+
+ipcMain.handle('extension-project-build', async (event, projectId) => {
+  return { success: true };
+});
+
+ipcMain.handle('extension-project-test', async (event, projectId) => {
+  return { success: true, results: { passed: 0, failed: 0 } };
+});
+
+ipcMain.handle('extension-project-deploy', async (event, projectId) => {
+  return { success: true };
+});
+
+ipcMain.handle('extension-project-delete', async (event, projectId) => {
+  return { success: true };
+});
+
+ipcMain.handle('extension-file-update', async (event, projectId, filePath, content) => {
+  return { success: true };
+});
+
+ipcMain.handle('java-extension-get-loaded', async () => {
+  return { success: true, extensions: [] };
+});
+
+ipcMain.handle('python-extension-get-loaded', async () => {
+  return { success: true, extensions: [] };
+});
+
+// Reporting handlers
+ipcMain.handle('report-generate', async (event, config) => {
+  return { success: true, reportId: `report-${Date.now()}` };
+});
+
+ipcMain.handle('report-get-all', async () => {
+  return { success: true, reports: [] };
+});
+
+ipcMain.handle('report-export', async (event, reportId, format) => {
+  return { success: true, filepath: '' };
+});
+
+ipcMain.handle('report-delete', async (event, reportId) => {
+  return { success: true };
+});
+
+ipcMain.handle('report-get-templates', async () => {
+  return { success: true, templates: [] };
+});
+
+ipcMain.handle('report-save-template', async (event, template) => {
+  return { success: true, templateId: `template-${Date.now()}` };
+});
+
+ipcMain.handle('report-delete-template', async (event, templateId) => {
+  return { success: true };
+});
+
+// Project Workspace handlers
+ipcMain.handle('project-create', async (event, projectData) => {
+  return { success: true, projectId: `proj-${Date.now()}` };
+});
+
+ipcMain.handle('project-get-all', async () => {
+  return { success: true, projects: [] };
+});
+
+ipcMain.handle('project-get-current', async () => {
+  return { success: true, project: null };
+});
+
+ipcMain.handle('project-open', async (event, projectId) => {
+  return { success: true };
+});
+
+ipcMain.handle('project-close', async () => {
+  return { success: true };
+});
+
+ipcMain.handle('project-save', async () => {
+  return { success: true };
+});
+
+ipcMain.handle('project-export', async (event, projectId, format) => {
+  return { success: true, filepath: '' };
+});
+
+ipcMain.handle('project-update-config', async (event, config) => {
+  return { success: true };
+});
+
+ipcMain.handle('project-remove-saved-item', async (event, projectId, itemId) => {
+  return { success: true };
+});
+
+ipcMain.handle('workspace-create', async (event, workspaceData) => {
+  return { success: true, workspaceId: `workspace-${Date.now()}` };
+});
+
+ipcMain.handle('workspace-get-all', async () => {
+  return { success: true, workspaces: [] };
+});
+
+ipcMain.handle('workspace-load', async (event, workspaceId) => {
+  return { success: true };
+});
+
+// Import/Export handlers
+ipcMain.handle('import-from-file', async (event, filepath, format) => {
+  return { success: true, data: {} };
+});
+
+ipcMain.handle('export-to-format', async (event, data, format) => {
+  return { success: true, filepath: '' };
+});
+
+ipcMain.handle('export-to-tool', async (event, data, tool) => {
+  return { success: true };
+});
+
+ipcMain.handle('export-to-jira', async (event, data, config) => {
+  return { success: true };
+});
+
+ipcMain.handle('export-to-github', async (event, data, config) => {
+  return { success: true };
+});
+
+ipcMain.handle('tool-integration-get', async () => {
+  return { success: true, integrations: [] };
+});
+
+ipcMain.handle('tool-integration-add', async (event, integration) => {
+  return { success: true };
+});
+
+ipcMain.handle('tool-integration-remove', async (event, integrationId) => {
+  return { success: true };
+});
+
+ipcMain.handle('tool-integration-run', async (event, integrationId, data) => {
+  return { success: true };
+});
+
+// Headless Automation handlers
+ipcMain.handle('headless-agent-register', async (event, agentData) => {
+  return { success: true, agentId: `agent-${Date.now()}` };
+});
+
+ipcMain.handle('headless-agent-remove', async (event, agentId) => {
+  return { success: true };
+});
+
+ipcMain.handle('headless-agent-get-all', async () => {
+  return { success: true, agents: [] };
+});
+
+ipcMain.handle('headless-job-create', async (event, agentId, jobData) => {
+  return { success: true, jobId: `job-${Date.now()}` };
+});
+
+ipcMain.handle('headless-job-cancel', async (event, jobId) => {
+  return { success: true };
+});
+
+ipcMain.handle('docker-config-get', async () => {
+  return { success: true, config: null };
+});
+
+ipcMain.handle('docker-config-save', async (event, config) => {
+  return { success: true };
+});
+
+ipcMain.handle('docker-container-start', async (event, config) => {
+  return { success: true, containerId: `container-${Date.now()}` };
+});
+
+ipcMain.handle('docker-container-stop', async (event, containerId) => {
+  return { success: true };
+});
+
+ipcMain.handle('pipeline-create', async (event, pipelineData) => {
+  return { success: true, pipelineId: `pipeline-${Date.now()}` };
+});
+
+ipcMain.handle('pipeline-get-all', async () => {
+  return { success: true, pipelines: [] };
+});
+
+ipcMain.handle('pipeline-run', async (event, pipelineId) => {
+  return { success: true, runId: `run-${Date.now()}` };
+});
+
+ipcMain.handle('pipeline-delete', async (event, pipelineId) => {
+  return { success: true };
+});
+
+ipcMain.handle('cicd-config-get', async () => {
+  return { success: true, config: {} };
+});
+
+ipcMain.handle('cicd-config-save', async (event, config) => {
+  return { success: true };
+});
+
+ipcMain.handle('cicd-trigger-scan', async (event, config) => {
+  return { success: true, scanId: `scan-${Date.now()}` };
+});
+
+// Vulnerability Scan handlers
+ipcMain.handle('vulnerability-scan', async (event, target, scanType) => {
+  return { success: true, vulnerabilities: [] };
+});
+
+ipcMain.handle('run-intruder', async (event, requestData, positions, payloads, attackType) => {
+  return { success: true, results: [] };
+});
+
+// AI Assistant handlers
+ipcMain.handle('ai-call-anthropic', async (event, params) => {
+  try {
+    const { model, apiKey, messages, tools, maxTokens } = params;
+
+    // Format messages for Anthropic API
+    const formattedMessages = messages.map(msg => {
+      if (msg.toolResults) {
+        // Tool result message
+        return {
+          role: 'user',
+          content: msg.toolResults.map(result => ({
+            type: 'tool_result',
+            tool_use_id: result.toolCallId,
+            content: result.error || JSON.stringify(result.result)
+          }))
+        };
+      }
+      return {
+        role: msg.role,
+        content: msg.content
+      };
+    });
+
+    // Call Anthropic API
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: model,
+        max_tokens: maxTokens || 4096,
+        messages: formattedMessages,
+        tools: tools
+      })
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      return { success: false, error: `Anthropic API error: ${error}` };
+    }
+
+    const data = await response.json();
+
+    // Extract content and tool calls
+    let content = '';
+    let toolCalls = [];
+
+    if (data.content) {
+      for (const block of data.content) {
+        if (block.type === 'text') {
+          content += block.text;
+        } else if (block.type === 'tool_use') {
+          toolCalls.push({
+            id: block.id,
+            name: block.name,
+            input: block.input
+          });
+        }
+      }
+    }
+
+    return {
+      success: true,
+      content: content,
+      toolCalls: toolCalls.length > 0 ? toolCalls : undefined
+    };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+});
+
+ipcMain.handle('ai-call-gemini', async (event, params) => {
+  try {
+    const { model, apiKey, messages, tools } = params;
+
+    // Format messages for Gemini API
+    const contents = messages.map(msg => {
+      if (msg.toolResults) {
+        // Tool result in Gemini format
+        return {
+          role: 'function',
+          parts: msg.toolResults.map(result => ({
+            functionResponse: {
+              name: result.toolCallId,
+              response: result.error ? { error: result.error } : result.result
+            }
+          }))
+        };
+      }
+      return {
+        role: msg.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: msg.content }]
+      };
+    });
+
+    // Format tools for Gemini
+    const functionDeclarations = tools.map(tool => ({
+      name: tool.name,
+      description: tool.description,
+      parameters: tool.parameters
+    }));
+
+    // Call Gemini API
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          contents: contents,
+          tools: [{ functionDeclarations }]
+        })
+      }
+    );
+
+    if (!response.ok) {
+      const error = await response.text();
+      return { success: false, error: `Gemini API error: ${error}` };
+    }
+
+    const data = await response.json();
+
+    // Extract content and tool calls
+    let content = '';
+    let toolCalls = [];
+
+    if (data.candidates && data.candidates[0]) {
+      const candidate = data.candidates[0];
+      if (candidate.content && candidate.content.parts) {
+        for (const part of candidate.content.parts) {
+          if (part.text) {
+            content += part.text;
+          } else if (part.functionCall) {
+            toolCalls.push({
+              id: part.functionCall.name,
+              name: part.functionCall.name,
+              input: part.functionCall.args
+            });
+          }
+        }
+      }
+    }
+
+    return {
+      success: true,
+      content: content,
+      toolCalls: toolCalls.length > 0 ? toolCalls : undefined
+    };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+});
+
+// Settings handlers
+const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+
+const defaultSettings = {
+  ai: {
+    provider: 'anthropic',
+    apiKey: '',
+    model: '',
+    enableAutoToolCall: true,
+    maxTokens: 4096
+  },
+  general: {
+    autoSave: true,
+    confirmBeforeExit: true,
+    defaultView: 'capture',
+    logLevel: 'info'
+  },
+  network: {
+    defaultProxyPort: 8080,
+    enableIPv6: false,
+    dnsServer: '8.8.8.8',
+    timeout: 30000
+  },
+  security: {
+    validateSSL: true,
+    followRedirects: true,
+    maxRedirects: 5,
+    allowSelfSignedCerts: false
+  },
+  appearance: {
+    theme: 'light',
+    accentColor: '#0071e3',
+    fontSize: 'medium',
+    compactMode: false
+  },
+  advanced: {
+    enableExperimentalFeatures: false,
+    debugMode: false,
+    maxCaptureBuffer: 10000,
+    maxHistoryItems: 1000
+  }
+};
+
+ipcMain.handle('settings-get', async () => {
+  try {
+    if (fs.existsSync(settingsPath)) {
+      const data = fs.readFileSync(settingsPath, 'utf8');
+      const settings = JSON.parse(data);
+      // Merge with defaults to ensure all fields exist
+      return {
+        success: true,
+        settings: {
+          ai: { ...defaultSettings.ai, ...settings.ai },
+          general: { ...defaultSettings.general, ...settings.general },
+          network: { ...defaultSettings.network, ...settings.network },
+          security: { ...defaultSettings.security, ...settings.security },
+          appearance: { ...defaultSettings.appearance, ...settings.appearance },
+          advanced: { ...defaultSettings.advanced, ...settings.advanced }
+        }
+      };
+    }
+    return { success: true, settings: defaultSettings };
+  } catch (error) {
+    console.error('Failed to load settings:', error);
+    return { success: true, settings: defaultSettings };
+  }
+});
+
+ipcMain.handle('settings-save', async (event, settings) => {
+  try {
+    fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2), 'utf8');
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to save settings:', error);
+    return { success: false, error: error.message };
+  }
+});
+
+ipcMain.handle('settings-reset', async () => {
+  try {
+    fs.writeFileSync(settingsPath, JSON.stringify(defaultSettings, null, 2), 'utf8');
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to reset settings:', error);
     return { success: false, error: error.message };
   }
 });

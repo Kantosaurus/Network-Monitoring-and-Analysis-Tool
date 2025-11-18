@@ -1473,6 +1473,27 @@ export interface ElectronAPI {
   onExtensionLog: (callback: (log: ExtensionLog) => void) => void;
   onAPICall: (callback: (call: RESTAPICall) => void) => void;
   onExtensionBuildComplete: (callback: (projectId: string, success: boolean, output: string) => void) => void;
+
+  // AI Assistant
+  aiCallAnthropic: (params: {
+    model: string;
+    apiKey: string;
+    messages: any[];
+    tools: any[];
+    maxTokens?: number;
+  }) => Promise<{ success: boolean; content?: string; toolCalls?: any[]; error?: string }>;
+
+  aiCallGemini: (params: {
+    model: string;
+    apiKey: string;
+    messages: any[];
+    tools: any[];
+  }) => Promise<{ success: boolean; content?: string; toolCalls?: any[]; error?: string }>;
+
+  // Settings
+  settingsGet: () => Promise<{ success: boolean; settings?: any; error?: string }>;
+  settingsSave: (settings: any) => Promise<{ success: boolean; error?: string }>;
+  settingsReset: () => Promise<{ success: boolean; error?: string }>;
 }
 
 declare global {

@@ -4,19 +4,23 @@ import {
   IconGlobe,
   IconSparkles,
   IconMenu2,
+  IconRobot,
+  IconSettings,
 } from "@tabler/icons-react";
 import anime from 'animejs';
 import { cn } from "@/lib/utils";
 import { PacketCapture } from "@/components/PacketCapture/PacketCapture";
 import { HTTPProxy } from "@/components/HTTPProxy/HTTPProxy";
 import { Esper } from "@/components/Esper/Esper";
+import { AIAssistant } from "@/components/AIAssistant";
+import { Settings } from "@/components/Settings";
 import { TitleBar } from "@/components/TitleBar/TitleBar";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 
 export default function App() {
   console.log("App component rendering...");
 
-  const [activeView, setActiveView] = useState<"capture" | "proxy" | "esper">("capture");
+  const [activeView, setActiveView] = useState<"capture" | "proxy" | "esper" | "ai" | "settings">("capture");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -34,10 +38,22 @@ export default function App() {
       description: "Burp Suite-inspired traffic interception",
     },
     {
+      label: "AI Assistant",
+      value: "ai" as const,
+      icon: <IconRobot size={20} />,
+      description: "AI-powered security testing assistant",
+    },
+    {
       label: "Esper",
       value: "esper" as const,
       icon: <IconSparkles size={20} />,
       description: "AI-powered network intelligence",
+    },
+    {
+      label: "Settings",
+      value: "settings" as const,
+      icon: <IconSettings size={20} />,
+      description: "Configure NMAT preferences",
     },
   ];
 
@@ -54,7 +70,7 @@ export default function App() {
     }
   }, [activeView]);
 
-  const handleNavClick = (value: "capture" | "proxy" | "esper") => {
+  const handleNavClick = (value: "capture" | "proxy" | "esper" | "ai" | "settings") => {
     // Animate button press
     const button = document.querySelector(`[data-nav="${value}"]`);
     if (button) {
@@ -74,8 +90,12 @@ export default function App() {
         return "Packet Capture";
       case "proxy":
         return "HTTP Proxy";
+      case "ai":
+        return "AI Assistant";
       case "esper":
         return "Esper";
+      case "settings":
+        return "Settings";
     }
   };
 
@@ -85,8 +105,12 @@ export default function App() {
         return "Monitor and analyze network packets in real-time";
       case "proxy":
         return "Intercept and modify HTTP/HTTPS traffic";
+      case "ai":
+        return "AI-powered security testing with tool use";
       case "esper":
         return "AI-powered network intelligence and automation";
+      case "settings":
+        return "Configure NMAT preferences and AI settings";
     }
   };
 
@@ -185,7 +209,9 @@ export default function App() {
             <div className="h-full flex flex-col p-6">
               {activeView === "capture" && <PacketCapture />}
               {activeView === "proxy" && <HTTPProxy />}
+              {activeView === "ai" && <AIAssistant />}
               {activeView === "esper" && <Esper />}
+              {activeView === "settings" && <Settings />}
             </div>
           </div>
         </div>
